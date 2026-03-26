@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keyword Mapper — AI SEO Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --surface: #fffef9;
+    --surface2: #f0ece0;
+    --border: #ddd8c8;
+    --ink: #1a1714;
+    --ink-muted: #7a746a;
+    --accent: #c8410a;
+    --accent-light: #fdf0ea;
+    --accent2: #1a6b3c;
+    --accent2-light: #eaf4ee;
+    --blue: #1a4a8a;
+    --blue-light: #eaf0fb;
+    --purple: #5c2d91;
+    --purple-light: #f3edfb;
+    --warn: #b45309;
+    --warn-light: #fef3c7;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-mono: 'Geist Mono', 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); min-height: 100vh; }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:999; opacity:.5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  /* HEADER */
+  header {
+    padding: 20px 44px; border-bottom: 1.5px solid var(--border); background: var(--surface);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .logo { display: flex; align-items: baseline; gap: 10px; }
+  .logo-mark { font-family: var(--font-display); font-size: 21px; color: var(--accent); font-style: italic; }
+  .logo-text { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); }
+  .header-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .hbadge {
+    font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 11px; border-radius: 2px; border: 1px solid;
+  }
+  .hbadge-orange { background: var(--accent-light); color: var(--accent); border-color: #e8c5b4; }
+  .hbadge-green  {
+    background: var(--accent2-light); color: var(--accent2); border-color: #b6d9c4;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .pulse-dot { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.75)} }
+
+  /* MAIN */
+  main { max-width: 980px; margin: 0 auto; padding: 50px 28px 80px; }
+
+  /* HERO */
+  .hero { text-align: center; margin-bottom: 44px; }
+  .eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 14px; }
+  .hero-title { font-family: var(--font-display); font-size: 48px; line-height: 1.06; margin-bottom: 12px; }
+  .hero-title em { color: var(--accent); font-style: italic; }
+  .hero-sub { font-size: 12px; color: var(--ink-muted); line-height: 1.65; max-width: 510px; margin: 0 auto 30px; }
+  .hero-sub strong { color: var(--ink); }
+
+  /* INPUT */
+  .input-wrap {
+    display: flex; max-width: 650px; margin: 0 auto 12px;
+    border: 1.5px solid var(--border); border-radius: 3px; background: var(--surface); overflow: hidden;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,65,10,.1); }
+  .inp-seed { flex:1; padding: 14px 18px; font-family: var(--font-mono); font-size: 14px; color: var(--ink); background: none; border: none; outline: none; }
+  .inp-seed::placeholder { color: var(--ink-muted); }
+  .inp-site { padding: 14px 12px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); background: var(--surface2); border: none; border-left: 1.5px solid var(--border); outline: none; width: 170px; }
+  .inp-site::placeholder { color: #b0a898; }
+  .btn-gen {
+    padding: 14px 24px; background: var(--accent); color: #fff; font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    border: none; cursor: pointer; transition: background .2s; white-space: nowrap;
+  }
+  .btn-gen:hover:not(:disabled) { background: #a83308; }
+  .btn-gen:disabled { opacity:.45; cursor:not-allowed; }
+
+  .opts { display: flex; gap: 14px; max-width: 650px; margin: 0 auto 10px; justify-content: center; flex-wrap: wrap; }
+  .opt-l { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink-muted); cursor: pointer; }
+  .opt-l input { accent-color: var(--accent); }
+  select.sel {
+    font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted);
+    background: var(--surface); border: 1px solid var(--border); border-radius: 2px; padding: 4px 9px; outline: none; cursor: pointer;
+  }
+
+  /* CANNIBAL PANEL */
+  .cp { max-width: 650px; margin: 14px auto 0; background: var(--surface); border: 1.5px solid var(--border); border-radius: 3px; overflow: hidden; }
+  .cp-toggle {
+    width:100%; padding: 11px 16px; background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; font-family: var(--font-mono);
+    font-size: 11px; color: var(--ink-muted); transition: background .15s;
+  }
+  .cp-toggle:hover { background: var(--surface2); }
+  .cp-left { display: flex; align-items: center; gap: 8px; }
+  .cp-cnt { font-size: 10px; background: var(--accent2-light); color: var(--accent2); border: 1px solid #b6d9c4; padding: 2px 8px; border-radius: 2px; font-weight: 600; }
+  .cp-arrow { font-size: 10px; transition: transform .2s; }
+  .cp-arrow.open { transform: rotate(180deg); }
+  .cp-body { display: none; padding: 0 16px 14px; border-top: 1px solid var(--border); }
+  .cp-body.open { display: block; }
+  .cp-desc { font-size: 11px; color: var(--ink-muted); margin: 10px 0 8px; line-height: 1.55; }
+  .blog-list { display: flex; flex-direction: column; gap: 3px; max-height: 220px; overflow-y: auto; }
+  .blog-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; font-size: 11px; }
+  .bi-title { flex:1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bi-url { font-size: 10px; color: var(--blue); flex-shrink: 0; }
+  .bi-rm { background: none; border: none; cursor: pointer; color: var(--ink-muted); font-size: 15px; line-height:1; padding: 0 2px; transition: color .15s; }
+  .bi-rm:hover { color: var(--accent); }
+  .add-row { display: flex; gap: 7px; margin-top: 9px; }
+  .add-inp { flex:1; padding: 7px 11px; font-family: var(--font-mono); font-size: 11px; background: var(--surface); border: 1px solid var(--border); border-radius: 2px; outline: none; color: var(--ink); }
+  .add-inp:focus { border-color: var(--accent2); }
+  .add-btn { padding: 7px 13px; background: var(--accent2); color: #fff; font-family: var(--font-mono); font-size: 11px; font-weight: 600; border: none; border-radius: 2px; cursor: pointer; }
+  .add-btn:hover { background: #155c2e; }
+
+  /* STATUS / ERROR */
+  .status-wrap { max-width: 650px; margin: 14px auto 0; display: none; }
+  .status-wrap.on { display: block; }
+  .status-inner { display: flex; align-items: center; gap: 11px; padding: 11px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 2px; }
+  .spinner { width:13px; height:13px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin .7s linear infinite; flex-shrink:0; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .status-txt { font-size: 11px; color: var(--ink-muted); }
+  .err-bar { max-width: 650px; margin: 10px auto 0; padding: 11px 16px; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 2px; font-size: 11px; color: #b91c1c; display: none; }
+
+  .chips { display: flex; gap: 7px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+  .chip { font-size: 11px; padding: 5px 13px; border: 1px solid var(--border); border-radius: 2px; background: var(--surface); color: var(--ink-muted); cursor: pointer; transition: all .15s; }
+  .chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  /* RESULTS */
+  #results { display: none; animation: fu .45s ease both; }
+  @keyframes fu { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+  .r-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 26px; padding-bottom: 18px; border-bottom: 1.5px solid var(--border);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .r-seed { font-family: var(--font-display); font-size: 25px; font-style: italic; }
+  .r-seed span { color: var(--accent); }
+  .r-meta { font-size: 10px; color: var(--ink-muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+  .btn-out {
+    padding: 9px 18px; background: var(--surface); border: 1.5px solid var(--border); color: var(--ink-muted);
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; border-radius: 2px; cursor: pointer; transition: all .2s;
+  }
+  .btn-out:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* CANNIBALIZATION SUMMARY */
+  .cs {
+    background: var(--surface); border: 1.5px solid var(--border); border-radius: 3px;
+    padding: 16px 22px; margin-bottom: 22px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  }
+  .cs-title { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-muted); }
+  .cs-div { width: 1px; height: 30px; background: var(--border); }
+  .cs-stat { display: flex; align-items: center; gap: 9px; }
+  .cs-n { font-family: var(--font-display); font-size: 26px; font-style: italic; }
+  .cs-n.g { color: var(--accent2); }
+  .cs-n.w { color: var(--warn); }
+  .cs-n.r { color: var(--accent); }
+  .cs-l { font-size: 10px; color: var(--ink-muted); line-height: 1.35; }
+  .cs-note { font-size: 11px; color: var(--ink-muted); max-width: 320px; line-height: 1.5; }
+
+  /* FILTER */
+  .fbar { display: flex; gap: 7px; margin-bottom: 16px; flex-wrap: wrap; }
+  .fbtn {
+    padding: 6px 13px; border: 1.5px solid var(--border); border-radius: 2px; background: var(--surface);
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--ink-muted); cursor: pointer; transition: all .15s;
+  }
+  .fbtn:hover { border-color: var(--accent); color: var(--accent); }
+  .fbtn.fa  { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .fbtn.fg  { border-color: var(--accent2); color: var(--accent2); background: var(--accent2-light); }
+  .fbtn.fw  { border-color: var(--warn); color: var(--warn); background: var(--warn-light); }
+
+  /* PAGE CARDS */
+  .pgrid { display: flex; flex-direction: column; gap: 20px; }
+  .pcard {
+    background: var(--surface); border: 1.5px solid var(--border); border-radius: 3px;
+    overflow: hidden; transition: box-shadow .2s;
+  }
+  .pcard:hover { box-shadow: 0 4px 22px rgba(0,0,0,.07); }
+  .pcard.c-risk     { border-color: #f59e0b; }
+  .pcard.c-conflict { border-color: var(--accent); }
+
+  .ch {
+    display: flex; align-items: flex-start; gap: 14px; padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cnum { font-family: var(--font-display); font-size: 28px; color: var(--border); line-height:1; flex-shrink:0; min-width:32px; font-style:italic; }
+  .cta { flex:1; min-width:0; }
+  .ctype-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap; }
+  .ctype { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+  .t-pillar   { color: var(--accent); }
+  .t-cluster  { color: var(--blue); }
+  .t-landing  { color: var(--accent2); }
+  .t-blog     { color: var(--purple); }
+  .t-comparison { color: var(--warn); }
+  .itag { font-size: 9px; padding: 2px 7px; border-radius: 2px; font-weight:600; letter-spacing:1px; text-transform:uppercase; }
+  .i-info  { background:var(--blue-light); color:var(--blue); }
+  .i-comm  { background:var(--accent-light); color:var(--accent); }
+  .i-trans { background:var(--accent2-light); color:var(--accent2); }
+  .i-nav   { background:var(--purple-light); color:var(--purple); }
+  .ctitle { font-family: var(--font-display); font-size: 18px; line-height:1.2; margin-bottom:3px; }
+  .curl { font-size: 11px; color: var(--blue); word-break: break-all; }
+  .cgoal { font-size:11px; color:var(--ink-muted); padding:4px 9px; background:var(--surface2); border-radius:2px; margin-left:auto; flex-shrink:0; max-width:185px; text-align:right; line-height:1.4; align-self:center; }
+
+  /* CANNIBALIZATION ALERT */
+  .ca {
+    margin: 0 24px 12px; padding: 10px 14px; border-radius: 2px;
+    font-size: 11px; line-height: 1.5; border: 1px solid;
+  }
+  .ca.safe     { background:var(--accent2-light); border-color:#b6d9c4; color:var(--accent2); }
+  .ca.risk     { background:var(--warn-light); border-color:#fde68a; color:var(--warn); }
+  .ca.conflict { background:var(--accent-light); border-color:#f8c9b3; color:var(--accent); }
+  .ca-lbl { font-size:9px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; margin-bottom:3px; }
+  .ca-links { display:flex; flex-direction:column; gap:3px; margin-top:5px; }
+  .ca-link {
+    font-size:10px; color:var(--blue); text-decoration:none;
+    background:rgba(26,74,138,.07); padding:3px 8px; border-radius:2px; display:inline-block; width:fit-content;
+  }
+  .ca-link:hover { text-decoration:underline; }
+  .ca-action { font-size:10px; margin-top:4px; font-style:italic; opacity:.8; }
+
+  /* CARD BODY */
+  .cbody { display:grid; grid-template-columns:1fr 1fr; }
+  @media(max-width:660px){.cbody{grid-template-columns:1fr;}}
+  .cs2 { padding:16px 24px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .cs2:nth-child(2n){border-right:none;}
+  .cs2:nth-last-child(-n+2){border-bottom:none;}
+  .cslbl {
+    font-size:9px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--ink-muted);
+    margin-bottom:8px; display:flex; align-items:center; gap:6px;
+  }
+  .cslbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .kwl { display:flex; flex-wrap:wrap; gap:5px; }
+  .kwc { font-size:11px; padding:3px 9px; border-radius:2px; font-weight:500; border:1px solid; }
+  .kp { background:var(--accent-light); color:var(--accent); border-color:#e8c5b4; }
+  .ks { background:var(--blue-light); color:var(--blue); border-color:#c2d4f0; }
+  .kse{ background:var(--surface2); color:var(--ink-muted); border-color:var(--border); }
+
+  .mbox { background:var(--surface2); border:1px solid var(--border); border-radius:2px; padding:10px 12px; margin-bottom:7px; }
+  .mlbl-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+  .mtype { font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-muted); font-weight:600; }
+  .mctr { font-size:10px; font-weight:600; }
+  .mok { color:var(--accent2); } .mwn { color:var(--warn); } .mov { color:var(--accent); }
+  .mtxt { font-size:12px; color:var(--ink); line-height:1.5; }
+  .mprog { height:2px; background:var(--border); border-radius:1px; margin-top:6px; overflow:hidden; }
+  .mbar { height:100%; border-radius:1px; }
+
+  .copybtn {
+    padding:3px 8px; background:none; border:1px solid var(--border); border-radius:2px;
+    font-family:var(--font-mono); font-size:9px; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+    color:var(--ink-muted); cursor:pointer; transition:all .15s; margin-left:8px;
+  }
+  .copybtn:hover{border-color:var(--accent);color:var(--accent);}
+  .copybtn.cp2{border-color:var(--accent2);color:var(--accent2);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">KwMap</div>
+    <div class="logo-text">AI Keyword Mapper</div>
+  </div>
+  <div class="header-right">
+    <div class="hbadge hbadge-green">
+      <div class="pulse-dot"></div>
+      Cannibalization Guard
+    </div>
+    <div class="hbadge hbadge-orange">Powered by Claude</div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="eyebrow">SEO Content Planning</div>
+    <h1 class="hero-title">Turn one keyword into<br>a <em>full content map</em></h1>
+    <p class="hero-sub">Enter a seed keyword — Claude maps out pages, keyword clusters, and optimised meta tags, then <strong>cross-checks your existing blog</strong> to flag cannibalization risks before you create anything.</p>
+
+    <div class="input-wrap">
+      <input class="inp-seed" id="inp-seed" type="text" placeholder="e.g. hire overseas workers" />
+      <input class="inp-site" id="inp-site" type="text" placeholder="yoursite.com" />
+      <button class="btn-gen" id="btn-gen" onclick="generate()">Generate →</button>
+    </div>
+
+    <div class="opts">
+      <label class="opt-l"><input type="checkbox" id="opt-comm" checked> Commercial pages</label>
+      <label class="opt-l"><input type="checkbox" id="opt-blog" checked> Blog content</label>
+      <label class="opt-l">Pages:
+        <select class="sel" id="opt-cnt">
+          <option value="5">5 pages</option>
+          <option value="8" selected>8 pages</option>
+          <option value="12">12 pages</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- CANNIBALIZATION PANEL -->
+    <div class="cp">
+      <button class="cp-toggle" onclick="toggleCP()">
+        <div class="cp-left">
+          <span>🛡️</span>
+          <span>Cannibalization Guard — Existing Blog Posts</span>
+          <span class="cp-cnt" id="cp-cnt">28 posts</span>
+        </div>
+        <span class="cp-arrow" id="cp-arrow">▼</span>
+      </button>
+      <div class="cp-body" id="cp-body">
+        <p class="cp-desc">Claude checks every suggested page against these posts — flagging direct conflicts (update/consolidate instead), overlap risks (differentiate angle), and safe new pages (green light to create).</p>
+        <div class="blog-list" id="blog-list"></div>
+        <div class="add-row">
+          <input class="add-inp" id="add-ttl" placeholder="Post title…">
+          <input class="add-inp" id="add-url" placeholder="/blogs/slug" style="max-width:190px">
+          <button class="add-btn" onclick="addPost()">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="chips">
+      <div class="chip" onclick="fe('hire overseas workers','hireoverseas.com')">hire overseas workers</div>
+      <div class="chip" onclick="fe('virtual assistant services','hireoverseas.com')">virtual assistant services</div>
+      <div class="chip" onclick="fe('offshore staffing agency','hireoverseas.com')">offshore staffing agency</div>
+      <div class="chip" onclick="fe('remote hiring Philippines','hireoverseas.com')">remote hiring Philippines</div>
+    </div>
+
+    <div class="status-wrap" id="sw">
+      <div class="status-inner">
+        <div class="spinner"></div>
+        <div class="status-txt" id="stxt">Generating keyword map…</div>
+      </div>
+    </div>
+    <div class="err-bar" id="err"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="r-header">
+      <div>
+        <div class="r-seed">Keyword map for <span id="r-seed"></span></div>
+        <div class="r-meta" id="r-meta"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn-out" onclick="exportCSV()">↓ CSV</button>
+        <button class="btn-out" onclick="resetForm()">New Keyword</button>
+      </div>
+    </div>
+
+    <div class="cs" id="cs-bar"></div>
+
+    <div class="fbar">
+      <button class="fbtn fa" id="f-all"      onclick="setF('all')">All Pages</button>
+      <button class="fbtn"    id="f-safe"     onclick="setF('safe')">✓ Safe to Create</button>
+      <button class="fbtn"    id="f-risk"     onclick="setF('risk')">⚠ Review Needed</button>
+      <button class="fbtn"    id="f-conflict" onclick="setF('conflict')">✗ Conflicts</button>
+    </div>
+
+    <div class="pgrid" id="pgrid"></div>
+  </div>
+</main>
+
+<script>
+let blogPosts = [
+  {t:'How to Hire Employees from Overseas: A Complete Guide',u:'/blogs/how-to-hire-employees-from-overseas'},
+  {t:'Top Companies Hiring Remote Workers: The Ultimate Guide',u:'/blogs/companies-hiring-remote-workers'},
+  {t:'20 Best Remote Companies to Work For',u:'/blogs/best-remote-companies-to-work-for'},
+  {t:'Non-Voice Work From Home: A Starter Guide',u:'/blogs/non-voice-work-from-home'},
+  {t:'13 Best Global Recruitment Agencies to Find Top Talent',u:'/blogs/global-recruitment-agency'},
+  {t:'What Is OpenClaw? Why It Matters for AI Operations Teams',u:'/blogs/what-is-open-claw'},
+  {t:'OpenClaw vs LangChain: Best Framework for AI Agents?',u:'/blogs/openclaw-vs-langchain'},
+  {t:'OpenClaw Implementation Roadmap for Stable Automation',u:'/blogs/openclaw-implementation-roadmap'},
+  {t:'Best Countries to Hire OpenClaw Developers',u:'/blogs/hire-openclaw-developers'},
+  {t:'Virtual Assistant vs In-House Employee: Which is Right?',u:'/blogs/virtual-assistant-vs-in-house'},
+  {t:'What Does a Virtual Assistant Do? Guide for All Industries',u:'/blogs/what-does-a-virtual-assistant-do'},
+  {t:'Answer Engine Optimization (AEO): Beyond SEO for Founders',u:'/blogs/answer-engine-optimization-aeo'},
+  {t:'Offshore Staffing Agency: How It Works for Founders',u:'/blogs/offshore-staffing-agency'},
+  {t:'Hiring Remote Employees in Other Countries: Systems That Scale',u:'/blogs/hiring-remote-employees-other-countries'},
+  {t:'In-House SEO vs Outsourcing: Which Compounds Growth?',u:'/blogs/in-house-seo-vs-outsourcing'},
+  {t:'Outsourcing SEO Services: When and Why It Works',u:'/blogs/outsourcing-seo-services'},
+  {t:'Best Countries to Hire Customer Success Managers in 2026',u:'/blogs/hire-customer-success-managers'},
+  {t:'Filipino AI Experts: Why Global Businesses Hire Them',u:'/blogs/hire-filipino-ai-experts'},
+  {t:'Working With Hire Overseas: An Inside View',u:'/blogs/hire-overseas-company-review'},
+  {t:'25 Best Questions to Ask HR During an Interview',u:'/blogs/questions-to-ask-hr-during-interview'},
+  {t:'How Rupa Health Built a $10M+ Media Brand with Offshore Talent',u:'/blogs/rupa-health-case-study'},
+  {t:'Best Countries for Remote Hiring: Cost & Talent Breakdown',u:'/blogs/best-countries-remote-hiring'},
+  {t:'How to Build an Offshore Team: Step-by-Step',u:'/blogs/how-to-build-offshore-team'},
+  {t:'Hire Virtual Assistant Philippines: Complete Guide',u:'/blogs/hire-virtual-assistant-philippines'},
+  {t:'Overseas Recruitment: How It Works for US Businesses',u:'/blogs/overseas-recruitment'},
+  {t:'Cost of Hiring Overseas vs Domestically',u:'/blogs/cost-of-hiring-overseas'},
+  {t:'How to Manage a Remote Team Across Time Zones',u:'/blogs/manage-remote-team-time-zones'},
+  {t:'Remote Work Tips: How to Build Systems That Scale',u:'/blogs/remote-work-tips'},
+];
+
+let currentPages=[], currentFilter='all';
+
+function updCnt(){ document.getElementById('cp-cnt').textContent=blogPosts.length+' posts'; }
+function renderBlogList(){
+  document.getElementById('blog-list').innerHTML=blogPosts.map((p,i)=>`
+    <div class="blog-item">
+      <span class="bi-title" title="${p.t}">${p.t}</span>
+      <span class="bi-url">${p.u}</span>
+      <button class="bi-rm" onclick="rmPost(${i})">×</button>
+    </div>`).join('');
+}
+function rmPost(i){ blogPosts.splice(i,1); renderBlogList(); updCnt(); }
+function addPost(){
+  const t=document.getElementById('add-ttl').value.trim();
+  const u=document.getElementById('add-url').value.trim();
+  if(!t)return;
+  blogPosts.push({t,u:u||'/blogs/'+t.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')});
+  renderBlogList(); updCnt();
+  document.getElementById('add-ttl').value='';
+  document.getElementById('add-url').value='';
+}
+function toggleCP(){
+  const b=document.getElementById('cp-body'),a=document.getElementById('cp-arrow'),o=b.classList.contains('open');
+  b.classList.toggle('open',!o); a.classList.toggle('open',!o);
+  if(!o) renderBlogList();
+}
+function fe(kw,site){
+  document.getElementById('inp-seed').value=kw;
+  document.getElementById('inp-site').value=site;
+}
+
+async function generate(){
+  const seed=document.getElementById('inp-seed').value.trim();
+  const site=document.getElementById('inp-site').value.trim()||'yoursite.com';
+  const cnt=document.getElementById('opt-cnt').value;
+  const comm=document.getElementById('opt-comm').checked;
+  const blog=document.getElementById('opt-blog').checked;
+  if(!seed){document.getElementById('inp-seed').focus();return;}
+  setLoading(true); hideErr(); document.getElementById('results').style.display='none'; currentFilter='all';
+
+  const blogStr=blogPosts.map(p=>`- "${p.t}" → ${p.u}`).join('\n');
+
+  const sys=`You are an expert SEO strategist. Generate a keyword mapping plan and return ONLY valid JSON — no markdown, no backticks, no explanation. Return a single JSON array of page objects.
+
+Each object MUST have:
+- "pageType": one of ["Pillar Page","Cluster Page","Landing Page","Blog Post","Comparison Page"]
+- "pageTitle": compelling H1 title
+- "slug": URL slug starting with /
+- "searchIntent": one of ["Informational","Commercial","Transactional","Navigational"]
+- "contentGoal": 1 sentence — specific purpose and conversion/traffic objective
+- "primaryKeyword": exact target keyword
+- "secondaryKeywords": array of 3-5 strings
+- "semanticKeywords": array of 4-6 LSI strings
+- "metaTitle": UNDER 60 chars, includes primary keyword
+- "metaDescription": EXACTLY 140-155 characters with a CTA — count carefully
+- "cannibalizationStatus": "safe" | "risk" | "conflict"
+  safe = no real overlap with existing content
+  risk = partial overlap; can coexist with clear differentiation
+  conflict = direct overlap; recommend update/consolidate over new creation
+- "cannibalizationDetails":
+  - "conflictingPosts": array of titles from existing posts (empty if safe)
+  - "conflictingUrls": array of matching URLs (empty if safe)
+  - "recommendation": "Create new page"|"Update existing post"|"Consolidate with existing"|"Differentiate angle"
+  - "notes": 1-2 sentence explanation of overlap or why it is safe
+
+Be accurate. Only flag real keyword/topic overlaps, not superficial similarity.
+${comm?'Include commercial intent pages.':''} ${blog?'Include blog/informational posts.':''}`;
+
+  const usr=`Seed keyword: "${seed}"
+Website: ${site}
+Generate exactly ${cnt} pages.
+
+EXISTING BLOG POSTS (${blogPosts.length} total) — check every recommended page against these:
+${blogStr}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:6000,system:sys,messages:[{role:'user',content:usr}]})
+    });
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error '+res.status);}
+    const data=await res.json();
+    const raw=data.content.find(b=>b.type==='text')?.text||'';
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const pages=JSON.parse(clean);
+    currentPages=pages;
+    renderResults(pages,seed,site);
+  }catch(e){showErr('Error: '+e.message);}
+  setLoading(false);
+}
+
+function renderResults(pages,seed,site){
+  document.getElementById('r-seed').textContent='"'+seed+'"';
+  const safe=pages.filter(p=>p.cannibalizationStatus==='safe').length;
+  const risk=pages.filter(p=>p.cannibalizationStatus==='risk').length;
+  const con=pages.filter(p=>p.cannibalizationStatus==='conflict').length;
+  document.getElementById('r-meta').textContent=
+    site+' · '+pages.length+' pages · '+safe+' safe · '+risk+' review · '+con+' conflicts · '+
+    new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  document.getElementById('cs-bar').innerHTML=`
+    <div class="cs-title">Cannibalization Report</div>
+    <div class="cs-div"></div>
+    <div class="cs-stat"><div class="cs-n g">${safe}</div><div class="cs-l">Safe to<br>Create</div></div>
+    <div class="cs-div"></div>
+    <div class="cs-stat"><div class="cs-n w">${risk}</div><div class="cs-l">Review<br>Needed</div></div>
+    <div class="cs-div"></div>
+    <div class="cs-stat"><div class="cs-n r">${con}</div><div class="cs-l">Direct<br>Conflicts</div></div>
+    <div class="cs-div"></div>
+    <div class="cs-note">${
+      con>0?`⚠ ${con} page${con>1?'s':''} conflict with existing content — update or consolidate instead. `:''}${
+      risk>0?`${risk} page${risk>1?'s':''} need angle differentiation. `:''}${
+      safe===pages.length?'✓ All pages are clear to create — no cannibalization detected.':''
+    }</div>`;
+
+  window._kwp=pages; window._kws=seed; window._kwsite=site;
+  renderGrid(pages,site);
+  document.getElementById('results').style.display='block';
+}
+
+function setF(f){
+  currentFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.className='fbtn');
+  const m={all:'fa',safe:'fg',risk:'fw',conflict:'fw'};
+  document.getElementById('f-'+f).classList.add(m[f]||'fa');
+  renderGrid(currentPages,window._kwsite);
+}
+
+function renderGrid(pages,site){
+  let fp=pages;
+  if(currentFilter==='safe') fp=pages.filter(p=>p.cannibalizationStatus==='safe');
+  else if(currentFilter==='risk') fp=pages.filter(p=>p.cannibalizationStatus==='risk');
+  else if(currentFilter==='conflict') fp=pages.filter(p=>p.cannibalizationStatus==='conflict');
+  document.getElementById('pgrid').innerHTML=fp.length
+    ?fp.map((p,i)=>buildCard(p,i,site)).join('')
+    :`<div style="text-align:center;padding:40px;color:var(--ink-muted);font-size:13px;">No pages match this filter.</div>`;
+}
+
+const TC={'Pillar Page':'t-pillar','Cluster Page':'t-cluster','Landing Page':'t-landing','Blog Post':'t-blog','Comparison Page':'t-comparison'};
+const IC={'Informational':'i-info','Commercial':'i-comm','Transactional':'i-trans','Navigational':'i-nav'};
+
+function buildCard(p,i,site){
+  const tc=TC[p.pageType]||'t-cluster';
+  const ic=IC[p.searchIntent]||'i-info';
+  const st=p.cannibalizationStatus||'safe';
+  const cc=st==='conflict'?'c-conflict':st==='risk'?'c-risk':'';
+  const tl=(p.metaTitle||'').length, dl=(p.metaDescription||'').length;
+  const tclr=tl<=60?'mok':'mov', dclr=dl>=140&&dl<=155?'mok':'mwn';
+  const tbg=tl<=60?'#1a6b3c':'#b45309', dbg=dl>=140&&dl<=155?'#1a6b3c':'#b45309';
+  const url=(site?'https://'+site.replace(/^https?:\/\//,''):'')+(p.slug||'');
+  const cd=p.cannibalizationDetails||{};
+  const cps=cd.conflictingPosts||[], cus=cd.conflictingUrls||[], rec=cd.recommendation||'Create new page', notes=cd.notes||'';
+  const base=site?'https://'+site.replace(/^https?:\/\//,''):'https://hireoverseas.com';
+
+  let alert='';
+  if(st==='conflict'){
+    alert=`<div class="ca conflict">
+      <div class="ca-lbl">✗ Direct Conflict — ${rec}</div>
+      <div>${notes}</div>
+      ${cps.length?`<div class="ca-links">${cps.map((t,j)=>`<a class="ca-link" href="${base}${cus[j]||''}" target="_blank">↗ ${t}</a>`).join('')}</div>`:''}
+      <div class="ca-action">Action: ${rec}</div>
+    </div>`;
+  } else if(st==='risk'){
+    alert=`<div class="ca risk">
+      <div class="ca-lbl">⚠ Overlap Risk — Differentiation Needed</div>
+      <div>${notes}</div>
+      ${cps.length?`<div class="ca-links">${cps.map((t,j)=>`<a class="ca-link" href="${base}${cus[j]||''}" target="_blank">↗ ${t}</a>`).join('')}</div>`:''}
+      <div class="ca-action">Action: ${rec}</div>
+    </div>`;
+  } else {
+    alert=`<div class="ca safe"><div class="ca-lbl">✓ Safe to Create</div><div>${notes||'No existing content overlaps with this topic.'}</div></div>`;
+  }
+
+  const ri=(window._kwp||[]).indexOf(p);
+  return `
+  <div class="pcard ${cc}">
+    <div class="ch">
+      <div class="cnum">${String(i+1).padStart(2,'0')}</div>
+      <div class="cta">
+        <div class="ctype-row">
+          <span class="ctype ${tc}">${p.pageType}</span>
+          <span class="itag ${ic}">${p.searchIntent}</span>
+        </div>
+        <div class="ctitle">${p.pageTitle||''}</div>
+        <div class="curl">${url}</div>
+      </div>
+      <div class="cgoal">${p.contentGoal||''}</div>
+    </div>
+    ${alert}
+    <div class="cbody">
+      <div class="cs2">
+        <div class="cslbl">Primary Keyword</div>
+        <div class="kwl"><span class="kwc kp">${p.primaryKeyword||''}</span></div>
+      </div>
+      <div class="cs2">
+        <div class="cslbl">Secondary Keywords</div>
+        <div class="kwl">${(p.secondaryKeywords||[]).map(k=>`<span class="kwc ks">${k}</span>`).join('')}</div>
+      </div>
+      <div class="cs2">
+        <div class="cslbl">Semantic / LSI Keywords</div>
+        <div class="kwl">${(p.semanticKeywords||[]).map(k=>`<span class="kwc kse">${k}</span>`).join('')}</div>
+      </div>
+      <div class="cs2">
+        <div class="cslbl">Meta Tags <button class="copybtn" onclick="cpMeta(${ri})">Copy</button></div>
+        <div class="mbox">
+          <div class="mlbl-row"><span class="mtype">Title</span><span class="mctr ${tclr}">${tl}/60</span></div>
+          <div class="mtxt">${p.metaTitle||''}</div>
+          <div class="mprog"><div class="mbar" style="width:${Math.min(100,Math.round(tl/60*100))}%;background:${tbg}"></div></div>
+        </div>
+        <div class="mbox">
+          <div class="mlbl-row"><span class="mtype">Description</span><span class="mctr ${dclr}">${dl}/155</span></div>
+          <div class="mtxt">${p.metaDescription||''}</div>
+          <div class="mprog"><div class="mbar" style="width:${Math.min(100,Math.round(dl/155*100))}%;background:${dbg}"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function cpMeta(i){
+  const p=(window._kwp||[])[i]; if(!p)return;
+  navigator.clipboard.writeText(`Meta Title:\n${p.metaTitle}\n\nMeta Description:\n${p.metaDescription}`).then(()=>{
+    const btns=document.querySelectorAll('.copybtn');
+    if(btns[i]){btns[i].textContent='Copied!';btns[i].classList.add('cp2');setTimeout(()=>{btns[i].textContent='Copy';btns[i].classList.remove('cp2');},1800);}
+  });
+}
+
+function exportCSV(){
+  const pages=window._kwp||[], site=window._kwsite||'';
+  const rows=[['#','Page Type','Page Title','URL','Search Intent','Content Goal','Primary Keyword','Secondary Keywords','Semantic Keywords','Meta Title','Title Len','Meta Description','Desc Len','Cannibal Status','Conflicting Posts','Recommendation','Notes']];
+  pages.forEach((p,i)=>{
+    const cd=p.cannibalizationDetails||{};
+    rows.push([i+1,p.pageType,p.pageTitle,(site?'https://'+site.replace(/^https?:\/\//,''):'')+(p.slug||''),
+      p.searchIntent,p.contentGoal,p.primaryKeyword,
+      (p.secondaryKeywords||[]).join('; '),(p.semanticKeywords||[]).join('; '),
+      p.metaTitle,(p.metaTitle||'').length,p.metaDescription,(p.metaDescription||'').length,
+      p.cannibalizationStatus||'safe',(cd.conflictingPosts||[]).join('; '),cd.recommendation||'',cd.notes||''
+    ]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download=`keyword-map-${(window._kws||'export').replace(/\s+/g,'-')}.csv`;
+  a.click();
+}
+
+const statuses=['Analysing seed keyword…','Mapping content clusters…','Scanning existing blog posts…','Checking for cannibalization…','Optimising meta tags…','Finalising your content map…'];
+function setLoading(on){
+  document.getElementById('sw').classList.toggle('on',on);
+  document.getElementById('btn-gen').disabled=on;
+  document.getElementById('btn-gen').textContent=on?'Generating…':'Generate →';
+  if(on){let i=0;window._st=setInterval(()=>{document.getElementById('stxt').textContent=statuses[i++%statuses.length];},1600);}
+  else{clearInterval(window._st);document.getElementById('sw').classList.remove('on');}
+}
+function showErr(m){const e=document.getElementById('err');e.textContent=m;e.style.display='block';}
+function hideErr(){document.getElementById('err').style.display='none';}
+function resetForm(){document.getElementById('results').style.display='none';document.getElementById('inp-seed').value='';document.getElementById('inp-seed').focus();currentFilter='all';}
+
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.id==='inp-seed')generate();});
+updCnt();
+</script>
+</body>
+</html>
