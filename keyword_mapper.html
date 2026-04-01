@@ -423,7 +423,7 @@ function setLoading(statusId,txtId,on,msg){
   if(msg) document.getElementById(txtId).textContent=msg;
 }
 function callAPI(sys,usr,maxTok=8000){
-  return fetch('https://api.anthropic.com/v1/messages',{
+  return fetch('/api/chat',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok,system:sys,messages:[{role:'user',content:usr}]})
@@ -431,7 +431,7 @@ function callAPI(sys,usr,maxTok=8000){
    .then(d=>{ const raw=d.content.find(b=>b.type==='text')?.text||''; return JSON.parse(raw.replace(/```json|```/g,'').trim()); });
 }
 function callAPIRaw(sys,usr,maxTok=16000){
-  return fetch('https://api.anthropic.com/v1/messages',{
+  return fetch('/api/chat',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok,system:sys,messages:[{role:'user',content:usr}]})
