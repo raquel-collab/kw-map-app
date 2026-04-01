@@ -22,7 +22,6 @@
 body{background:var(--bg);color:var(--ink);font-family:var(--fd);min-height:100vh;-webkit-font-smoothing:antialiased;}
 body::after{content:'';position:fixed;top:-180px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(83,194,223,.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
 
-/* ── HEADER ── */
 header{padding:14px 40px;border-bottom:1px solid var(--border);background:rgba(22,27,38,.96);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);}
 .logo{display:flex;align-items:center;gap:12px;}
 .logo-img{height:26px;width:auto;}
@@ -41,36 +40,31 @@ header{padding:14px 40px;border-bottom:1px solid var(--border);background:rgba(2
 .pdot{width:5px;height:5px;background:var(--grn);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 6px var(--grn);}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
 
-/* ── MAIN ── */
-main{max-width:900px;margin:0 auto;padding:40px 24px 80px;position:relative;z-index:1;}
+main{max-width:960px;margin:0 auto;padding:40px 24px 80px;position:relative;z-index:1;}
 
-/* ── STEP PROGRESS ── */
-.progress{display:flex;align-items:center;gap:0;margin-bottom:44px;max-width:600px;margin-left:auto;margin-right:auto;}
-.step-item{display:flex;align-items:center;flex:1;}
-.step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all .3s;border:2px solid var(--border);background:var(--surface);color:var(--muted);}
+.progress{display:flex;align-items:center;gap:0;margin-bottom:40px;overflow-x:auto;padding-bottom:4px;}
+.step-item{display:flex;align-items:center;flex-shrink:0;}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;transition:all .3s;border:2px solid var(--border);background:var(--surface);color:var(--muted);}
 .step-circle.active{border-color:var(--grn);background:var(--grn-l);color:var(--grn);}
 .step-circle.done{border-color:var(--grn);background:var(--grn);color:#0E1117;}
-.step-label{font-size:11px;font-weight:600;color:var(--muted);margin-left:8px;white-space:nowrap;transition:color .3s;}
+.step-label{font-size:10px;font-weight:600;color:var(--muted);margin-left:6px;white-space:nowrap;transition:color .3s;}
 .step-label.active{color:var(--grn);}
 .step-label.done{color:var(--grn);opacity:.7;}
-.step-line{flex:1;height:1px;background:var(--border);margin:0 10px;transition:background .3s;}
+.step-line{flex:0 0 24px;height:1px;background:var(--border);margin:0 4px;transition:background .3s;}
 .step-line.done{background:var(--grn);opacity:.5;}
 
-/* ── STEP PANELS ── */
 .step-panel{display:none;animation:fadeUp .35s ease both;}
 .step-panel.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── STEP HEADER ── */
 .step-hdr{margin-bottom:28px;}
 .step-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--grn);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
 .step-eyebrow::before{content:'';width:20px;height:1px;background:var(--grn-b);}
-.step-title{font-size:28px;font-weight:800;letter-spacing:-.4px;margin-bottom:8px;}
+.step-title{font-size:26px;font-weight:800;letter-spacing:-.4px;margin-bottom:8px;}
 .step-title em{color:var(--grn);font-style:normal;}
 .step-desc{font-size:13px;color:var(--muted);line-height:1.65;max-width:560px;}
 .step-desc strong{color:var(--ink);}
 
-/* ── INPUT BOX ── */
 .input-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;margin-bottom:20px;}
 .input-card-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 .seed-row{display:flex;gap:0;border:1px solid var(--border-hi);border-radius:var(--r);background:var(--s2);overflow:hidden;transition:border-color .2s,box-shadow .2s;margin-bottom:14px;}
@@ -87,7 +81,6 @@ select.sel{font-family:var(--fd);font-size:12px;color:var(--muted);background:va
 .chip{font-size:12px;padding:5px 14px;border:1px solid var(--border);border-radius:20px;background:var(--s2);color:var(--muted);cursor:pointer;transition:all .15s;}
 .chip:hover{border-color:var(--grn);color:var(--grn);background:var(--grn-l);}
 
-/* ── BTN ── */
 .btn-primary{padding:13px 32px;background:var(--grn);color:#0E1117;font-family:var(--fd);font-size:14px;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
 .btn-primary:hover:not(:disabled){background:var(--grn-d);}
 .btn-primary:disabled{opacity:.4;cursor:not-allowed;}
@@ -95,198 +88,92 @@ select.sel{font-family:var(--fd);font-size:12px;color:var(--muted);background:va
 .btn-outline:hover{background:var(--grn-l);border-color:var(--grn);}
 .btn-ghost{padding:10px 20px;background:var(--s2);color:var(--muted);border:1px solid var(--border);font-family:var(--fd);font-size:13px;font-weight:600;border-radius:var(--r);cursor:pointer;transition:all .2s;}
 .btn-ghost:hover{border-color:var(--border-hi);color:var(--ink);}
+.btn-sm{padding:6px 16px;font-size:12px;font-weight:600;border-radius:var(--r-sm);cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:5px;}
+.btn-gen{background:var(--grn-l);color:var(--grn);border:1px solid var(--grn-b);}
+.btn-gen:hover{background:var(--grn);color:#0E1117;}
+.btn-gen:disabled{opacity:.4;cursor:not-allowed;}
 .btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 
-/* ── STATUS ── */
 .status-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;display:none;align-items:center;gap:12px;margin-top:16px;}
 .status-box.on{display:flex;}
 .spin{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--grn);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
+.spin-sm{width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--grn);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .status-txt{font-size:13px;color:var(--muted);}
 .err-box{background:var(--red-l);border:1px solid var(--red-b);border-radius:var(--r);padding:12px 16px;font-size:13px;color:var(--red);display:none;margin-top:12px;}
 
-/* ── STEP 1 RESULTS — PILLAR/CLUSTER MAP ── */
-.map-summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.map-sum-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
-.map-sum-div{width:1px;height:28px;background:var(--border);}
-.map-sum-stat{display:flex;align-items:center;gap:8px;}
-.map-sum-n{font-size:26px;font-weight:800;color:var(--grn);}
-.map-sum-l{font-size:11px;color:var(--muted);line-height:1.3;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px;}
+.card-hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:var(--s2);display:flex;align-items:center;gap:10px;}
+.card-body{padding:18px 20px;}
 
-.kmap-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
-.kmap-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:border-color .2s;}
-.kmap-card:hover{border-color:var(--border-hi);}
-.kmap-card.selected{border-color:var(--grn);box-shadow:0 0 0 2px var(--grn-l);}
-.kmap-card-hdr{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;}
-.kmap-check{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:2px;}
-.kmap-check.on{background:var(--grn);border-color:var(--grn);}
-.kmap-check.on::after{content:'✓';color:#0E1117;font-size:11px;font-weight:700;}
-.kmap-type-badge{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;border:1px solid;flex-shrink:0;margin-top:2px;}
-.kb-pillar{background:var(--grn-l);color:var(--grn);border-color:var(--grn-b);}
-.kb-cluster{background:var(--blu-l);color:var(--blu);border-color:var(--blu-b);}
-.kb-landing{background:var(--pur-l);color:var(--pur);border-color:var(--pur-b);}
-.kb-blog{background:var(--amb-l);color:var(--amb);border-color:var(--amb-b);}
-.kb-comparison{background:var(--red-l);color:var(--red);border-color:var(--red-b);}
-.kmap-info{flex:1;}
-.kmap-title{font-size:16px;font-weight:700;margin-bottom:4px;letter-spacing:-.2px;}
-.kmap-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.kmap-kw{font-size:11px;color:var(--grn);font-family:var(--fm);}
-.kmap-intent{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;}
-.intent-info{background:var(--blu-l);color:var(--blu);}
-.intent-comm{background:var(--grn-l);color:var(--grn);}
-.intent-trans{background:var(--pur-l);color:var(--pur);}
-.intent-nav{background:var(--amb-l);color:var(--amb);}
-.kmap-cannibal{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid;}
-.kc-safe{background:var(--grn-l);color:var(--grn);border-color:var(--grn-b);}
-.kc-risk{background:var(--amb-l);color:var(--amb);border-color:var(--amb-b);}
-.kc-conflict{background:var(--red-l);color:var(--red);border-color:var(--red-b);}
-.kmap-goal{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5;}
-.kmap-url{font-size:11px;color:var(--blu);font-family:var(--fm);margin-top:3px;}
-.select-all-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.sel-all-btn{font-size:12px;font-weight:600;color:var(--grn);background:none;border:none;cursor:pointer;padding:0;}
-.sel-all-btn:hover{text-decoration:underline;}
-.sel-count{font-size:12px;color:var(--muted);}
-
-/* ── STEP 2 — KEYWORDS ── */
-.kw-section{margin-bottom:24px;}
-.kw-section-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.kw-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-.page-kw-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:14px;overflow:hidden;}
-.pkw-hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:var(--s2);display:flex;align-items:center;gap:10px;}
-.pkw-num{font-size:11px;font-weight:700;font-family:var(--fm);color:var(--grn);opacity:.7;}
-.pkw-title{font-size:15px;font-weight:700;flex:1;}
-.pkw-body{padding:16px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-@media(max-width:700px){.pkw-body{grid-template-columns:1fr;}}
-.pkw-col-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-.pkw-col-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.kwl{display:flex;flex-wrap:wrap;gap:5px;}
-.kwc{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;border:1px solid;font-family:var(--fm);}
+.map-table{width:100%;border-collapse:collapse;font-size:12px;}
+.map-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--border);background:var(--s2);}
+.map-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.map-table tr:hover{background:var(--s2);}
+.map-table tr.selected-row{background:var(--grn-l);border-left:3px solid var(--grn);}
+.type-badge{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:20px;border:1px solid;white-space:nowrap;}
+.tb-pillar{background:var(--grn-l);color:var(--grn);border-color:var(--grn-b);}
+.tb-cluster{background:var(--blu-l);color:var(--blu);border-color:var(--blu-b);}
+.tb-landing{background:var(--pur-l);color:var(--pur);border-color:var(--pur-b);}
+.tb-blog{background:var(--amb-l);color:var(--amb);border-color:var(--amb-b);}
+.tb-comparison{background:var(--red-l);color:var(--red);border-color:var(--red-b);}
+.intent-badge{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:600;white-space:nowrap;}
+.ib-info{background:var(--blu-l);color:var(--blu);}
+.ib-comm{background:var(--grn-l);color:var(--grn);}
+.ib-trans{background:var(--pur-l);color:var(--pur);}
+.ib-nav{background:var(--amb-l);color:var(--amb);}
+.kw-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.kwc{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;border:1px solid;font-family:var(--fm);}
 .kp{background:var(--grn-l);color:var(--grn);border-color:var(--grn-b);}
 .ks{background:var(--blu-l);color:var(--blu);border-color:var(--blu-b);}
 .kse{background:var(--s2);color:var(--muted);border-color:var(--border);}
 
-/* META */
-.meta-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 16px;}
-@media(max-width:600px){.meta-row{grid-template-columns:1fr;}}
-.mbox{background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;}
-.mlr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-.mtype{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;}
-.mctr{font-size:10px;font-weight:700;font-family:var(--fm);}
-.mok{color:var(--grn);} .mwn{color:var(--amb);} .mov{color:var(--red);}
-.mtxt{font-size:12px;color:var(--ink);line-height:1.5;}
-.mprog{height:2px;background:var(--border);border-radius:1px;margin-top:5px;overflow:hidden;}
-.mbar{height:100%;border-radius:1px;}
-.copybtn{padding:3px 9px;background:var(--s2);border:1px solid var(--border);border-radius:20px;font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
-.copybtn:hover{border-color:var(--grn);color:var(--grn);}
-.copybtn.ok{border-color:var(--grn);color:var(--grn);}
+.outline-option{background:var(--surface);border:2px solid var(--border);border-radius:var(--r-lg);padding:24px;margin-bottom:16px;cursor:pointer;transition:all .2s;}
+.outline-option:hover{border-color:var(--border-hi);}
+.outline-option.chosen{border-color:var(--grn);box-shadow:0 0 0 3px var(--grn-l);}
+.outline-option .opt-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--grn);margin-bottom:10px;}
+.outline-option .opt-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+.outline-option .opt-angle{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
+.h2-item{padding:8px 12px;background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:6px;}
+.h2-label{font-size:13px;font-weight:700;color:var(--ink);}
+.h3-sub{font-size:11px;color:var(--muted);margin-top:3px;padding-left:14px;line-height:1.6;}
 
-/* ── STEP 3 — ANALYSIS ── */
-.analysis-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;}
-.ac-hdr{padding:16px 22px;background:var(--s2);border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;}
-.ac-num{font-size:11px;font-weight:700;font-family:var(--fm);color:var(--grn);opacity:.7;flex-shrink:0;margin-top:3px;}
-.ac-info{flex:1;}
-.ac-title{font-size:17px;font-weight:700;margin-bottom:4px;}
-.ac-badges{display:flex;gap:6px;flex-wrap:wrap;}
-.ac-badge{font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid;font-weight:600;}
-.ac-tabs{display:flex;border-bottom:1px solid var(--border);overflow-x:auto;}
-.act{padding:10px 18px;border:none;border-bottom:2px solid transparent;background:none;font-family:var(--fd);font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s;}
-.act:hover{color:var(--ink);}
-.act.on{color:var(--grn);border-bottom-color:var(--grn);}
-.ac-pane{display:none;padding:20px 22px;}
-.ac-pane.on{display:block;}
+.article-content{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;line-height:1.8;font-size:15px;color:var(--ink);}
+.article-content h1{font-size:28px;font-weight:800;margin-bottom:16px;color:var(--ink);letter-spacing:-.3px;}
+.article-content h2{font-size:22px;font-weight:700;margin:28px 0 12px;color:var(--ink);letter-spacing:-.2px;border-bottom:1px solid var(--border);padding-bottom:8px;}
+.article-content h3{font-size:17px;font-weight:700;margin:20px 0 8px;color:var(--grn);}
+.article-content h4{font-size:15px;font-weight:700;margin:16px 0 6px;color:var(--muted);}
+.article-content p{margin-bottom:14px;color:var(--ink);}
+.article-content ul,.article-content ol{margin:10px 0 14px 20px;}
+.article-content li{margin-bottom:6px;}
+.article-content strong{color:var(--grn);}
+.article-content blockquote{border-left:3px solid var(--grn);padding:10px 16px;background:var(--s2);margin:14px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;font-style:italic;color:var(--muted);}
 
-/* SERP */
-.serp-comp{border:1px solid var(--border);border-radius:var(--r-sm);background:var(--s2);overflow:hidden;margin-bottom:8px;}
-.serp-comp-hdr{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);}
-.spos{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:var(--fm);}
-.sp1{background:var(--amb-l);color:var(--amb);border:1px solid var(--amb-b);}
-.sp2{background:var(--blu-l);color:var(--blu);border:1px solid var(--blu-b);}
-.sp3{background:var(--grn-l);color:var(--grn);border:1px solid var(--grn-b);}
-.spn{background:var(--s2);color:var(--muted);border:1px solid var(--border);}
-.sdom{font-size:12px;font-weight:600;flex:1;}
-.stag{font-size:10px;padding:2px 7px;border-radius:20px;border:1px solid;}
-.stag-reg{background:var(--s2);color:var(--muted);border-color:var(--border);}
-.stag-fs{background:var(--yel-l);color:var(--yel);border-color:var(--yel-b);}
-.stag-ai{background:var(--pur-l);color:var(--pur);border-color:var(--pur-b);}
-.serp-comp-body{padding:10px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.sc-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.sc-val{font-size:11px;color:var(--ink);line-height:1.5;}
-.snip-box{margin-top:10px;padding:10px 14px;background:var(--yel-l);border:1px solid var(--yel-b);border-radius:var(--r-sm);}
-.snip-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--yel);margin-bottom:4px;}
-.snip-val{font-size:12px;color:var(--ink);line-height:1.6;}
-.ai-box{margin-top:8px;padding:10px 14px;background:var(--pur-l);border:1px solid var(--pur-b);border-radius:var(--r-sm);}
-.ai-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--pur);margin-bottom:4px;}
-.ai-val{font-size:12px;color:var(--ink);line-height:1.5;}
-.win-box{margin-top:8px;padding:10px 14px;background:var(--grn-l);border:1px solid var(--grn-b);border-radius:var(--r-sm);}
-.win-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--grn);margin-bottom:4px;}
-.win-val{font-size:12px;color:var(--ink);line-height:1.5;}
+.link-table{width:100%;border-collapse:collapse;font-size:12px;}
+.link-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--border);background:var(--s2);}
+.link-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.anchor-type{font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid;white-space:nowrap;}
+.at-exact{background:var(--grn-l);color:var(--grn);border-color:var(--grn-b);}
+.at-branded{background:var(--blu-l);color:var(--blu);border-color:var(--blu-b);}
+.at-partial{background:var(--pur-l);color:var(--pur);border-color:var(--pur-b);}
+.at-secondary{background:var(--amb-l);color:var(--amb);border-color:var(--amb-b);}
+.at-descriptive{background:var(--s2);color:var(--muted);border-color:var(--border);}
 
-/* OUTLINE */
-.ol-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
-.ol-tag{font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid;}
-.ol-grn{background:var(--grn-l);color:var(--grn);border-color:var(--grn-b);}
-.ol-blu{background:var(--blu-l);color:var(--blu);border-color:var(--blu-b);}
-.ol-pur{background:var(--pur-l);color:var(--pur);border-color:var(--pur-b);}
-.ol-yel{background:var(--yel-l);color:var(--yel);border-color:var(--yel-b);}
-.ol-intro{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;padding:10px 14px;background:var(--s2);border-radius:var(--r-sm);border-left:3px solid var(--grn);}
-.h2-block{border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;margin-bottom:8px;}
-.h2-hdr{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--border);}
-.h2-num{font-size:12px;font-weight:700;font-family:var(--fm);color:var(--grn);flex-shrink:0;line-height:1.6;}
-.h2-info .h2-title{font-size:13px;font-weight:700;margin-bottom:3px;}
-.h2-info .h2-purpose{font-size:11px;color:var(--muted);}
-.h2-tags{display:flex;gap:5px;flex-wrap:wrap;padding:7px 14px;border-bottom:1px solid var(--border);background:var(--surface);}
-.h2-tag{font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid;}
-.h3-list{padding:8px 14px;background:var(--surface);}
-.h3-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;}
-.h3-item:last-child{border-bottom:none;}
-.h3-bullet{color:var(--grn);flex-shrink:0;margin-top:2px;font-weight:700;}
-.h3-text{flex:1;color:var(--ink);line-height:1.4;}
-.h3-note{font-size:10px;color:var(--muted);font-style:italic;}
-.cta-box{margin-top:10px;padding:10px 14px;background:var(--grn-l);border:1px solid var(--grn-b);border-radius:var(--r-sm);}
-.cta-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--grn);margin-bottom:4px;}
-.cta-val{font-size:12px;color:var(--ink);line-height:1.5;}
+.stats-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
+.stat-item{display:flex;align-items:center;gap:8px;}
+.stat-n{font-size:24px;font-weight:800;color:var(--grn);}
+.stat-l{font-size:11px;color:var(--muted);line-height:1.3;}
 
-/* INTERNAL LINKS */
-.il-item{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:5px;}
-.il-cat{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:20px;flex-shrink:0;margin-top:1px;}
-.il-hire{background:var(--grn-l);color:var(--grn);}
-.il-role{background:var(--blu-l);color:var(--blu);}
-.il-ind{background:var(--amb-l);color:var(--amb);}
-.il-blog{background:var(--pur-l);color:var(--pur);}
-.il-info{flex:1;min-width:0;}
-.il-anchor{font-size:12px;font-weight:600;color:var(--ink);}
-.il-url{font-size:10px;color:var(--blu);word-break:break-all;font-family:var(--fm);}
-.il-ctx{font-size:11px;color:var(--muted);margin-top:2px;}
-
-/* CANNIBALIZATION */
-.can-box{padding:10px 14px;border-radius:var(--r-sm);font-size:12px;line-height:1.5;border:1px solid;margin-bottom:10px;}
-.can-safe{background:var(--grn-l);border-color:var(--grn-b);color:var(--grn);}
-.can-risk{background:var(--amb-l);border-color:var(--amb-b);color:var(--amb);}
-.can-conflict{background:var(--red-l);border-color:var(--red-b);color:var(--red);}
-.can-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px;}
-.can-links{display:flex;flex-direction:column;gap:3px;margin-top:5px;}
-.can-link{font-size:11px;color:var(--blu);text-decoration:none;background:var(--blu-l);padding:3px 8px;border-radius:var(--r-sm);display:inline-block;width:fit-content;}
-.can-link:hover{text-decoration:underline;}
-
-/* ── SITE INDEX PANEL ── */
 .site-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-top:16px;}
 .sp-hdr{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .sp-left{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
 .sp-cnt{font-size:10px;background:var(--grn-l);color:var(--grn);border:1px solid var(--grn-b);padding:2px 9px;border-radius:20px;font-weight:700;}
 .sp-right{display:flex;gap:7px;align-items:center;}
-.sync-btn{padding:5px 14px;background:var(--grn);color:#0E1117;font-size:11px;font-weight:700;border:none;border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:5px;}
-.sync-btn:hover{background:var(--grn-d);}
-.sync-spin{width:10px;height:10px;border:2px solid rgba(14,17,23,.3);border-top-color:#0E1117;border-radius:50%;animation:spin .6s linear infinite;display:none;}
 .sp-toggle{background:none;border:none;cursor:pointer;color:var(--muted);font-size:12px;padding:4px 8px;}
 .sp-toggle:hover{color:var(--grn);}
 .sp-body{display:none;border-top:1px solid var(--border);padding:0 18px 14px;}
 .sp-body.open{display:block;}
-.sp-note{font-size:12px;color:var(--muted);margin:10px 0 9px;line-height:1.55;}
-.sync-ok{font-size:11px;padding:5px 11px;background:var(--grn-l);color:var(--grn);border:1px solid var(--grn-b);border-radius:var(--r-sm);margin-bottom:8px;display:none;}
-.pg-tabs{display:flex;gap:4px;margin-bottom:8px;}
-.pg-tab{padding:4px 12px;background:none;border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
-.pg-tab.on{background:var(--grn-l);color:var(--grn);border-color:var(--grn-b);}
-.pg-list{display:flex;flex-direction:column;gap:3px;max-height:180px;overflow-y:auto;}
+.pg-list{display:flex;flex-direction:column;gap:3px;max-height:180px;overflow-y:auto;margin-top:10px;}
 .pg-item{display:flex;align-items:center;gap:7px;padding:5px 9px;background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);font-size:11px;}
 .pi-cat{font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;}
 .pi-blog{background:var(--pur-l);color:var(--pur);}
@@ -294,26 +181,18 @@ select.sel{font-family:var(--fd);font-size:12px;color:var(--muted);background:va
 .pi-page{background:var(--blu-l);color:var(--blu);}
 .pi-ttl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink);}
 .pi-url{font-size:10px;color:var(--blu);flex-shrink:0;font-family:var(--fm);}
-.pi-rm{background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;padding:0 2px;}
-.pi-rm:hover{color:var(--red);}
-.add-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-.add-i{padding:7px 10px;font-family:var(--fd);font-size:12px;background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);outline:none;color:var(--ink);}
-.add-i:focus{border-color:var(--grn);}
-.add-i.w1{flex:1;} .add-i.w2{width:155px;} .add-i.w3{width:90px;}
-select.add-i{cursor:pointer;}
-.add-b{padding:7px 13px;background:var(--grn);color:#0E1117;font-size:12px;font-weight:700;border:none;border-radius:var(--r-sm);cursor:pointer;}
 
-/* EXPORT BAR */
-.export-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:24px;}
-.eb-txt{font-size:13px;color:var(--muted);}
-.eb-txt strong{color:var(--ink);}
-
-/* CANNIBAL SUMMARY */
-.can-summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-
-/* COPY OUTLINE */
-.copy-ol-btn{padding:3px 10px;background:var(--s2);border:1px solid var(--border);border-radius:20px;font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;margin-left:auto;}
-.copy-ol-btn:hover{border-color:var(--grn);color:var(--grn);}
+.serp-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin-bottom:10px;}
+.serp-pos{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:700;font-family:var(--fm);margin-right:8px;}
+.sp1{background:var(--amb-l);color:var(--amb);border:1px solid var(--amb-b);}
+.sp2{background:var(--blu-l);color:var(--blu);border:1px solid var(--blu-b);}
+.sp3{background:var(--grn-l);color:var(--grn);border:1px solid var(--grn-b);}
+.spn{background:var(--s2);color:var(--muted);border:1px solid var(--border);}
+.insight-box{padding:12px 16px;border-radius:var(--r-sm);margin-top:12px;font-size:12px;line-height:1.6;}
+.ib-green{background:var(--grn-l);border:1px solid var(--grn-b);color:var(--grn);}
+.ib-purple{background:var(--pur-l);border:1px solid var(--pur-b);color:var(--pur);}
+.ib-yellow{background:var(--yel-l);border:1px solid var(--yel-b);color:var(--yel);}
+.ib-blue{background:var(--blu-l);border:1px solid var(--blu-b);color:var(--blu);}
 </style>
 </head>
 <body>
@@ -329,225 +208,221 @@ select.add-i{cursor:pointer;}
     <div class="logo-sub">SEO Keyword Mapper</div>
   </div>
   <div class="hbadges">
-    <div class="hb hb-g"><div class="pdot"></div>271 Pages Indexed</div>
-    <div class="hb hb-b">3-Step Wizard</div>
-    <div class="hb hb-r">Powered by Claude</div>
+    <span class="hb hb-g"><span class="pdot"></span> <span id="sp-cnt-hdr">271 Pages Indexed</span></span>
+    <span class="hb hb-b">8-Step Wizard</span>
+    <span class="hb hb-r">Powered by Claude</span>
   </div>
 </header>
 
 <main>
 
-  <!-- STEP PROGRESS -->
-  <div class="progress">
-    <div class="step-item">
-      <div class="step-circle active" id="sc1">1</div>
-      <div class="step-label active" id="sl1">Pillar & Cluster Map</div>
+<div class="progress" id="progress-bar"></div>
+
+<!-- STEP 1: SEED KEYWORD -->
+<div class="step-panel active" id="step1">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 1 of 8</div>
+    <div class="step-title">Enter your <em>seed keyword</em></div>
+    <div class="step-desc">Claude will analyse the keyword and map out the <strong>pillar page</strong> and all <strong>cluster pages</strong> — checking every page against your live site URLs for cannibalization.</div>
+  </div>
+
+  <div class="input-card">
+    <div class="input-card-label">Seed Keyword + Domain</div>
+    <div class="seed-row">
+      <input class="inp-seed" id="inp-seed" placeholder="e.g. hire overseas workers">
+      <input class="inp-site" id="inp-site" value="hireoverseas.com" placeholder="yoursite.com">
     </div>
-    <div class="step-line" id="line1"></div>
-    <div class="step-item">
-      <div class="step-circle" id="sc2">2</div>
-      <div class="step-label" id="sl2">Keywords & Meta</div>
+    <div class="opts-row">
+      <label class="optl"><input type="checkbox" id="opt-comm" checked> Include commercial pages</label>
+      <label class="optl"><input type="checkbox" id="opt-blog" checked> Include blog posts</label>
+      <span style="font-size:12px;color:var(--muted)">Pages:</span>
+      <select class="sel" id="opt-cnt">
+        <option>6 pages</option><option selected>8 pages</option><option>10 pages</option><option>12 pages</option>
+      </select>
     </div>
-    <div class="step-line" id="line2"></div>
-    <div class="step-item">
-      <div class="step-circle" id="sc3">3</div>
-      <div class="step-label" id="sl3">SERP Analysis & Outline</div>
+    <div class="chips">
+      <span class="chip" onclick="fe('hire overseas workers')">hire overseas workers</span>
+      <span class="chip" onclick="fe('virtual assistant services')">virtual assistant services</span>
+      <span class="chip" onclick="fe('offshore staffing agency')">offshore staffing agency</span>
+      <span class="chip" onclick="fe('remote hiring Philippines')">remote hiring Philippines</span>
+      <span class="chip" onclick="fe('hire SEO specialist overseas')">hire SEO specialist overseas</span>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       STEP 1 — SEED KEYWORD + PILLAR/CLUSTER MAP
-       ══════════════════════════════════════════ -->
-  <div class="step-panel active" id="step1">
-    <div class="step-hdr">
-      <div class="step-eyebrow">Step 1 of 3</div>
-      <h1 class="step-title">Enter your <em>seed keyword</em></h1>
-      <p class="step-desc">Claude will analyse the keyword and map out the <strong>pillar page</strong> and all <strong>cluster pages</strong> — checking every page against the 271 live URLs on hireoverseas.com for cannibalization before anything gets built.</p>
-    </div>
-
-    <div class="input-card">
-      <div class="input-card-label">Seed Keyword + Domain</div>
-      <div class="seed-row">
-        <input class="inp-seed" id="inp-seed" type="text" placeholder="e.g. hire overseas workers" />
-        <input class="inp-site" id="inp-site" value="hireoverseas.com" />
-      </div>
-      <div class="opts-row">
-        <label class="optl"><input type="checkbox" id="opt-comm" checked> Include commercial pages</label>
-        <label class="optl"><input type="checkbox" id="opt-blog" checked> Include blog posts</label>
-        <label class="optl">Pages:
-          <select class="sel" id="opt-cnt">
-            <option value="5">5 pages</option>
-            <option value="8" selected>8 pages</option>
-            <option value="12">12 pages</option>
-          </select>
-        </label>
-      </div>
-      <div class="chips">
-        <div class="chip" onclick="fe('hire overseas workers')">hire overseas workers</div>
-        <div class="chip" onclick="fe('virtual assistant services')">virtual assistant services</div>
-        <div class="chip" onclick="fe('offshore staffing agency')">offshore staffing agency</div>
-        <div class="chip" onclick="fe('remote hiring Philippines')">remote hiring Philippines</div>
-        <div class="chip" onclick="fe('hire SEO specialist overseas')">hire SEO specialist overseas</div>
+  <div class="site-panel">
+    <div class="sp-hdr">
+      <div class="sp-left">🌐 Live Site Index <span class="sp-cnt" id="sp-cnt"></span></div>
+      <div class="sp-right">
+        <button class="sp-toggle" onclick="toggleSP()">▼ View</button>
       </div>
     </div>
-
-    <!-- SITE INDEX PANEL -->
-    <div class="site-panel">
-      <div class="sp-hdr">
-        <div class="sp-left">🌐 <strong style="color:var(--ink)">Live Site Index</strong> <span class="sp-cnt" id="sp-cnt">271 pages</span></div>
-        <div class="sp-right">
-          <button class="sync-btn" id="sync-btn" onclick="syncSite()"><div class="sync-spin" id="sync-spin"></div>↻ Sync New Posts</button>
-          <button class="sp-toggle" onclick="toggleSP()">▼ View</button>
-        </div>
-      </div>
-      <div class="sp-body" id="sp-body">
-        <p class="sp-note">All pages below are checked for cannibalization on every run. Hit <strong>Sync</strong> to auto-detect new posts published today.</p>
-        <div class="sync-ok" id="sync-ok"></div>
-        <div class="pg-tabs">
-          <button class="pg-tab on" onclick="showPgTab('all',this)">All (<span id="cnt-all">271</span>)</button>
-          <button class="pg-tab" onclick="showPgTab('blog',this)">Blogs (<span id="cnt-blog">0</span>)</button>
-          <button class="pg-tab" onclick="showPgTab('role',this)">Roles (<span id="cnt-role">0</span>)</button>
-          <button class="pg-tab" onclick="showPgTab('page',this)">Pages (<span id="cnt-page">0</span>)</button>
-        </div>
-        <div class="pg-list" id="pg-list"></div>
-        <div class="add-row">
-          <input class="add-i w1" id="add-ttl" placeholder="Page title…">
-          <input class="add-i w2" id="add-url" placeholder="/path/slug">
-          <select class="add-i w3" id="add-cat"><option value="blog">Blog</option><option value="role">Role</option><option value="page">Page</option></select>
-          <button class="add-b" onclick="addPage()">+ Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="status-box" id="s1-status"><div class="spin"></div><div class="status-txt" id="s1-txt">Analysing seed keyword…</div></div>
-    <div class="err-box" id="s1-err"></div>
-
-    <div style="margin-top:24px;">
-      <button class="btn-primary" id="s1-btn" onclick="runStep1()">Analyse Keyword → <span style="font-size:18px;line-height:1;">→</span></button>
-    </div>
-
-    <!-- STEP 1 RESULTS -->
-    <div id="s1-results" style="display:none;margin-top:32px;">
-      <div style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="font-size:20px;font-weight:800;letter-spacing:-.3px;">Keyword Map: <span style="color:var(--grn)" id="s1-seed-label"></span></div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--fm);margin-top:3px;" id="s1-meta"></div>
-        </div>
-      </div>
-      <div class="can-summary" id="s1-can-summary"></div>
-      <div class="select-all-row">
-        <button class="sel-all-btn" onclick="selectAll(true)">Select all</button>
-        <span style="color:var(--border)">·</span>
-        <button class="sel-all-btn" onclick="selectAll(false)">Deselect all</button>
-        <span class="sel-count" id="sel-count">0 selected</span>
-      </div>
-      <div class="kmap-grid" id="kmap-grid"></div>
-      <div class="btn-row" style="margin-top:8px;">
-        <button class="btn-primary" onclick="goStep2()">Continue to Keywords & Meta →</button>
-        <span style="font-size:12px;color:var(--muted)">Select the pages you want to proceed with</span>
-      </div>
+    <div class="sp-body" id="sp-body">
+      <div class="pg-list" id="pg-list"></div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       STEP 2 — SECONDARY + SEMANTIC KEYWORDS + META
-       ══════════════════════════════════════════ -->
-  <div class="step-panel" id="step2">
-    <div class="step-hdr">
-      <div class="step-eyebrow">Step 2 of 3</div>
-      <h2 class="step-title">Secondary & <em>semantic keywords</em></h2>
-      <p class="step-desc">For each selected page, Claude generates <strong>10 secondary keywords</strong>, <strong>10 semantic/LSI keywords</strong>, and an optimised <strong>meta title + description</strong>. Review, then proceed to full analysis.</p>
-    </div>
-    <div id="s2-loading" style="display:none;" class="status-box on"><div class="spin"></div><div class="status-txt" id="s2-txt">Building keywords…</div></div>
-    <div class="err-box" id="s2-err"></div>
-    <div id="s2-content" style="display:none;">
-      <div id="s2-cards"></div>
-      <div class="btn-row" style="margin-top:8px;">
-        <button class="btn-primary" onclick="goStep3()">Run Full Analysis →</button>
-        <button class="btn-ghost" onclick="goBackTo(1)">← Back</button>
-      </div>
-    </div>
+  <div style="margin-top:20px">
+    <button class="btn-primary" id="s1-btn" onclick="runStep1()">Analyse Keyword → →</button>
   </div>
+  <div class="status-box" id="s1-status"><div class="spin"></div><div class="status-txt" id="s1-txt"></div></div>
+  <div class="err-box" id="s1-err"></div>
+</div>
 
-  <!-- ══════════════════════════════════════════
-       STEP 3 — SERP ANALYSIS + CONTENT OUTLINE
-       ══════════════════════════════════════════ -->
-  <div class="step-panel" id="step3">
-    <div class="step-hdr">
-      <div class="step-eyebrow">Step 3 of 3</div>
-      <h2 class="step-title">SERP analysis & <em>content outline</em></h2>
-      <p class="step-desc">For each page, Claude runs a <strong>SERP competitor breakdown</strong>, identifies <strong>featured snippet + AI Overview opportunities</strong>, and builds a full <strong>5-H2 content outline</strong> with internal links.</p>
-    </div>
-    <div id="s3-loading" style="display:none;" class="status-box on"><div class="spin"></div><div class="status-txt" id="s3-txt">Analysing SERPs…</div></div>
-    <div class="err-box" id="s3-err"></div>
-    <div id="s3-content" style="display:none;">
-      <div id="s3-cards"></div>
-      <div class="export-bar">
-        <div class="eb-txt">All done — <strong id="s3-done-count"></strong> pages fully mapped.</div>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="exportCSV()">↓ Export CSV</button>
-          <button class="btn-ghost" onclick="goBackTo(2)">← Back</button>
-          <button class="btn-ghost" onclick="startOver()">Start Over</button>
-        </div>
-      </div>
-    </div>
+<!-- STEP 2: PILLAR & CLUSTER MAP -->
+<div class="step-panel" id="step2">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 2 of 8</div>
+    <div class="step-title">Pillar & <em>Cluster Map</em></div>
+    <div class="step-desc">Review the content map below. Click <strong>"Generate Keywords"</strong> on each row to get secondary and semantic keywords. Then select a page to continue with SERP analysis.</div>
   </div>
+  <div id="s2-content"></div>
+  <div class="status-box" id="s2-status"><div class="spin"></div><div class="status-txt" id="s2-txt"></div></div>
+  <div class="err-box" id="s2-err"></div>
+</div>
+
+<!-- STEP 3: SERP ANALYSIS -->
+<div class="step-panel" id="step3">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 3 of 8</div>
+    <div class="step-title"><em>SERP Analysis</em> & Insights</div>
+    <div class="step-desc">Claude analyses the current search results for your chosen keyword and provides competitive insights.</div>
+  </div>
+  <div id="s3-content"></div>
+  <div class="status-box" id="s3-status"><div class="spin"></div><div class="status-txt" id="s3-txt"></div></div>
+  <div class="err-box" id="s3-err"></div>
+</div>
+
+<!-- STEP 4: GENERATE OUTLINE -->
+<div class="step-panel" id="step4">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 4 of 8</div>
+    <div class="step-title">Generate <em>SEO Outline</em></div>
+    <div class="step-desc">Generate an outline optimised for <strong>SEO</strong>, <strong>AI Overviews</strong>, <strong>Featured Snippets</strong>, and <strong>LLM visibility</strong>.</div>
+  </div>
+  <div id="s4-content"></div>
+  <div class="status-box" id="s4-status"><div class="spin"></div><div class="status-txt" id="s4-txt"></div></div>
+  <div class="err-box" id="s4-err"></div>
+</div>
+
+<!-- STEP 5: DRAFT OUTLINE OPTIONS -->
+<div class="step-panel" id="step5">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 5 of 8</div>
+    <div class="step-title">Choose your <em>outline draft</em></div>
+    <div class="step-desc">Here are <strong>2 outline options</strong> angled to outperform the current SERP competitors. Pick the one that best fits your strategy.</div>
+  </div>
+  <div id="s5-content"></div>
+  <div class="status-box" id="s5-status"><div class="spin"></div><div class="status-txt" id="s5-txt"></div></div>
+  <div class="err-box" id="s5-err"></div>
+</div>
+
+<!-- STEP 6: WRITE FULL ARTICLE -->
+<div class="step-panel" id="step6">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 6 of 8</div>
+    <div class="step-title">Write <em>full article</em></div>
+    <div class="step-desc">Claude writes a complete, human-quality SEO article that answers intent, creates value, and converts — no fluff, no keyword stuffing.</div>
+  </div>
+  <div id="s6-content"></div>
+  <div class="status-box" id="s6-status"><div class="spin"></div><div class="status-txt" id="s6-txt"></div></div>
+  <div class="err-box" id="s6-err"></div>
+</div>
+
+<!-- STEP 7: INTERNAL LINKING -->
+<div class="step-panel" id="step7">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 7 of 8</div>
+    <div class="step-title"><em>Internal linking</em> opportunities</div>
+    <div class="step-desc">Recommended internal links with anchor text types (exact match, branded, partial, secondary, descriptive) and natural placement suggestions.</div>
+  </div>
+  <div id="s7-content"></div>
+  <div class="status-box" id="s7-status"><div class="spin"></div><div class="status-txt" id="s7-txt"></div></div>
+  <div class="err-box" id="s7-err"></div>
+</div>
+
+<!-- STEP 8: FINAL OUTPUT -->
+<div class="step-panel" id="step8">
+  <div class="step-hdr">
+    <div class="step-eyebrow">Step 8 of 8</div>
+    <div class="step-title"><em>Final content</em> ready</div>
+    <div class="step-desc">Your complete SEO article is ready. Review the stats and copy the content.</div>
+  </div>
+  <div id="s8-content"></div>
+</div>
 
 </main>
 
 <script>
-// ═══════════════════════════════════
-// SITE INDEX — 271 live pages
-// ═══════════════════════════════════
-let sitePages = [
-  {t:'Home',u:'/',cat:'page'},{t:'Hire Remote Workers',u:'/hire-remote-workers',cat:'page'},{t:'Remote Staffing Agency',u:'/remote-staffing-agency',cat:'page'},{t:'About Us',u:'/about-us',cat:'page'},{t:'Roles',u:'/roles',cat:'page'},{t:'FAQs',u:'/faqs',cat:'page'},{t:'Community',u:'/community',cat:'page'},{t:'Blogs',u:'/blogs',cat:'page'},
-  {t:'Virtual Assistant',u:'/roles/virtual-assistant',cat:'role'},{t:'Web Developer',u:'/roles/web-developer',cat:'role'},{t:'SEO Specialist',u:'/roles/seo-specialist',cat:'role'},{t:'Graphic Designer',u:'/roles/graphic-designer',cat:'role'},{t:'UX/UI Designer',u:'/roles/ux-ui-designer',cat:'role'},{t:'Video Editor',u:'/roles/video-editor',cat:'role'},{t:'Google Ads Manager',u:'/roles/google-ads-manager',cat:'role'},{t:'Ecommerce Customer Support',u:'/roles/ecommerce-customer-support',cat:'role'},{t:'Customer Support',u:'/roles/customer-support',cat:'role'},{t:'Data Analyst',u:'/roles/data-analyst',cat:'role'},{t:'Accountant',u:'/roles/accountant',cat:'role'},{t:'Executive Assistant',u:'/roles/executive-assistant',cat:'role'},{t:'Digital Marketing Manager',u:'/roles/digital-marketing-manager',cat:'role'},{t:'Social Media Manager',u:'/roles/social-media-manager',cat:'role'},{t:'Copywriter',u:'/roles/copywriter',cat:'role'},{t:'Financial Analyst',u:'/roles/financial-analyst',cat:'role'},{t:'Payroll Specialist',u:'/roles/payroll-specialist',cat:'role'},{t:'Community Manager',u:'/roles/community-manager',cat:'role'},{t:'SDR',u:'/roles/sdr',cat:'role'},{t:'Project Manager',u:'/roles/project-manager',cat:'role'},{t:'AI Automations Manager',u:'/roles/ai-automations-manager',cat:'role'},{t:'Content Assistant',u:'/roles/content-assistant',cat:'role'},{t:'Email Marketing Specialist',u:'/roles/email-marketing-specialist',cat:'role'},{t:'Healthcare Recruiter',u:'/roles/healthcare-recruiter',cat:'role'},{t:'Paralegal',u:'/roles/paralegal',cat:'role'},{t:'OpenClaw Manager',u:'/roles/openclaw-manager',cat:'role'},{t:'AEO Specialist',u:'/roles/aeo-specialist',cat:'role'},{t:'Forward Deployed Engineer',u:'/roles/forward-deployed-engineer',cat:'role'},{t:'QA Tester',u:'/roles/qa-tester',cat:'role'},{t:'Product Designer',u:'/roles/product-designer',cat:'role'},{t:'Amazon Virtual Assistant',u:'/roles/amazon-virtual-assistant',cat:'role'},{t:'Medical Virtual Assistant',u:'/roles/medical-virtual-assistant',cat:'role'},{t:'Shopify Virtual Assistant',u:'/roles/shopify-virtual-assistant',cat:'role'},{t:'Paralegal for Law Firms',u:'/roles/paralegal-for-law-firms',cat:'role'},{t:'Healthcare Recruiters',u:'/roles/healthcare-recruiters',cat:'role'},{t:'Head Hunter',u:'/roles/head-hunter',cat:'role'},{t:'Virtual Medical Receptionist',u:'/roles/virtual-medical-receptionist',cat:'role'},{t:'Medical Scribe',u:'/roles/medical-scribe',cat:'role'},{t:'UGC Content Creator',u:'/roles/ugc-content-creator',cat:'role'},{t:'Front-End Engineers',u:'/roles/front-end-engineers',cat:'role'},{t:'Backend Engineers',u:'/roles/backend-engineers',cat:'role'},{t:'Medical Billing VA',u:'/roles/medical-billing-virtual-assistant',cat:'role'},{t:'Unity Developer',u:'/roles/unity-developer',cat:'role'},{t:'Claude AI Developer',u:'/roles/claude-ai-developer',cat:'role'},{t:'AI SEO Specialist',u:'/roles/ai-seo-specialist',cat:'role'},{t:'Reddit Marketers',u:'/roles/reddit-marketers',cat:'role'},{t:'Bookkeeper',u:'/roles/bookkeeper',cat:'role'},{t:'OpenClaw Integration Specialist',u:'/roles/openclaw-integration-specialist',cat:'role'},{t:'OpenClaw AI Engineer',u:'/roles/openclaw-ai-engineer',cat:'role'},{t:'OpenClaw Automation Developer',u:'/roles/openclaw-automation-developer',cat:'role'},{t:'OpenClaw Implementation Expert',u:'/roles/openclaw-implementation-expert',cat:'role'},
-  {t:'Hire Remote Workers South Africa',u:'/hire-remote-workers/south-africa',cat:'page'},{t:'Hire Remote Workers Latin America',u:'/hire-remote-workers/latin-america',cat:'page'},{t:'Hire Remote Workers Philippines',u:'/hire-remote-workers/philippines',cat:'page'},{t:'Hire Remote',u:'/hire-remote',cat:'page'},{t:'Hire Remote Software Developers',u:'/hire-remote/software-developers',cat:'page'},{t:'Hire Remote Full Stack Developers',u:'/hire-remote/full-stack-developers',cat:'page'},{t:'Hire Remote Front-End Developers',u:'/hire-remote/front-end-developers',cat:'page'},{t:'Hire Remote ReactJS Developers',u:'/hire-remote/reactjs-developers',cat:'page'},{t:'Hire Remote Laravel Developers',u:'/hire-remote/laravel-developers',cat:'page'},{t:'Hire Remote Angular Developers',u:'/hire-remote/angular-6-developers',cat:'page'},{t:'Hire Remote Social Media Manager',u:'/hire-remote/social-media-manager',cat:'page'},{t:'Hire Remote PPC Manager',u:'/hire-remote/ppc-manager',cat:'page'},{t:'Hire Remote Marketing Manager',u:'/hire-remote/marketing-manager',cat:'page'},{t:'Hire Remote Assistant',u:'/hire-remote/assistant',cat:'page'},{t:'Hire Remote Virtual Assistant',u:'/hire-remote/virtual-assistant',cat:'page'},{t:'Hire Remote Executive Assistant',u:'/hire-remote/executive-assistant',cat:'page'},{t:'Hire Remote Project Manager',u:'/hire-remote/project-manager',cat:'page'},{t:'Hire Remote IT Project Manager',u:'/hire-remote/it-project-manager',cat:'page'},{t:'Hire Remote Product Manager',u:'/hire-remote/product-manager',cat:'page'},{t:'Hire Remote Analyst',u:'/hire-remote/analyst',cat:'page'},{t:'Hire Remote Data Analyst',u:'/hire-remote/data-analyst',cat:'page'},{t:'Hire Remote Financial Analyst',u:'/hire-remote/financial-analyst',cat:'page'},{t:'Hire Remote QA Engineer',u:'/hire-remote/qa-engineer',cat:'page'},{t:'Hire Remote Big Data Engineer',u:'/hire-remote/big-data-engineer',cat:'page'},{t:'Hire Remote Prompt Engineer',u:'/hire-remote/prompt-engineer',cat:'page'},{t:'Hire Remote Staff',u:'/hire-remote/staff',cat:'page'},{t:'Hire Remote Sales Staff',u:'/hire-remote/sales-staff',cat:'page'},{t:'Software Assistant Hub',u:'/software-assistant',cat:'page'},{t:'ChatGPT Expert',u:'/software-assistant/chat-gpt-expert',cat:'page'},{t:'Runway ML Expert',u:'/software-assistant/runway-ml-expert',cat:'page'},{t:'Google Veo 3 Expert',u:'/software-assistant/google-veo-3-expert',cat:'page'},{t:'Apollo Expert',u:'/software-assistant/apollo-expert',cat:'page'},{t:'Notion Expert',u:'/software-assistant/notion-expert',cat:'page'},{t:'Clay Expert',u:'/software-assistant/clay-expert',cat:'page'},{t:'Claude Code Expert',u:'/software-assistant/claude-code-expert',cat:'page'},{t:'Make Expert',u:'/software-assistant/make-expert',cat:'page'},{t:'Zapier Expert',u:'/software-assistant/zapier-expert',cat:'page'},{t:'HubSpot Expert',u:'/software-assistant/hubspot-expert',cat:'page'},{t:'Figma Expert',u:'/software-assistant/figma-expert',cat:'page'},{t:'n8n Expert',u:'/software-assistant/n8n-expert',cat:'page'},{t:'Klaviyo Expert',u:'/software-assistant/klaviyo-expert',cat:'page'},{t:'Case Study — Sunflower Sober',u:'/case-studies/sunflower-sober-case-study',cat:'page'},{t:'Case Study — SearchSEO',u:'/case-studies/searchseo-case-study',cat:'page'},{t:'Case Study — Sunrise Toyota',u:'/case-studies/sunrise-toyota-case-study',cat:'page'},{t:'Case Study — Verinomics',u:'/case-studies/verinomics',cat:'page'},{t:'Case Study — Talofa Games',u:'/case-studies/talofa-games',cat:'page'},{t:'Case Study — Golden Egg',u:'/case-studies/golden-egg',cat:'page'},{t:'Playbook — SEO for Healthcare',u:'/playbooks/how-to-do-seo-for-healthcare-company',cat:'page'},{t:'Playbook — Startups Growth',u:'/playbooks/how-startups-can-get-started-with-growth',cat:'page'},{t:'Playbook — Rank with AEO',u:'/playbooks/how-to-rank-with-aeo',cat:'page'},{t:'Playbook — Start a Podcast',u:'/playbooks/how-to-start-a-podcast',cat:'page'},{t:'Playbook — YouTube Channel',u:'/playbooks/how-to-grow-a-youtube-channel-for-your-company',cat:'page'},{t:'Playbook — Media Brand',u:'/playbooks/how-to-build-a-media-brand-for-your-company',cat:'page'},{t:'Healthcare Outsourcing Services',u:'/healthcare-oursourcing-services',cat:'page'},{t:'Remote Hiring Consultation',u:'/remote-hiring-consultation',cat:'page'},{t:'AI Implementation Agent',u:'/ai-implementation-agent',cat:'page'},
-  {t:'How to Hire Employees from Overseas',u:'/blogs/how-to-hire-employees-from-overseas',cat:'blog'},{t:'Top Companies Hiring Remote Workers',u:'/blogs/companies-hiring-remote-workers',cat:'blog'},{t:'20 Best Remote Companies to Work For',u:'/blogs/best-remote-companies-to-work-for',cat:'blog'},{t:'Non-Voice Work From Home',u:'/blogs/non-voice-work-from-home',cat:'blog'},{t:'13 Best Global Recruitment Agencies',u:'/blogs/global-recruitment-agency',cat:'blog'},{t:'What Is OpenClaw?',u:'/blogs/what-is-open-claw',cat:'blog'},{t:'OpenClaw vs LangChain',u:'/blogs/openclaw-vs-langchain',cat:'blog'},{t:'OpenClaw Implementation Roadmap',u:'/blogs/openclaw-implementation-roadmap',cat:'blog'},{t:'Best Countries to Hire OpenClaw Developers',u:'/blogs/hire-openclaw-developers',cat:'blog'},{t:'Virtual Assistant vs In-House',u:'/blogs/virtual-assistant-vs-in-house',cat:'blog'},{t:'What Does a Virtual Assistant Do?',u:'/blogs/what-does-a-virtual-assistant-do',cat:'blog'},{t:'Answer Engine Optimization AEO',u:'/blogs/answer-engine-optimization-aeo',cat:'blog'},{t:'Offshore Staffing Agency',u:'/blogs/offshore-staffing-agency',cat:'blog'},{t:'Hiring Remote Employees in Other Countries',u:'/blogs/hiring-remote-employees-other-countries',cat:'blog'},{t:'In-House SEO vs Outsourcing',u:'/blogs/in-house-seo-vs-outsourcing',cat:'blog'},{t:'Outsourcing SEO Services',u:'/blogs/outsourcing-seo-services',cat:'blog'},{t:'Best Countries to Hire Customer Success Managers',u:'/blogs/hire-customer-success-managers',cat:'blog'},{t:'Filipino AI Experts',u:'/blogs/hire-filipino-ai-experts',cat:'blog'},{t:'Working With Hire Overseas',u:'/blogs/hire-overseas-company-review',cat:'blog'},{t:'25 HR Interview Questions',u:'/blogs/questions-to-ask-hr-during-interview',cat:'blog'},{t:'Top Virtual Assistant Companies',u:'/blogs/top-virtual-assistant-companies',cat:'blog'},{t:'Best Countries for Remote Hiring',u:'/blogs/best-countries-remote-hiring',cat:'blog'},{t:'Cost of Hiring Overseas',u:'/blogs/cost-of-hiring-overseas',cat:'blog'},{t:'Manage Remote Team Across Time Zones',u:'/blogs/manage-remote-team-time-zones',cat:'blog'},{t:'Rupa Health Case Study',u:'/blogs/rupa-health-case-study',cat:'blog'},{t:'Offshore SEO Services',u:'/blogs/offshore-seo-services',cat:'blog'},{t:'Hire Digital Marketing Managers',u:'/blogs/hire-digital-marketing-managers',cat:'blog'},{t:'Hire Video Editors Overseas',u:'/blogs/hire-video-editors-overseas',cat:'blog'},{t:'Upwork vs Fiverr',u:'/blogs/upwork-vs-fiverr',cat:'blog'},{t:'Leveraging AI with Overseas Teams',u:'/blogs/leveraging-ai-with-overseas-teams',cat:'blog'},{t:'5 Emerging Countries in Outsourcing 2025',u:'/blogs/5-emerging-countries-dominating-the-outsourcing-landscape-in-2025',cat:'blog'},{t:'Hire Filipino Talent',u:'/blogs/hire-filipino-talent-for-your-remote-team',cat:'blog'},{t:'Filipino Bookkeeper Hiring Guide',u:'/blogs/filipino-bookkeeper-hiring-guide',cat:'blog'},{t:'Outsourced Accounting Guide',u:'/blogs/outsourced-accounting-guide',cat:'blog'},{t:'Payroll Outsourcing',u:'/blogs/payroll-outsourcing',cat:'blog'},{t:'Benefits of Offshoring',u:'/blogs/benefits-of-offshoring',cat:'blog'},{t:'Nearshore vs Offshore',u:'/blogs/nearshore-vs-offshore',cat:'blog'},{t:'Hire Offshore Employees',u:'/resources/blogs/hire-offshore-employees',cat:'blog'},{t:'Outsourcing vs Offshoring',u:'/resources/blogs/outsourcing-vs-offshoring',cat:'blog'},{t:'Hire Offshore Development Teams',u:'/resources/blogs/hire-offshore-development-teams',cat:'blog'},{t:'Nearshoring Latin America',u:'/resources/blogs/nearshoring-latin-america',cat:'blog'},{t:'Managing Remote Teams',u:'/blogs/managing-remote-teams',cat:'blog'},{t:'International Payroll',u:'/blogs/international-payroll',cat:'blog'},{t:'Remote Work Laws by State',u:'/blogs/remote-work-laws-by-state',cat:'blog'},{t:'How to Hire Remote Employees',u:'/resources/blogs/how-to-hire-remote-employees',cat:'blog'},{t:'Hiring Remote Workers Philippines',u:'/resources/blogs/hiring-remote-workers-in-the-philippines',cat:'blog'},{t:'Virtual Assistant from Latin America',u:'/resources/blogs/virtual-assistant-from-latin-america',cat:'blog'},{t:'Best Countries to Hire Remote Workers',u:'/resources/blogs/best-countries-to-hire-remote-workers',cat:'blog'},{t:'Onboarding Remote Employees',u:'/resources/blogs/onboarding-remote-employees',cat:'blog'},{t:'Healthcare Outsourcing',u:'/resources/blogs/healthcare-outsourcing',cat:'blog'},{t:'Bookkeeping Outsourcing',u:'/resources/blogs/bookkeeping-outsourcing',cat:'blog'},{t:'Outsourcing to the Philippines',u:'/resources/blogs/outsourcing-to-the-philippines',cat:'blog'},{t:'Recruitment Process Outsourcing',u:'/resources/blogs/recruitment-process-outsourcing',cat:'blog'},{t:'Outsourcing to Latin America',u:'/resources/blogs/outsourcing-to-latin-america',cat:'blog'},{t:'Offshore Accounting',u:'/blogs/offshore-accounting',cat:'blog'},{t:'What Is HR Outsourcing',u:'/blogs/what-is-hr-outsourcing',cat:'blog'},{t:'Best Outsourced Accounting Providers',u:'/blogs/best-outsourced-accounting-service-providers',cat:'blog'},{t:'Benefits of Outsourcing HR',u:'/blogs/benefits-of-outsourcing-hr',cat:'blog'},{t:'Remote Work Challenges',u:'/blogs/remote-work-challenges',cat:'blog'},{t:'Project Management Recruitment Agencies',u:'/blogs/project-management-recruitment-agencies',cat:'blog'},{t:'Marketing Recruitment Agencies',u:'/blogs/marketing-recruitment-agencies',cat:'blog'},{t:'International Employment Law',u:'/blogs/international-employment-law',cat:'blog'},{t:'Executive Assistant Staffing Agency',u:'/blogs/executive-assistant-staffing-agency',cat:'blog'},{t:'Outsource SEO Services',u:'/blogs/outsource-seo-services',cat:'blog'},{t:'Outsource Medical Billing',u:'/blogs/outsource-medical-billing',cat:'blog'},{t:'Bookkeeping Services for Small Business',u:'/blogs/bookkeeping-services-for-small-business',cat:'blog'},{t:'Offshore Outsourcing',u:'/blogs/offshore-outsourcing',cat:'blog'},{t:'Hire AI Talent Philippines',u:'/blogs/hire-ai-talent-in-the-philippines',cat:'blog'},{t:'Software Developer Recruitment Agency',u:'/blogs/software-developer-recruitment-agency',cat:'blog'},{t:'Offshore Development Company',u:'/blogs/offshore-development-company',cat:'blog'},{t:'Outsource Web Development',u:'/blogs/outsource-web-development',cat:'blog'},{t:'AI Workflow Operators Philippines',u:'/blogs/ai-workflow-operators-philippines',cat:'blog'},{t:'Hire Remote AI Operations Team Philippines',u:'/blogs/hire-a-remote-ai-operations-team-in-the-philippines',cat:'blog'},{t:'Contract Recruitment',u:'/blogs/contract-recruitment',cat:'blog'},{t:'Filipino VA and AI Tools',u:'/blogs/filipino-va-and-ai-tools',cat:'blog'},{t:'Top Finance Recruiting Firms',u:'/blogs/top-finance-recruiting-firms',cat:'blog'},{t:'Hire Remote Staff South Africa',u:'/blogs/hire-remote-staff-in-south-africa',cat:'blog'},{t:'Outsource Healthcare Software Dev',u:'/blogs/outsource-healthcare-software-development',cat:'blog'},{t:'Hire Google Veo 3 Editor',u:'/blogs/hire-a-google-veo-3-editor',cat:'blog'},{t:'Nearshore Software Development',u:'/blogs/nearshore-software-development',cat:'blog'},{t:'Google Veo 3 AI Video Creation',u:'/blogs/google-veo-3-ai-video-creation',cat:'blog'},{t:'Collaboration Tools Remote Teams',u:'/blogs/collaboration-tools-for-remote-teams',cat:'blog'},{t:'Google Veo 3 vs Runway ML',u:'/blogs/google-veo-3-vs-runway-ml',cat:'blog'},{t:'IT Staffing Agencies',u:'/blogs/it-staffing-agencies',cat:'blog'},{t:'Google Veo 3 Marketing Uses',u:'/blogs/google-veo-3-marketing-uses',cat:'blog'},{t:'Are Staffing Agencies Worth It?',u:'/blogs/are-staffing-agencies-worth-it',cat:'blog'},{t:'Hire Clay Expert Philippines',u:'/blogs/hire-a-clay-expert-in-the-philippines',cat:'blog'},{t:'Offshore Software Development Company',u:'/blogs/offshore-software-development-company',cat:'blog'},{t:'Hire ChatGPT Expert Philippines',u:'/blogs/hire-a-chatgpt-expert-in-the-philippines',cat:'blog'},{t:'Accounting Staffing Agencies',u:'/blogs/accounting-staffing-agencies',cat:'blog'},{t:'Hire Zapier Expert',u:'/blogs/hire-a-zapier-expert',cat:'blog'},{t:'Recruiters for Remote Jobs',u:'/blogs/recruiters-for-remote-jobs',cat:'blog'},{t:'Hire Make Expert Philippines',u:'/blogs/hire-a-make-expert-in-the-philippines',cat:'blog'},{t:'Support Outsourcing Companies',u:'/blogs/support-outsourcing-companies',cat:'blog'},{t:'Hire HubSpot Expert Philippines',u:'/blogs/hire-a-hubspot-expert-in-the-philippines',cat:'blog'},{t:'Accounts Receivable Outsourcing',u:'/blogs/accounts-receivable-outsourcing',cat:'blog'},{t:'Top Tech Recruiting Firms',u:'/blogs/top-tech-recruiting-firms',cat:'blog'},{t:'Offshore Outsourcing Company',u:'/blogs/offshore-outsourcing-company',cat:'blog'},{t:'Outsource Employees',u:'/blogs/outsource-employees',cat:'blog'},{t:'Virtual Assistant for Lawyers',u:'/blogs/virtual-assistant-for-lawyers',cat:'blog'},{t:'Hire Virtual Assistant China',u:'/blogs/how-to-hire-a-virtual-assistant-in-china',cat:'blog'},{t:'Remote Paralegal Careers',u:'/blogs/remote-paralegal-careers',cat:'blog'},{t:'Hiring a Reliable Virtual Assistant',u:'/blogs/hiring-a-reliable-virtual-assistant',cat:'blog'},{t:'Philippines vs Latin America VAs',u:'/blogs/philippines-vs-latin-america-virtual-assistants',cat:'blog'},{t:'Hiring Remote Product Managers',u:'/blogs/hiring-remote-product-managers',cat:'blog'},{t:'Managing Global Remote Teams',u:'/blogs/managing-global-remote-teams',cat:'blog'},{t:'FTC/FDA Compliant Healthcare Content',u:'/blogs/how-to-create-ftc-fda-compliant-healthcare-content',cat:'blog'},{t:'Developer Hiring Cost Comparison',u:'/blogs/developer-hiring-cost-comparison-guide',cat:'blog'},{t:'Hire Remote Developers Philippines',u:'/blogs/hire-remote-developers-philippines',cat:'blog'},{t:'AI Powered Operations Team Philippines',u:'/blogs/ai-powered-operations-team-philippines',cat:'blog'},{t:'Hire Niche Developers Overseas',u:'/blogs/hire-niche-developers-overseas',cat:'blog'},{t:'Scale Marketing with Remote Talent',u:'/blogs/scale-marketing-teams-with-remote-talent',cat:'blog'},{t:'Virtual Assistant Cost',u:'/blogs/virtual-assistant-cost',cat:'blog'},{t:'Google Veo 3 Specialist',u:'/blogs/google-veo-3-specialist',cat:'blog'},{t:'Assess English Skills Offshore Talent',u:'/blogs/assess-the-english-skills-of-offshore-talent',cat:'blog'},{t:'Google Veo 3 Watermarking',u:'/blogs/google-veo-3-watermarking',cat:'blog'},{t:'How to Hire Remote Executive Assistant',u:'/blogs/how-to-hire-a-remote-executive-assistant',cat:'blog'},{t:'How to Hire Remote Developers',u:'/blogs/how-to-hire-remote-developers',cat:'blog'},{t:'Outsource Bookkeeping',u:'/blogs/outsource-bookkeeping',cat:'blog'},{t:'Hiring International Contractors',u:'/blogs/hiring-international-contractors',cat:'blog'},{t:'Real Estate Virtual Assistant',u:'/blogs/real-estate-virtual-assistant',cat:'blog'},{t:'Hiring Remote Talent Checklist',u:'/blogs/hiring-remote-talent-overseas-checklist',cat:'blog'},{t:'Top Countries to Hire Virtual Assistants',u:'/blogs/top-countries-to-hire-virtual-assistants',cat:'blog'},{t:'Can US Companies Hire Foreign Workers?',u:'/blogs/can-us-companies-hire-remote-foreign-workers',cat:'blog'},{t:'Hire Overseas vs Freelancer',u:'/blogs/hire-overseas-vs-freelancer',cat:'blog'},{t:'State of Global Hiring 2025',u:'/blogs/the-state-of-global-hiring-2025',cat:'blog'},{t:'Independent Contractor vs Employee',u:'/blogs/independent-contractor-vs-employee',cat:'blog'},{t:'Top Countries to Hire SEO Specialists',u:'/blogs/top-countries-to-hire-seo-specialists',cat:'blog'},{t:'How to Hire Remote Software Dev Team',u:'/blogs/how-to-hire-a-remote-team-of-software-developers',cat:'blog'},{t:'Attracting and Retaining Talent',u:'/blogs/attracting-and-retaining-talent',cat:'blog'},{t:'Top Countries to Hire Automation Managers',u:'/blogs/top-countries-to-hire-automation-managers',cat:'blog'},{t:'Top Countries to Hire Video Editors',u:'/blogs/top-countries-to-hire-video-editors-overseas',cat:'blog'},{t:'Top Countries to Hire Digital Marketers',u:'/blogs/top-countries-to-hire-digital-marketing-managers',cat:'blog'},{t:'Top Countries Customer Success Managers',u:'/blogs/top-countries-to-hire-customer-success-managers',cat:'blog'},{t:'Benefits of Outsourcing SEO',u:'/blogs/benefits-of-outsourcing-seo-services',cat:'blog'},{t:'SEO In-House vs Outsourcing',u:'/blogs/seo-in-house-vs-outsourcing',cat:'blog'},{t:'Freelancer vs Virtual Assistant',u:'/blogs/freelancer-vs-virtual-assistant',cat:'blog'},{t:'AEO vs SEO',u:'/blogs/aeo-vs-seo',cat:'blog'},{t:'Hiring Remote Employees Other Countries',u:'/blogs/hiring-remote-employees-in-other-countries',cat:'blog'},{t:'Outsourcing vs Offshoring (Blog)',u:'/blogs/outsourcing-vs-offshoring',cat:'blog'},{t:'Answer Engine Optimization',u:'/blogs/answer-engine-optimization',cat:'blog'},{t:'Top Countries to Hire Content Assistants',u:'/blogs/top-countries-to-hire-content-assistant',cat:'blog'},{t:'Virtual Assistant for Small Business',u:'/blogs/virtual-assistant-for-small-business',cat:'blog'},{t:'Hire Virtual Assistant Philippines',u:'/blogs/hire-virtual-assistant-philippines',cat:'blog'},{t:'Hire OpenClaw Developer',u:'/blogs/hire-openclaw-developer',cat:'blog'},{t:'Cost to Hire OpenClaw Developer',u:'/blogs/cost-to-hire-open-claw-developer',cat:'blog'},{t:'Remote OpenClaw Developer',u:'/blogs/remote-openclaw-developer',cat:'blog'},{t:'VA vs In-House Assistant',u:'/blogs/virtual-assistant-vs-in-house-assistant',cat:'blog'},{t:'OpenClaw Implementation',u:'/blogs/openclaw-implementation',cat:'blog'},{t:'OpenClaw vs AutoGPT',u:'/blogs/openclaw-vs-autogpt',cat:'blog'},{t:'OpenClaw vs CrewAI',u:'/blogs/openclaw-vs-crewai',cat:'blog'},{t:'Executive Assistant vs Virtual Assistant',u:'/blogs/executive-assistant-vs-virtual-assistant',cat:'blog'},{t:'Best AI Model for Business',u:'/blogs/best-ai-model-for-business',cat:'blog'},
+const STEPS = [
+  {n:1,l:'Keyword'},{n:2,l:'Map'},{n:3,l:'SERP'},{n:4,l:'Outline'},
+  {n:5,l:'Draft'},{n:6,l:'Article'},{n:7,l:'Links'},{n:8,l:'Export'}
 ];
+let currentStep = 1;
 
-// ═══════════════════════════════════
-// STATE
-// ═══════════════════════════════════
-let currentSeed = '', currentSite = 'hireoverseas.com';
-let step1Pages = [];      // All pages from step 1
-let selectedPages = [];   // User-selected pages
-let step2Data = [];        // Keywords/meta per page
-let step3Data = [];        // Analysis per page
-let activePgTab = 'all';
+function buildProgress(){
+  const bar = document.getElementById('progress-bar');
+  bar.innerHTML = STEPS.map((s,i) => {
+    let html = `<div class="step-item"><div class="step-circle" id="sc${s.n}">${s.n}</div><div class="step-label" id="sl${s.n}">${s.l}</div></div>`;
+    if(i < STEPS.length-1) html += `<div class="step-line" id="line${s.n}"></div>`;
+    return html;
+  }).join('');
+}
 
-// ═══════════════════════════════════
-// STEP NAVIGATION
-// ═══════════════════════════════════
-function setStep(n) {
-  [1,2,3].forEach(i => {
-    document.getElementById('step'+i).classList.toggle('active', i===n);
-    const sc = document.getElementById('sc'+i);
-    const sl = document.getElementById('sl'+i);
-    if (i < n)  { sc.className='step-circle done'; sl.className='step-label done'; }
-    else if (i===n){ sc.className='step-circle active'; sl.className='step-label active'; }
-    else        { sc.className='step-circle'; sl.className='step-label'; }
-    if (i < n) document.getElementById('line'+i).classList.add('done');
-    else if(document.getElementById('line'+i)) document.getElementById('line'+i).classList.remove('done');
+function setStep(n){
+  currentStep = n;
+  STEPS.forEach(s => {
+    document.getElementById('step'+s.n).classList.toggle('active', s.n===n);
+    const sc = document.getElementById('sc'+s.n);
+    const sl = document.getElementById('sl'+s.n);
+    if(s.n < n){ sc.className='step-circle done'; sl.className='step-label done'; }
+    else if(s.n===n){ sc.className='step-circle active'; sl.className='step-label active'; }
+    else { sc.className='step-circle'; sl.className='step-label'; }
+    const line = document.getElementById('line'+s.n);
+    if(line){ line.classList.toggle('done', s.n < n); }
   });
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function goBackTo(n){ setStep(n); }
-function startOver(){ location.reload(); }
+// SITE INDEX
+let sitePages = [
+  {t:'Home',u:'/',cat:'page'},{t:'Hire Remote Workers',u:'/hire-remote-workers',cat:'page'},{t:'Remote Staffing Agency',u:'/remote-staffing-agency',cat:'page'},{t:'About Us',u:'/about-us',cat:'page'},{t:'Roles',u:'/roles',cat:'page'},{t:'FAQs',u:'/faqs',cat:'page'},{t:'Community',u:'/community',cat:'page'},{t:'Blogs',u:'/blogs',cat:'page'},
+  {t:'Virtual Assistant',u:'/roles/virtual-assistant',cat:'role'},{t:'Web Developer',u:'/roles/web-developer',cat:'role'},{t:'SEO Specialist',u:'/roles/seo-specialist',cat:'role'},{t:'Graphic Designer',u:'/roles/graphic-designer',cat:'role'},{t:'UX/UI Designer',u:'/roles/ux-ui-designer',cat:'role'},{t:'Video Editor',u:'/roles/video-editor',cat:'role'},{t:'Google Ads Manager',u:'/roles/google-ads-manager',cat:'role'},{t:'Customer Support',u:'/roles/customer-support',cat:'role'},{t:'Data Analyst',u:'/roles/data-analyst',cat:'role'},{t:'Accountant',u:'/roles/accountant',cat:'role'},{t:'Executive Assistant',u:'/roles/executive-assistant',cat:'role'},{t:'Digital Marketing Manager',u:'/roles/digital-marketing-manager',cat:'role'},{t:'Social Media Manager',u:'/roles/social-media-manager',cat:'role'},{t:'Copywriter',u:'/roles/copywriter',cat:'role'},{t:'Financial Analyst',u:'/roles/financial-analyst',cat:'role'},{t:'Payroll Specialist',u:'/roles/payroll-specialist',cat:'role'},{t:'Community Manager',u:'/roles/community-manager',cat:'role'},{t:'SDR',u:'/roles/sdr',cat:'role'},{t:'Project Manager',u:'/roles/project-manager',cat:'role'},{t:'AI Automations Manager',u:'/roles/ai-automations-manager',cat:'role'},{t:'Content Assistant',u:'/roles/content-assistant',cat:'role'},{t:'Email Marketing Specialist',u:'/roles/email-marketing-specialist',cat:'role'},
+  {t:'How to Hire Employees from Overseas',u:'/blogs/how-to-hire-employees-from-overseas',cat:'blog'},{t:'Top Companies Hiring Remote Workers',u:'/blogs/companies-hiring-remote-workers',cat:'blog'},{t:'20 Best Remote Companies to Work For',u:'/blogs/best-remote-companies-to-work-for',cat:'blog'},{t:'Non-Voice Work From Home',u:'/blogs/non-voice-work-from-home',cat:'blog'},{t:'13 Best Global Recruitment Agencies',u:'/blogs/global-recruitment-agency',cat:'blog'},{t:'Virtual Assistant vs In-House',u:'/blogs/virtual-assistant-vs-in-house',cat:'blog'},{t:'What Does a Virtual Assistant Do?',u:'/blogs/what-does-a-virtual-assistant-do',cat:'blog'},{t:'Answer Engine Optimization AEO',u:'/blogs/answer-engine-optimization-aeo',cat:'blog'},{t:'Offshore Staffing Agency',u:'/blogs/offshore-staffing-agency',cat:'blog'},{t:'Hiring Remote Employees in Other Countries',u:'/blogs/hiring-remote-employees-other-countries',cat:'blog'},{t:'In-House SEO vs Outsourcing',u:'/blogs/in-house-seo-vs-outsourcing',cat:'blog'},{t:'Outsourcing SEO Services',u:'/blogs/outsourcing-seo-services',cat:'blog'},{t:'Best Countries to Hire Customer Success Managers',u:'/blogs/hire-customer-success-managers',cat:'blog'},{t:'Filipino AI Experts',u:'/blogs/hire-filipino-ai-experts',cat:'blog'},{t:'Working With Hire Overseas',u:'/blogs/hire-overseas-company-review',cat:'blog'},{t:'25 HR Interview Questions',u:'/blogs/questions-to-ask-hr-during-interview',cat:'blog'},{t:'Top Virtual Assistant Companies',u:'/blogs/top-virtual-assistant-companies',cat:'blog'},{t:'Best Countries for Remote Hiring',u:'/blogs/best-countries-remote-hiring',cat:'blog'},{t:'Cost of Hiring Overseas',u:'/blogs/cost-of-hiring-overseas',cat:'blog'}
+];
 
-// ═══════════════════════════════════
+function updCnt(){
+  const tot=sitePages.length;
+  document.getElementById('sp-cnt').textContent=tot+' pages';
+  document.getElementById('sp-cnt-hdr').textContent=tot+' Pages Indexed';
+}
+function renderPgList(){
+  const cc={blog:'pi-blog',role:'pi-role',page:'pi-page'};
+  document.getElementById('pg-list').innerHTML=sitePages.map(p=>`<div class="pg-item"><span class="pi-cat ${cc[p.cat]||'pi-page'}">${p.cat}</span><span class="pi-ttl" title="${p.t}">${p.t}</span><span class="pi-url">${p.u}</span></div>`).join('');
+}
+function toggleSP(){ const b=document.getElementById('sp-body'); b.classList.toggle('open'); if(b.classList.contains('open')){updCnt();renderPgList();} }
+
+// STATE
+let currentSeed='', currentSite='hireoverseas.com';
+let step1Pages=[];
+let step2Keywords={};
+let selectedPageIdx=null;
+let serpData=null;
+let outlineOptions=[];
+let chosenOutlineIdx=null;
+let articleHTML='';
+let articleText='';
+let linkData=[];
+
 // UTILS
-// ═══════════════════════════════════
 function fe(kw){ document.getElementById('inp-seed').value=kw; document.getElementById('inp-seed').focus(); }
-function showErr(id,msg){ const e=document.getElementById(id); e.textContent=msg; e.style.display='block'; setTimeout(()=>e.style.display='none',8000); }
+function showErr(id,msg){ const e=document.getElementById(id); e.textContent=msg; e.style.display='block'; setTimeout(()=>e.style.display='none',10000); }
 function hideErr(id){ document.getElementById(id).style.display='none'; }
 function setLoading(statusId,txtId,on,msg){
   const el=document.getElementById(statusId);
   el.classList.toggle('on',on);
   if(msg) document.getElementById(txtId).textContent=msg;
 }
-function callAPI(sys,usr,maxTok=12000){
+function callAPI(sys,usr,maxTok=8000){
   return fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -555,50 +430,20 @@ function callAPI(sys,usr,maxTok=12000){
   }).then(async r=>{ if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API error '+r.status);} return r.json(); })
    .then(d=>{ const raw=d.content.find(b=>b.type==='text')?.text||''; return JSON.parse(raw.replace(/```json|```/g,'').trim()); });
 }
+function callAPIRaw(sys,usr,maxTok=16000){
+  return fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok,system:sys,messages:[{role:'user',content:usr}]})
+  }).then(async r=>{ if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API error '+r.status);} return r.json(); })
+   .then(d=> d.content.find(b=>b.type==='text')?.text||'');
+}
 const siteStr = ()=>sitePages.map(p=>`[${p.cat.toUpperCase()}] "${p.t}" → ${p.u}`).join('\n');
 const base = ()=>'https://'+(currentSite||'hireoverseas.com').replace(/^https?:\/\//,'');
+function esc(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
 
 // ═══════════════════════════════════
-// SITE INDEX
-// ═══════════════════════════════════
-function updCnt(){
-  const tot=sitePages.length, b=sitePages.filter(p=>p.cat==='blog').length, r=sitePages.filter(p=>p.cat==='role').length, pg=sitePages.filter(p=>p.cat==='page').length;
-  document.getElementById('sp-cnt').textContent=tot+' pages';
-  document.getElementById('cnt-all').textContent=tot;
-  document.getElementById('cnt-blog').textContent=b;
-  document.getElementById('cnt-role').textContent=r;
-  document.getElementById('cnt-page').textContent=pg;
-}
-function showPgTab(tab,el){ activePgTab=tab; document.querySelectorAll('.pg-tab').forEach(b=>b.classList.remove('on')); el.classList.add('on'); renderPgList(); }
-function renderPgList(){
-  const filtered=activePgTab==='all'?sitePages:sitePages.filter(p=>p.cat===activePgTab);
-  const cc={blog:'pi-blog',role:'pi-role',page:'pi-page'};
-  document.getElementById('pg-list').innerHTML=filtered.map(p=>`<div class="pg-item"><span class="pi-cat ${cc[p.cat]||'pi-page'}">${p.cat}</span><span class="pi-ttl" title="${p.t}">${p.t}</span><span class="pi-url">${p.u}</span><button class="pi-rm" onclick="removePg('${p.u}')">×</button></div>`).join('');
-}
-function removePg(url){ sitePages=sitePages.filter(p=>p.u!==url); updCnt(); renderPgList(); }
-function addPage(){ const t=document.getElementById('add-ttl').value.trim(),u=document.getElementById('add-url').value.trim(),cat=document.getElementById('add-cat').value; if(!t)return; sitePages.push({t,u:u||'/'+cat+'s/'+t.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,''),cat}); updCnt(); renderPgList(); document.getElementById('add-ttl').value=''; document.getElementById('add-url').value=''; }
-function toggleSP(){ const b=document.getElementById('sp-body'); const open=b.classList.toggle('open'); if(open){updCnt();renderPgList();} }
-
-async function syncSite(){
-  const btn=document.getElementById('sync-btn'),sp=document.getElementById('sync-spin'),ss=document.getElementById('sync-ok');
-  btn.disabled=true; sp.style.display='inline-block';
-  const proxy='https://api.allorigins.win/get?url=';
-  let found=0;
-  for(const t of['https://www.hireoverseas.com/sitemap.xml','https://www.hireoverseas.com/blog-sitemap.xml']){
-    try{ const r=await fetch(proxy+encodeURIComponent(t)); const d=await r.json(); const txt=d.contents||'';
-      const urls=[...txt.matchAll(/<loc>(https?:\/\/(?:www\.)?hireoverseas\.com[^<]*)<\/loc>/gi)].map(m=>m[1].replace(/^https?:\/\/(?:www\.)?hireoverseas\.com/,''));
-      for(const u of urls){ if(!sitePages.find(p=>p.u===u)){ const slug=u.split('/').pop().replace(/-/g,' '); sitePages.push({t:slug.charAt(0).toUpperCase()+slug.slice(1),u,cat:u.includes('/blogs/')?'blog':u.includes('/roles/')?'role':'page',isNew:true}); found++; } }
-      if(found>0)break;
-    }catch(e){}
-  }
-  btn.disabled=false; sp.style.display='none';
-  ss.textContent=found>0?`✓ Found ${found} new pages`:'✓ Already up to date';
-  ss.style.display='block'; updCnt(); renderPgList();
-  document.getElementById('sp-body').classList.add('open');
-}
-
-// ═══════════════════════════════════
-// STEP 1 — PILLAR + CLUSTER MAP
+// STEP 1 — ANALYSE SEED KEYWORD
 // ═══════════════════════════════════
 async function runStep1(){
   const seed=document.getElementById('inp-seed').value.trim();
@@ -610,12 +455,10 @@ async function runStep1(){
   const blog=document.getElementById('opt-blog').checked;
 
   document.getElementById('s1-btn').disabled=true;
-  document.getElementById('s1-results').style.display='none';
   hideErr('s1-err');
-
-  const statuses=['Analysing seed keyword…','Mapping pillar page…','Identifying cluster pages…','Checking 271 live pages for cannibalization…','Finalising content map…'];
-  let si=0; const st=setInterval(()=>{ setLoading('s1-status','s1-txt',true,statuses[si++%statuses.length]); },1800);
-  setLoading('s1-status','s1-txt',true,statuses[0]);
+  const msgs=['Analysing seed keyword…','Mapping pillar page…','Identifying cluster pages…','Checking live pages for cannibalization…','Finalising content map…'];
+  let si=0; const st=setInterval(()=>{ setLoading('s1-status','s1-txt',true,msgs[si++%msgs.length]); },2000);
+  setLoading('s1-status','s1-txt',true,msgs[0]);
 
   const sys=`You are a senior SEO strategist. Analyse a seed keyword and return a content map as ONLY valid JSON — no markdown, no code fences. Return a JSON array of page objects.
 
@@ -625,30 +468,27 @@ Each object MUST have:
 - "slug": URL slug starting with /
 - "primaryKeyword": exact target keyword
 - "searchIntent": "Informational"|"Commercial"|"Transactional"|"Navigational"
-- "contentGoal": 1 sentence — specific purpose and conversion/traffic objective
+- "contentGoal": 1 sentence — specific purpose
 - "cannibalizationStatus": "safe"|"risk"|"conflict"
-- "cannibalizationDetails":
-  - "conflictingPosts": array of conflicting page titles from site index
-  - "conflictingUrls": matching URL paths
-  - "recommendation": "Create new page"|"Update existing post"|"Consolidate with existing"|"Differentiate angle"
-  - "notes": 1-2 sentence explanation
+- "cannibalizationDetails": {"conflictingPosts":[],"conflictingUrls":[],"recommendation":"","notes":""}
 
 There must be exactly 1 Pillar Page. All other pages are Clusters or supporting content.
 ${comm?'Include commercial intent pages.':''} ${blog?'Include blog posts.':''}`;
 
   const usr=`Seed keyword: "${seed}"
 Website: ${currentSite}
-Generate exactly ${cnt} pages (1 pillar + the rest as clusters/supporting).
+Generate exactly ${cnt.replace(' pages','')} pages (1 pillar + the rest as clusters/supporting).
 
 FULL SITE INDEX (${sitePages.length} pages) — check every suggested page against these for cannibalization:
 ${siteStr()}`;
 
   try{
-    clearInterval(st);
     step1Pages = await callAPI(sys,usr,6000);
+    clearInterval(st);
+    step2Keywords = {};
     setLoading('s1-status','s1-txt',false);
-    renderStep1(step1Pages);
-    document.getElementById('s1-results').style.display='block';
+    setStep(2);
+    renderStep2();
   }catch(e){
     clearInterval(st);
     setLoading('s1-status','s1-txt',false);
@@ -657,379 +497,649 @@ ${siteStr()}`;
   document.getElementById('s1-btn').disabled=false;
 }
 
-function renderStep1(pages){
-  document.getElementById('s1-seed-label').textContent='"'+currentSeed+'"';
-  const safe=pages.filter(p=>p.cannibalizationStatus==='safe').length;
-  const risk=pages.filter(p=>p.cannibalizationStatus==='risk').length;
-  const con=pages.filter(p=>p.cannibalizationStatus==='conflict').length;
-  document.getElementById('s1-meta').textContent=currentSite+' · '+pages.length+' pages · '+safe+' safe · '+risk+' review · '+con+' conflicts';
-  document.getElementById('s1-can-summary').innerHTML=`
-    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)">Cannibalization Check</div>
-    <div style="width:1px;height:26px;background:var(--border)"></div>
-    <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:24px;font-weight:800;color:var(--grn)">${safe}</div><div style="font-size:11px;color:var(--muted)">Safe to<br>Create</div></div>
-    <div style="width:1px;height:26px;background:var(--border)"></div>
-    <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:24px;font-weight:800;color:var(--amb)">${risk}</div><div style="font-size:11px;color:var(--muted)">Review<br>Needed</div></div>
-    <div style="width:1px;height:26px;background:var(--border)"></div>
-    <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:24px;font-weight:800;color:var(--red)">${con}</div><div style="font-size:11px;color:var(--muted)">Direct<br>Conflicts</div></div>
-    <div style="font-size:12px;color:var(--muted);max-width:280px;line-height:1.5">${con>0?`⚠ ${con} page${con>1?'s':''} conflict — Claude recommends updating/consolidating. `:''}${safe===pages.length?'✓ All pages safe to create.':''}</div>`;
-
-  const typeClass={
-    'Pillar Page':'kb-pillar','Cluster Page':'kb-cluster','Landing Page':'kb-landing',
-    'Blog Post':'kb-blog','Comparison Page':'kb-comparison'
-  };
-  const intentClass={
-    'Informational':'intent-info','Commercial':'intent-comm',
-    'Transactional':'intent-trans','Navigational':'intent-nav'
-  };
+// ═══════════════════════════════════
+// STEP 2 — PILLAR/CLUSTER MAP + KEYWORDS
+// ═══════════════════════════════════
+function renderStep2(){
+  const typeClass={'Pillar Page':'tb-pillar','Cluster Page':'tb-cluster','Landing Page':'tb-landing','Blog Post':'tb-blog','Comparison Page':'tb-comparison'};
+  const intentClass={'Informational':'ib-info','Commercial':'ib-comm','Transactional':'ib-trans','Navigational':'ib-nav'};
   const canClass={'safe':'kc-safe','risk':'kc-risk','conflict':'kc-conflict'};
-  const canLabel={'safe':'✓ Safe','risk':'⚠ Review','conflict':'✗ Conflict'};
 
-  document.getElementById('kmap-grid').innerHTML = pages.map((p,i)=>{
-    const cd=p.cannibalizationDetails||{};
-    const conflictLinks=((cd.conflictingPosts||[]).map((t,j)=>`<a class="can-link" href="${base()}${(cd.conflictingUrls||[])[j]||''}" target="_blank">↗ ${t}</a>`)).join('');
-    return `<div class="kmap-card" id="kc${i}" onclick="toggleSelect(${i})">
-      <div class="kmap-card-hdr">
-        <div class="kmap-check" id="chk${i}"></div>
-        <span class="kmap-type-badge ${typeClass[p.pageType]||'kb-cluster'}">${p.pageType}</span>
-        <div class="kmap-info">
-          <div class="kmap-title">${p.pageTitle||''}</div>
-          <div class="kmap-meta">
-            <span class="kmap-kw">${p.primaryKeyword||''}</span>
-            <span class="kmap-intent ${intentClass[p.searchIntent]||'intent-info'}">${p.searchIntent}</span>
-            <span class="kmap-cannibal ${canClass[p.cannibalizationStatus]||'kc-safe'}">${canLabel[p.cannibalizationStatus]||'✓ Safe'}</span>
-          </div>
-          <div class="kmap-goal">${p.contentGoal||''}</div>
-          <div class="kmap-url">${base()}${p.slug||''}</div>
-          ${cd.notes?`<div style="font-size:11px;color:var(--muted);margin-top:4px;font-style:italic">Note: ${cd.notes}</div>`:''}
-          ${conflictLinks?`<div style="display:flex;flex-direction:column;gap:3px;margin-top:5px;">${conflictLinks}</div>`:''}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+  let html = `<div class="stats-bar">
+    <div class="stat-item"><div class="stat-n">${step1Pages.length}</div><div class="stat-l">Total<br>Pages</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n" style="color:var(--grn)">${step1Pages.filter(p=>p.cannibalizationStatus==='safe').length}</div><div class="stat-l">Safe to<br>Create</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n" style="color:var(--amb)">${step1Pages.filter(p=>p.cannibalizationStatus==='risk').length}</div><div class="stat-l">Review<br>Needed</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n" style="color:var(--red)">${step1Pages.filter(p=>p.cannibalizationStatus==='conflict').length}</div><div class="stat-l">Direct<br>Conflicts</div></div>
+  </div>`;
 
-  // Auto-select safe pages
-  step1Pages.forEach((p,i)=>{ if(p.cannibalizationStatus==='safe') toggleSelect(i,true); });
-  updateSelCount();
+  html += `<div class="card"><div style="overflow-x:auto"><table class="map-table">
+    <thead><tr>
+      <th>#</th><th>Page Title</th><th>Type</th><th>Intent</th><th>Primary Keyword</th><th>Secondary & Semantic Keywords</th><th>Action</th>
+    </tr></thead><tbody>`;
+
+  step1Pages.forEach((p,i) => {
+    const kws = step2Keywords[i];
+    let kwCell = '';
+    if(kws){
+      kwCell = `<div class="kw-chips">${(kws.secondaryKeywords||[]).map(k=>`<span class="kwc ks">${esc(k)}</span>`).join('')}</div>
+        <div style="margin-top:6px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Semantic</div>
+        <div class="kw-chips">${(kws.semanticKeywords||[]).map(k=>`<span class="kwc kse">${esc(k)}</span>`).join('')}</div>`;
+    } else {
+      kwCell = `<span style="font-size:11px;color:var(--muted2)">Click generate →</span>`;
+    }
+
+    html += `<tr id="map-row-${i}">
+      <td style="font-family:var(--fm);font-size:11px;color:var(--grn);opacity:.7">${String(i+1).padStart(2,'0')}</td>
+      <td><div style="font-weight:700;margin-bottom:3px">${esc(p.pageTitle)}</div><div style="font-size:10px;color:var(--blu);font-family:var(--fm)">${esc(p.slug)}</div><div style="font-size:11px;color:var(--muted);margin-top:3px">${esc(p.contentGoal||'')}</div></td>
+      <td><span class="type-badge ${typeClass[p.pageType]||'tb-cluster'}">${esc(p.pageType)}</span></td>
+      <td><span class="intent-badge ${intentClass[p.searchIntent]||'ib-info'}">${esc(p.searchIntent)}</span></td>
+      <td><span class="kwc kp">${esc(p.primaryKeyword)}</span></td>
+      <td style="min-width:200px" id="kw-cell-${i}">${kwCell}</td>
+      <td>
+        <button class="btn-sm btn-gen" id="gen-kw-${i}" onclick="generateKeywords(${i})" ${kws?'disabled':''}>${kws?'✓ Done':'Generate Keywords'}</button>
+        ${kws?`<button class="btn-sm btn-gen" style="margin-top:6px" onclick="selectPageForSERP(${i})">Analyse →</button>`:''}
+      </td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></div>`;
+  html += `<div class="btn-row" style="margin-top:8px">
+    <button class="btn-ghost" onclick="setStep(1)">← Back</button>
+    <button class="btn-primary" id="gen-all-btn" onclick="generateAllKeywords()">Generate All Keywords</button>
+  </div>`;
+
+  document.getElementById('s2-content').innerHTML = html;
 }
 
-let selectedSet = new Set();
-function toggleSelect(i, forceOn){
-  if(forceOn===true){ selectedSet.add(i); }
-  else if(forceOn===false){ selectedSet.delete(i); }
-  else { if(selectedSet.has(i)) selectedSet.delete(i); else selectedSet.add(i); }
-  const card=document.getElementById('kc'+i);
-  const chk=document.getElementById('chk'+i);
-  const on=selectedSet.has(i);
-  card.classList.toggle('selected',on);
-  chk.classList.toggle('on',on);
-  updateSelCount();
-}
-function selectAll(on){ step1Pages.forEach((_,i)=>toggleSelect(i,on)); }
-function updateSelCount(){ document.getElementById('sel-count').textContent=selectedSet.size+' selected'; }
+async function generateKeywords(idx){
+  const btn = document.getElementById('gen-kw-'+idx);
+  const cell = document.getElementById('kw-cell-'+idx);
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin-sm"></span> Generating…';
+  cell.innerHTML = '<span style="font-size:11px;color:var(--muted)"><span class="spin-sm" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>Generating keywords…</span>';
 
-function goStep2(){
-  if(selectedSet.size===0){ alert('Please select at least one page to continue.'); return; }
-  selectedPages = [...selectedSet].map(i=>step1Pages[i]);
-  setStep(2);
-  runStep2();
-}
+  const p = step1Pages[idx];
+  const sys=`You are a senior SEO strategist. Generate keyword suggestions for a page. Return ONLY valid JSON — no markdown.
+Return a single JSON object with:
+- "secondaryKeywords": array of exactly 10 secondary keywords
+- "semanticKeywords": array of exactly 10 semantic/LSI keywords`;
 
-// ═══════════════════════════════════
-// STEP 2 — KEYWORDS + META
-// ═══════════════════════════════════
-async function runStep2(){
-  document.getElementById('s2-content').style.display='none';
-  document.getElementById('s2-loading').style.display='flex';
-  hideErr('s2-err');
-
-  const statuses=['Building secondary keywords…','Building semantic/LSI keywords…','Optimising meta titles…','Crafting meta descriptions (140-155 chars)…','Finalising keyword sets…'];
-  let si=0; const st=setInterval(()=>{ document.getElementById('s2-txt').textContent=statuses[si++%statuses.length]; },1800);
-
-  const sys=`You are a senior SEO strategist. For each page provided, generate keywords and meta tags. Return ONLY valid JSON — no markdown, no code fences. Return a JSON array with one object per page, in the same order as the input.
-
-Each object MUST have:
-- "slug": same slug as input
-- "secondaryKeywords": array of EXACTLY 10 secondary keywords
-- "semanticKeywords": array of EXACTLY 10 semantic/LSI keywords
-- "metaTitle": UNDER 60 characters, includes primary keyword
-- "metaDescription": EXACTLY 140-155 characters with a CTA — count carefully`;
-
-  const usr=`Website: ${currentSite}
-Pages to process:
-${selectedPages.map((p,i)=>`${i+1}. "${p.pageTitle}" | Primary: "${p.primaryKeyword}" | Slug: ${p.slug} | Intent: ${p.searchIntent}`).join('\n')}`;
+  const usr=`Page: "${p.pageTitle}"
+Primary keyword: "${p.primaryKeyword}"
+Search intent: ${p.searchIntent}
+Website: ${currentSite}`;
 
   try{
-    clearInterval(st);
-    step2Data = await callAPI(sys,usr,8000);
-    document.getElementById('s2-loading').style.display='none';
+    const data = await callAPI(sys,usr,2000);
+    step2Keywords[idx] = data;
     renderStep2();
-    document.getElementById('s2-content').style.display='block';
   }catch(e){
-    clearInterval(st);
-    document.getElementById('s2-loading').style.display='none';
-    showErr('s2-err','Error: '+e.message);
+    btn.disabled = false;
+    btn.textContent = 'Retry';
+    cell.innerHTML = `<span style="font-size:11px;color:var(--red)">Error: ${e.message}</span>`;
   }
 }
 
-function renderStep2(){
-  const html = selectedPages.map((p,i)=>{
-    const d=step2Data[i]||{};
-    const tl=(d.metaTitle||'').length, dl=(d.metaDescription||'').length;
-    const tclr=tl<=60?'mok':'mov', dclr=dl>=140&&dl<=155?'mok':'mwn';
-    const sec=(d.secondaryKeywords||[]).map(k=>`<span class="kwc ks">${k}</span>`).join('');
-    const sem=(d.semanticKeywords||[]).map(k=>`<span class="kwc kse">${k}</span>`).join('');
-    return `<div class="page-kw-card">
-      <div class="pkw-hdr">
-        <div class="pkw-num">${String(i+1).padStart(2,'0')}</div>
-        <div class="pkw-title">${p.pageTitle}</div>
-        <span class="kwc kp" style="margin-left:auto">${p.primaryKeyword}</span>
-      </div>
-      <div class="pkw-body">
-        <div>
-          <div class="pkw-col-label">Primary Keyword</div>
-          <div class="kwl"><span class="kwc kp">${p.primaryKeyword}</span></div>
-        </div>
-        <div>
-          <div class="pkw-col-label">10 Secondary Keywords</div>
-          <div class="kwl">${sec||'<span style="font-size:11px;color:var(--muted)">Loading…</span>'}</div>
-        </div>
-        <div>
-          <div class="pkw-col-label">10 Semantic / LSI Keywords</div>
-          <div class="kwl">${sem||'<span style="font-size:11px;color:var(--muted)">Loading…</span>'}</div>
-        </div>
-      </div>
-      <div class="meta-row">
-        <div class="mbox">
-          <div class="mlr"><span class="mtype">Meta Title</span><span class="mctr ${tclr}">${tl}/60</span></div>
-          <div class="mtxt">${d.metaTitle||'—'}</div>
-          <div class="mprog"><div class="mbar" style="width:${Math.min(100,Math.round(tl/60*100))}%;background:${tl<=60?'#53C2DF':'#FF5757'}"></div></div>
-        </div>
-        <div class="mbox">
-          <div class="mlr"><span class="mtype">Meta Description</span><span class="mctr ${dclr}">${dl}/155 <button class="copybtn" onclick="cpMeta(${i})">Copy</button></span></div>
-          <div class="mtxt">${d.metaDescription||'—'}</div>
-          <div class="mprog"><div class="mbar" style="width:${Math.min(100,Math.round(dl/155*100))}%;background:${dl>=140&&dl<=155?'#53C2DF':'#FFB347'}"></div></div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  document.getElementById('s2-cards').innerHTML = html;
+async function generateAllKeywords(){
+  document.getElementById('gen-all-btn').disabled = true;
+  document.getElementById('gen-all-btn').innerHTML = '<span class="spin-sm"></span> Generating all…';
+
+  for(let i=0; i<step1Pages.length; i++){
+    if(!step2Keywords[i]){
+      await generateKeywordsOnly(i);
+    }
+  }
+  renderStep2();
 }
 
-function cpMeta(i){
-  const d=step2Data[i]||{};
-  navigator.clipboard.writeText(`Meta Title:\n${d.metaTitle}\n\nMeta Description:\n${d.metaDescription}`).then(()=>{
-    const btns=document.querySelectorAll('.copybtn'); if(btns[i]){btns[i].textContent='Copied!';setTimeout(()=>btns[i].textContent='Copy',1800);}
-  });
+async function generateKeywordsOnly(idx){
+  const p = step1Pages[idx];
+  const sys=`You are a senior SEO strategist. Generate keyword suggestions for a page. Return ONLY valid JSON — no markdown.
+Return a single JSON object with:
+- "secondaryKeywords": array of exactly 10 secondary keywords
+- "semanticKeywords": array of exactly 10 semantic/LSI keywords`;
+  const usr=`Page: "${p.pageTitle}"
+Primary keyword: "${p.primaryKeyword}"
+Search intent: ${p.searchIntent}
+Website: ${currentSite}`;
+  try{
+    step2Keywords[idx] = await callAPI(sys,usr,2000);
+  }catch(e){}
 }
 
-function goStep3(){
+function selectPageForSERP(idx){
+  selectedPageIdx = idx;
   setStep(3);
   runStep3();
 }
 
 // ═══════════════════════════════════
-// STEP 3 — SERP + OUTLINE
+// STEP 3 — SERP ANALYSIS
 // ═══════════════════════════════════
 async function runStep3(){
-  document.getElementById('s3-content').style.display='none';
-  document.getElementById('s3-loading').style.display='flex';
+  const p = step1Pages[selectedPageIdx];
+  const kws = step2Keywords[selectedPageIdx]||{};
   hideErr('s3-err');
 
-  const statuses=['Analysing SERP competitors…','Identifying featured snippet targets…','Building AI Overview strategy…','Generating 5-H2 content outlines…','Mapping 8 internal link opportunities per page…','Finalising full briefs…'];
-  let si=0; const st=setInterval(()=>{ document.getElementById('s3-txt').textContent=statuses[si++%statuses.length]; },2000);
+  document.getElementById('s3-content').innerHTML = `<div class="card"><div class="card-hdr"><div style="font-weight:700">Analysing: "${p.primaryKeyword}"</div></div><div class="card-body"><span style="color:var(--muted)">Generating SERP analysis…</span></div></div>`;
 
-  const sys=`You are a senior SEO content strategist. For each page, generate a full SERP analysis and content outline. Return ONLY valid JSON — no markdown, no code fences. Return a JSON array in the same order as input.
+  const msgs=['Analysing SERP landscape…','Checking competitor positions…','Identifying featured snippets…','Evaluating AI overview potential…','Compiling insights…'];
+  let si=0; const st=setInterval(()=>{ setLoading('s3-status','s3-txt',true,msgs[si++%msgs.length]); },2000);
+  setLoading('s3-status','s3-txt',true,msgs[0]);
 
-Each object MUST have:
-- "slug": same slug as input
-- "serpAnalysis":
-  - "featuredSnippetExists": true|false
-  - "aiOverviewLikely": true|false
-  - "serpFeatures": array (e.g. ["Featured Snippet","People Also Ask","AI Overview"])
-  - "competitors": array of 4 objects each with: position(1-4), domain, pageType, estimatedWordCount, domainAuthority, contentStrengths(array 2-3), contentGaps(array 2-3)
-  - "featuredSnippetTarget": exact query string
-  - "featuredSnippetFormat": "Paragraph"|"Numbered List"|"Bullet List"|"Table"
-  - "featuredSnippetAnswer": 40-60 word direct answer paragraph optimised to win the featured snippet
-  - "aiOverviewStrategy": 2-3 sentences on structuring content for AI Overviews
-  - "winningStrategy": 2-3 sentences on what hireoverseas.com must do differently
-- "contentOutline":
-  - "recommendedWordCount": number
-  - "readingLevel": "Beginner"|"Intermediate"|"Expert"
-  - "contentTone": string
-  - "schemaMarkup": string
-  - "introHook": 2 sentences
-  - "h2Sections": array of EXACTLY 5 objects each with: h2Title, sectionPurpose, targetsFeaturedSnippet(bool), targetsAIOverview(bool), keywordsToInclude(array 3), h3Subsections(array 2-3 of {h3Title, contentNote})
-  - "closingCTA": 2 sentences
-- "internalLinks": array of EXACTLY 8 objects each with: anchorText, targetUrl(real URL from site index), targetTitle, linkType("hire-remote"|"role"|"industry"|"blog"), context`;
+  const sys=`You are an expert SEO analyst. Analyse the SERP landscape for a keyword. Return ONLY valid JSON.
+Return a JSON object with:
+- "keyword": the keyword
+- "searchVolume": estimated monthly search volume string
+- "keywordDifficulty": "Low"|"Medium"|"High" 
+- "serpFeatures": array of SERP features present (e.g. "Featured Snippet", "AI Overview", "People Also Ask", "Video Results", etc.)
+- "competitors": array of top 4 competitors, each with: {"position":1, "domain":"", "title":"", "url":"", "estimatedWordCount":0, "domainAuthority":0, "strengths":"", "weaknesses":""}
+- "featuredSnippetOpportunity": {"exists":true/false, "currentHolder":"", "format":"paragraph|list|table", "strategy":"how to capture it"}
+- "aiOverviewStatus": {"present":true/false, "sources":[], "strategy":"how to get cited"}
+- "contentGap": array of 3-5 topics/angles competitors are missing
+- "winningStrategy": 2-3 sentence recommendation on how to outrank competitors`;
 
-  const siteIndex=siteStr();
-  const usr=`Website: ${currentSite}
-Pages to analyse:
-${selectedPages.map((p,i)=>{const d=step2Data[i]||{}; return `${i+1}. "${p.pageTitle}" | Primary: "${p.primaryKeyword}" | Secondary: ${(d.secondaryKeywords||[]).slice(0,5).join(', ')} | Intent: ${p.searchIntent}`;}).join('\n')}
-
-SITE INDEX (for internal links):
-${siteIndex}`;
+  const usr=`Keyword: "${p.primaryKeyword}"
+Page type: ${p.pageType}
+Search intent: ${p.searchIntent}
+Website: ${currentSite}
+Secondary keywords: ${(kws.secondaryKeywords||[]).join(', ')}`;
 
   try{
+    serpData = await callAPI(sys,usr,6000);
     clearInterval(st);
-    step3Data = await callAPI(sys,usr,16000);
-    document.getElementById('s3-loading').style.display='none';
+    setLoading('s3-status','s3-txt',false);
     renderStep3();
-    document.getElementById('s3-content').style.display='block';
   }catch(e){
     clearInterval(st);
-    document.getElementById('s3-loading').style.display='none';
+    setLoading('s3-status','s3-txt',false);
     showErr('s3-err','Error: '+e.message);
   }
 }
 
 function renderStep3(){
-  const LT={'hire-remote':'il-hire','role':'il-role','industry':'il-ind','blog':'il-blog'};
-  const LL={'hire-remote':'Hire Remote','role':'Role','industry':'Industry','blog':'Blog'};
+  const s = serpData;
+  let html = `<div class="stats-bar">
+    <div class="stat-item"><div class="stat-n">${s.searchVolume||'N/A'}</div><div class="stat-l">Monthly<br>Searches</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n" style="color:${s.keywordDifficulty==='Low'?'var(--grn)':s.keywordDifficulty==='Medium'?'var(--amb)':'var(--red)'}">${s.keywordDifficulty||'—'}</div><div class="stat-l">Keyword<br>Difficulty</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${(s.serpFeatures||[]).length}</div><div class="stat-l">SERP<br>Features</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${(s.competitors||[]).length}</div><div class="stat-l">Top<br>Competitors</div></div>
+  </div>`;
 
-  const html = selectedPages.map((p,i)=>{
-    const s2=step2Data[i]||{};
-    const d=step3Data[i]||{};
-    const sa=d.serpAnalysis||{};
-    const co=d.contentOutline||{};
-    const ils=d.internalLinks||[];
-    const uid='ac'+i;
-    const base_=base();
+  if(s.serpFeatures && s.serpFeatures.length){
+    html += `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">${s.serpFeatures.map(f=>`<span class="kwc kse">${f}</span>`).join('')}</div>`;
+  }
 
-    // SERP tab
-    const sfBadges=(sa.serpFeatures||[]).map(f=>{ const cls=f==='Featured Snippet'?'stag-fs':f==='AI Overview'?'stag-ai':'stag-reg'; return `<span class="stag ${cls}">${f}</span>`; }).join('');
-    const compsHTML=(sa.competitors||[]).map(c=>{
-      const pc=c.position===1?'sp1':c.position===2?'sp2':c.position===3?'sp3':'spn';
-      return `<div class="serp-comp">
-        <div class="serp-comp-hdr"><div class="spos ${pc}">${c.position}</div><div class="sdom">${c.domain||''}</div><span class="stag stag-reg">${c.pageType||''}</span><span class="stag stag-reg">DA${c.domainAuthority||'?'}</span><span class="stag stag-reg">~${(c.estimatedWordCount||0).toLocaleString()}w</span></div>
-        <div class="serp-comp-body"><div><div class="sc-lbl">Strengths</div><div class="sc-val">${(c.contentStrengths||[]).map(s=>'• '+s).join('<br>')}</div></div><div><div class="sc-lbl">Gaps to Exploit</div><div class="sc-val" style="color:var(--grn)">${(c.contentGaps||[]).map(g=>'✓ '+g).join('<br>')}</div></div></div>
-      </div>`;
-    }).join('');
-    const serpTab=`<div>
-      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;align-items:center;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">SERP Features:</span>${sfBadges}</div>
-      ${compsHTML}
-      ${sa.featuredSnippetAnswer?`<div class="snip-box"><div class="snip-lbl">🎯 Featured Snippet Target: "${sa.featuredSnippetTarget||''}" — ${sa.featuredSnippetFormat||'Paragraph'}</div><div class="snip-val">${sa.featuredSnippetAnswer}</div></div>`:''}
-      ${sa.aiOverviewStrategy?`<div class="ai-box"><div class="ai-lbl">🤖 AI Overview Strategy</div><div class="ai-val">${sa.aiOverviewStrategy}</div></div>`:''}
-      ${sa.winningStrategy?`<div class="win-box"><div class="win-lbl">🏆 How Hire Overseas Wins</div><div class="win-val">${sa.winningStrategy}</div></div>`:''}
-    </div>`;
-
-    // OUTLINE tab
-    const h2HTML=(co.h2Sections||[]).map((h,hi)=>{
-      const tags=[h.targetsFeaturedSnippet?'<span class="h2-tag" style="background:var(--yel-l);color:var(--yel);border-color:var(--yel-b)">🎯 Featured Snippet</span>':'',h.targetsAIOverview?'<span class="h2-tag" style="background:var(--pur-l);color:var(--pur);border-color:var(--pur-b)">🤖 AI Overview</span>':'',...(h.keywordsToInclude||[]).map(k=>`<span class="h2-tag" style="background:var(--blu-l);color:var(--blu);border-color:var(--blu-b)">${k}</span>`)].filter(Boolean).join('');
-      const h3s=(h.h3Subsections||[]).map(h3=>`<div class="h3-item"><span class="h3-bullet">→</span><div><div class="h3-text"><strong>${h3.h3Title||''}</strong></div><div class="h3-note">${h3.contentNote||''}</div></div></div>`).join('');
-      return `<div class="h2-block">
-        <div class="h2-hdr"><div class="h2-num">H2.${hi+1}</div><div class="h2-info"><div class="h2-title">${h.h2Title||''}</div><div class="h2-purpose">${h.sectionPurpose||''}</div></div></div>
-        ${tags?`<div class="h2-tags">${tags}</div>`:''}
-        ${h3s?`<div class="h3-list">${h3s}</div>`:''}
-      </div>`;
-    }).join('');
-    const outlineTab=`<div>
-      <div class="ol-meta">
-        ${co.recommendedWordCount?`<span class="ol-tag ol-blu">~${co.recommendedWordCount.toLocaleString()} words</span>`:''}
-        ${co.readingLevel?`<span class="ol-tag ol-grn">${co.readingLevel}</span>`:''}
-        ${co.contentTone?`<span class="ol-tag ol-grn">${co.contentTone}</span>`:''}
-        ${co.schemaMarkup?`<span class="ol-tag ol-pur">Schema: ${co.schemaMarkup}</span>`:''}
-        <button class="copy-ol-btn" onclick="copyOutline(${i})">Copy Brief</button>
+  html += `<div class="card"><div class="card-hdr"><div style="font-weight:700">Top Competitors</div></div><div class="card-body">`;
+  (s.competitors||[]).forEach(c => {
+    const posClass = c.position<=1?'sp1':c.position<=2?'sp2':c.position<=3?'sp3':'spn';
+    html += `<div class="serp-card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span class="serp-pos ${posClass}">${c.position}</span>
+        <span style="font-weight:700;font-size:14px">${c.domain||''}</span>
+        <span style="font-size:10px;color:var(--muted);margin-left:auto">DA ${c.domainAuthority||'—'} · ~${c.estimatedWordCount||'—'} words</span>
       </div>
-      ${co.introHook?`<div class="ol-intro"><strong>Intro Hook:</strong> ${co.introHook}</div>`:''}
-      ${h2HTML}
-      ${co.closingCTA?`<div class="cta-box"><div class="cta-lbl">Closing CTA</div><div class="cta-val">${co.closingCTA}</div></div>`:''}
-      ${sa.featuredSnippetAnswer?`<div class="snip-box" style="margin-top:10px"><div class="snip-lbl">📌 Paste-Ready Answer Block</div><div class="snip-val">${sa.featuredSnippetAnswer}</div></div>`:''}
-    </div>`;
-
-    // INTERNAL LINKS tab
-    const ilHTML=ils.map(il=>`<div class="il-item"><span class="il-cat ${LT[il.linkType]||'il-blog'}">${LL[il.linkType]||'Blog'}</span><div class="il-info"><div class="il-anchor">${il.anchorText||''}</div><div class="il-url"><a href="${base_}${il.targetUrl||''}" target="_blank">${base_}${il.targetUrl||''}</a></div><div class="il-ctx">${il.context||''}</div></div></div>`).join('');
-
-    // Cannibalization
-    const step1p = step1Pages.find(pp=>pp.slug===p.slug)||{};
-    const cd=step1p.cannibalizationDetails||{};
-    const canCls=step1p.cannibalizationStatus==='conflict'?'can-conflict':step1p.cannibalizationStatus==='risk'?'can-risk':'can-safe';
-    const canLbl=step1p.cannibalizationStatus==='conflict'?'✗ Direct Conflict':step1p.cannibalizationStatus==='risk'?'⚠ Overlap Risk':'✓ Safe to Create';
-    const canConflicts=((cd.conflictingPosts||[]).map((t,j)=>`<a class="can-link" href="${base_}${(cd.conflictingUrls||[])[j]||''}" target="_blank">↗ ${t}</a>`)).join('');
-    const canTab=`<div>
-      <div class="can-box ${canCls}"><div class="can-lbl">${canLbl}</div><div>${cd.notes||'No overlap with existing content detected.'}</div>${canConflicts?`<div class="can-links">${canConflicts}</div>`:''}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px;font-family:var(--fm)">Recommendation: ${cd.recommendation||'Create new page'}</div>
-    </div>`;
-
-    const badges=[
-      sa.featuredSnippetExists?`<span class="ac-badge" style="background:var(--yel-l);color:var(--yel);border-color:var(--yel-b)">🎯 FS Target</span>`:'',
-      sa.aiOverviewLikely?`<span class="ac-badge" style="background:var(--pur-l);color:var(--pur);border-color:var(--pur-b)">🤖 AI Overview</span>`:'',
-      `<span class="ac-badge" style="background:var(--grn-l);color:var(--grn);border-color:var(--grn-b)">${p.pageType}</span>`,
-      `<span class="ac-badge" style="background:var(--blu-l);color:var(--blu);border-color:var(--blu-b)">${p.searchIntent}</span>`,
-    ].filter(Boolean).join('');
-
-    return `<div class="analysis-card">
-      <div class="ac-hdr">
-        <div class="ac-num">${String(i+1).padStart(2,'0')}</div>
-        <div class="ac-info">
-          <div class="ac-title">${p.pageTitle||''}</div>
-          <div class="ac-badges">${badges}</div>
-          <div style="font-size:11px;color:var(--blu);font-family:var(--fm);margin-top:4px">${base_}${p.slug||''}</div>
-        </div>
+      <div style="font-size:12px;color:var(--blu);margin-bottom:6px">${c.title||''}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px">
+        <div><span style="color:var(--grn);font-weight:600">Strengths:</span> <span style="color:var(--muted)">${c.strengths||''}</span></div>
+        <div><span style="color:var(--red);font-weight:600">Weaknesses:</span> <span style="color:var(--muted)">${c.weaknesses||''}</span></div>
       </div>
-      <div class="ac-tabs">
-        <button class="act on" onclick="swAcTab(event,'${uid}','serp')">SERP Analysis</button>
-        <button class="act" onclick="swAcTab(event,'${uid}','outline')">Content Outline</button>
-        <button class="act" onclick="swAcTab(event,'${uid}','links')">Internal Links (${ils.length})</button>
-        <button class="act" onclick="swAcTab(event,'${uid}','cannibal')">Cannibalization</button>
-      </div>
-      <div class="ac-pane on" id="${uid}-serp">${serpTab}</div>
-      <div class="ac-pane" id="${uid}-outline">${outlineTab}</div>
-      <div class="ac-pane" id="${uid}-links">${ilHTML||'<div style="color:var(--muted);font-size:12px">No internal links generated.</div>'}</div>
-      <div class="ac-pane" id="${uid}-cannibal">${canTab}</div>
     </div>`;
-  }).join('');
-
-  document.getElementById('s3-cards').innerHTML=html;
-  document.getElementById('s3-done-count').textContent=selectedPages.length+' pages';
-}
-
-function swAcTab(e,uid,pane){
-  const card=document.querySelector('#'+uid+'-serp').closest('.analysis-card');
-  card.querySelectorAll('.act').forEach(t=>t.classList.remove('on'));
-  card.querySelectorAll('.ac-pane').forEach(p=>p.classList.remove('on'));
-  e.target.classList.add('on');
-  document.getElementById(uid+'-'+pane).classList.add('on');
-}
-
-function copyOutline(i){
-  const p=selectedPages[i], co=(step3Data[i]||{}).contentOutline||{}, sa=(step3Data[i]||{}).serpAnalysis||{};
-  let txt=`CONTENT BRIEF: ${p.pageTitle}\nPrimary Keyword: ${p.primaryKeyword}\nWord Count: ~${co.recommendedWordCount||''} | Tone: ${co.contentTone||''} | Schema: ${co.schemaMarkup||''}\n\nINTRO HOOK:\n${co.introHook||''}\n\n`;
-  (co.h2Sections||[]).forEach((h,hi)=>{
-    txt+=`H2 ${hi+1}: ${h.h2Title}\n  Purpose: ${h.sectionPurpose||''}\n`;
-    if(h.targetsFeaturedSnippet) txt+=`  🎯 Targets Featured Snippet\n`;
-    if(h.targetsAIOverview) txt+=`  🤖 Targets AI Overview\n`;
-    (h.h3Subsections||[]).forEach(h3=>{ txt+=`  → ${h3.h3Title}\n     ${h3.contentNote||''}\n`; });
-    txt+='\n';
   });
-  if(co.closingCTA) txt+=`CLOSING CTA:\n${co.closingCTA}\n\n`;
-  if(sa.featuredSnippetAnswer) txt+=`FEATURED SNIPPET ANSWER:\n${sa.featuredSnippetAnswer}\n`;
-  navigator.clipboard.writeText(txt);
+  html += `</div></div>`;
+
+  const fs = s.featuredSnippetOpportunity||{};
+  if(fs.exists){
+    html += `<div class="insight-box ib-yellow"><div style="font-weight:700;margin-bottom:4px">Featured Snippet Opportunity</div>
+      <div>Current holder: <strong>${fs.currentHolder||'None'}</strong> · Format: <strong>${fs.format||'—'}</strong></div>
+      <div style="margin-top:4px">${fs.strategy||''}</div></div>`;
+  }
+
+  const ai = s.aiOverviewStatus||{};
+  html += `<div class="insight-box ib-purple"><div style="font-weight:700;margin-bottom:4px">AI Overview ${ai.present?'Present':'Not Present'}</div>
+    ${ai.sources&&ai.sources.length?`<div>Sources: ${ai.sources.join(', ')}</div>`:''}
+    <div style="margin-top:4px">${ai.strategy||''}</div></div>`;
+
+  if(s.contentGap && s.contentGap.length){
+    html += `<div class="insight-box ib-blue"><div style="font-weight:700;margin-bottom:4px">Content Gaps to Exploit</div>
+      <ul style="margin:4px 0 0 16px">${s.contentGap.map(g=>`<li>${g}</li>`).join('')}</ul></div>`;
+  }
+
+  html += `<div class="insight-box ib-green"><div style="font-weight:700;margin-bottom:4px">Winning Strategy</div><div>${s.winningStrategy||''}</div></div>`;
+
+  html += `<div class="btn-row" style="margin-top:20px">
+    <button class="btn-ghost" onclick="setStep(2)">← Back to Map</button>
+    <button class="btn-primary" onclick="setStep(4);renderStep4()">Generate Outline →</button>
+  </div>`;
+
+  document.getElementById('s3-content').innerHTML = html;
 }
 
 // ═══════════════════════════════════
-// CSV EXPORT
+// STEP 4 — GENERATE OUTLINE
 // ═══════════════════════════════════
+function renderStep4(){
+  const p = step1Pages[selectedPageIdx];
+  document.getElementById('s4-content').innerHTML = `
+    <div class="card"><div class="card-hdr"><div style="font-weight:700">Outline for: "${p.pageTitle}"</div></div>
+    <div class="card-body">
+      <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Claude will generate <strong style="color:var(--ink)">2 outline options</strong> based on the SERP analysis, each with a different competitive angle. The outlines are optimised for SEO, AI Overviews, Featured Snippets, and LLM visibility.</p>
+      <button class="btn-primary" id="s4-gen-btn" onclick="runStep4()">Generate 2 Outline Options →</button>
+    </div></div>
+    <div class="btn-row"><button class="btn-ghost" onclick="setStep(3)">← Back to SERP</button></div>`;
+}
+
+async function runStep4(){
+  const p = step1Pages[selectedPageIdx];
+  const kws = step2Keywords[selectedPageIdx]||{};
+  const btn = document.getElementById('s4-gen-btn');
+  btn.disabled = true;
+  hideErr('s4-err');
+
+  const msgs=['Analysing competitor outlines…','Crafting outline option A…','Crafting outline option B…','Optimising for AI Overviews…','Finalising outlines…'];
+  let si=0; const st=setInterval(()=>{ setLoading('s4-status','s4-txt',true,msgs[si++%msgs.length]); },2000);
+  setLoading('s4-status','s4-txt',true,msgs[0]);
+
+  const sys=`You are a senior SEO content strategist. Generate exactly 2 outline options for an article. Return ONLY valid JSON — no markdown.
+
+Return a JSON array with exactly 2 objects. Each object MUST have:
+- "optionLabel": "Option A" or "Option B"
+- "title": article title (H1)
+- "angle": 2-3 sentence description of the competitive angle and how it beats current SERP
+- "estimatedWordCount": number
+- "targetReadingLevel": e.g. "8th grade"
+- "sections": array of H2 sections, each with:
+  - "h2": heading text
+  - "purpose": 1 sentence what this section accomplishes
+  - "subsections": array of H3 objects with {"h3":"heading","notes":"what to cover"}
+  - "featuredSnippetTarget": boolean — is this section designed to capture a featured snippet?
+  - "aiOverviewTarget": boolean — is this section designed for AI overview citation?
+- "schemaMarkup": recommended schema type
+- "closingCTA": suggested call-to-action
+
+Each outline should take a DIFFERENT angle/approach to outperform competitors. Make them genuinely different strategies, not minor variations.`;
+
+  const usr=`Keyword: "${p.primaryKeyword}"
+Page: "${p.pageTitle}"
+Intent: ${p.searchIntent}
+Page type: ${p.pageType}
+Website: ${currentSite}
+Secondary keywords: ${(kws.secondaryKeywords||[]).join(', ')}
+Semantic keywords: ${(kws.semanticKeywords||[]).join(', ')}
+
+SERP ANALYSIS:
+- Top competitors: ${(serpData.competitors||[]).map(c=>`#${c.position} ${c.domain} (~${c.estimatedWordCount}w)`).join(', ')}
+- Featured snippet: ${JSON.stringify(serpData.featuredSnippetOpportunity||{})}
+- AI Overview: ${JSON.stringify(serpData.aiOverviewStatus||{})}
+- Content gaps: ${(serpData.contentGap||[]).join(', ')}
+- Winning strategy: ${serpData.winningStrategy||''}`;
+
+  try{
+    outlineOptions = await callAPI(sys,usr,8000);
+    clearInterval(st);
+    setLoading('s4-status','s4-txt',false);
+    setStep(5);
+    renderStep5();
+  }catch(e){
+    clearInterval(st);
+    setLoading('s4-status','s4-txt',false);
+    showErr('s4-err','Error: '+e.message);
+    btn.disabled = false;
+  }
+}
+
+// ═══════════════════════════════════
+// STEP 5 — CHOOSE OUTLINE DRAFT
+// ═══════════════════════════════════
+function renderStep5(){
+  chosenOutlineIdx = null;
+  let html = '';
+  outlineOptions.forEach((opt,i) => {
+    html += `<div class="outline-option" id="opt-${i}" onclick="chooseOutline(${i})">
+      <div class="opt-label">${opt.optionLabel||'Option '+(i+1)}</div>
+      <div class="opt-title">${opt.title||''}</div>
+      <div class="opt-angle">${opt.angle||''}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <span class="kwc kp">~${opt.estimatedWordCount||'—'} words</span>
+        <span class="kwc kse">${opt.targetReadingLevel||''}</span>
+        <span class="kwc ks">${opt.schemaMarkup||''}</span>
+      </div>`;
+
+    (opt.sections||[]).forEach(sec => {
+      html += `<div class="h2-item">
+        <div class="h2-label">${sec.featuredSnippetTarget?'🎯 ':''}${sec.aiOverviewTarget?'🤖 ':''}${sec.h2}</div>
+        <div class="h3-sub">${sec.purpose||''}</div>`;
+      if(sec.subsections && sec.subsections.length){
+        html += `<div class="h3-sub">${sec.subsections.map(s=>`→ ${s.h3}`).join('<br>')}</div>`;
+      }
+      html += `</div>`;
+    });
+
+    if(opt.closingCTA){
+      html += `<div style="margin-top:10px;padding:10px 14px;background:var(--grn-l);border:1px solid var(--grn-b);border-radius:var(--r-sm);font-size:12px;color:var(--grn)"><strong>CTA:</strong> ${opt.closingCTA}</div>`;
+    }
+    html += `</div>`;
+  });
+
+  html += `<div class="btn-row" style="margin-top:12px">
+    <button class="btn-ghost" onclick="setStep(3)">← Back to SERP</button>
+    <button class="btn-primary" id="s5-next-btn" onclick="goStep6()" disabled>Select an outline to continue →</button>
+  </div>`;
+
+  document.getElementById('s5-content').innerHTML = html;
+}
+
+function chooseOutline(idx){
+  chosenOutlineIdx = idx;
+  outlineOptions.forEach((_,i) => {
+    document.getElementById('opt-'+i).classList.toggle('chosen', i===idx);
+  });
+  const btn = document.getElementById('s5-next-btn');
+  btn.disabled = false;
+  btn.textContent = `Write article using ${outlineOptions[idx].optionLabel||'Option '+(idx+1)} →`;
+}
+
+function goStep6(){
+  if(chosenOutlineIdx===null) return;
+  setStep(6);
+  runStep6();
+}
+
+// ═══════════════════════════════════
+// STEP 6 — WRITE FULL ARTICLE
+// ═══════════════════════════════════
+async function runStep6(){
+  const p = step1Pages[selectedPageIdx];
+  const kws = step2Keywords[selectedPageIdx]||{};
+  const outline = outlineOptions[chosenOutlineIdx];
+  hideErr('s6-err');
+
+  document.getElementById('s6-content').innerHTML = `<div class="card"><div class="card-body" style="text-align:center;padding:40px"><span class="spin" style="width:24px;height:24px;display:inline-block;margin-bottom:12px"></span><div style="color:var(--muted)">Writing your article… This may take a minute.</div></div></div>`;
+
+  const msgs=['Writing introduction…','Drafting H2 sections…','Incorporating secondary keywords…','Optimising for featured snippets…','Refining for AI overviews…','Adding depth and value…','Polishing readability…','Finalising article…'];
+  let si=0; const st=setInterval(()=>{ setLoading('s6-status','s6-txt',true,msgs[si++%msgs.length]); },3000);
+  setLoading('s6-status','s6-txt',true,msgs[0]);
+
+  const outlineSections = (outline.sections||[]).map(s => {
+    let txt = `## ${s.h2}\nPurpose: ${s.purpose||''}`;
+    if(s.subsections) txt += '\n' + s.subsections.map(ss=>`### ${ss.h3}\n${ss.notes||''}`).join('\n');
+    if(s.featuredSnippetTarget) txt += '\n[TARGET: Featured Snippet]';
+    if(s.aiOverviewTarget) txt += '\n[TARGET: AI Overview]';
+    return txt;
+  }).join('\n\n');
+
+  const sys=`You are an expert SEO content writer. Write a complete, publication-ready article in HTML format. 
+
+CRITICAL RULES:
+1. Write in a natural, human voice — conversational yet authoritative. NO fluffy filler words.
+2. NO keyword stuffing. Naturally incorporate secondary keywords where they fit.
+3. Use proper heading hierarchy: <h1> for title, <h2> for main sections, <h3> for subsections, <h4> if needed.
+4. Wrap paragraphs in <p> tags. Use <ul>/<ol> for lists. Use <strong> for emphasis.
+5. Use <blockquote> for key takeaways or expert quotes.
+6. Optimise specific sections for featured snippets (clear, direct answers in 40-60 words).
+7. Optimise for AI Overview citations (factual, well-structured information).
+8. Answer the search intent directly and thoroughly.
+9. Create content that provides genuine value and converts readers.
+10. Target the specified reading level for accessibility.
+11. Return ONLY the HTML content — no wrapper, no code fences, no explanation. Start with <h1> and end with the closing content.`;
+
+  const usr=`Write the full article following this outline:
+
+Title: ${outline.title}
+Primary keyword: ${p.primaryKeyword}
+Secondary keywords: ${(kws.secondaryKeywords||[]).join(', ')}
+Semantic keywords: ${(kws.semanticKeywords||[]).join(', ')}
+Target word count: ~${outline.estimatedWordCount||2000}
+Reading level: ${outline.targetReadingLevel||'8th grade'}
+Search intent: ${p.searchIntent}
+Website: ${currentSite}
+CTA: ${outline.closingCTA||''}
+
+OUTLINE:
+${outlineSections}
+
+COMPETITIVE CONTEXT:
+${serpData.winningStrategy||''}
+Content gaps to address: ${(serpData.contentGap||[]).join(', ')}`;
+
+  try{
+    const rawHTML = await callAPIRaw(sys,usr,16000);
+    clearInterval(st);
+    articleHTML = rawHTML.replace(/```html|```/g,'').trim();
+    setLoading('s6-status','s6-txt',false);
+
+    const tmpDiv = document.createElement('div');
+    tmpDiv.innerHTML = articleHTML;
+    articleText = tmpDiv.textContent || tmpDiv.innerText || '';
+
+    document.getElementById('s6-content').innerHTML = `
+      <div class="article-content" id="article-preview">${articleHTML}</div>
+      <div class="btn-row" style="margin-top:20px">
+        <button class="btn-ghost" onclick="setStep(5)">← Back to Outlines</button>
+        <button class="btn-primary" onclick="setStep(7);runStep7()">Generate Internal Links →</button>
+      </div>`;
+  }catch(e){
+    clearInterval(st);
+    setLoading('s6-status','s6-txt',false);
+    showErr('s6-err','Error: '+e.message);
+    document.getElementById('s6-content').innerHTML = `<div class="btn-row"><button class="btn-ghost" onclick="setStep(5)">← Back</button><button class="btn-primary" onclick="runStep6()">Retry</button></div>`;
+  }
+}
+
+// ═══════════════════════════════════
+// STEP 7 — INTERNAL LINKING
+// ═══════════════════════════════════
+async function runStep7(){
+  const p = step1Pages[selectedPageIdx];
+  hideErr('s7-err');
+
+  document.getElementById('s7-content').innerHTML = `<div class="card"><div class="card-body" style="text-align:center;padding:40px"><span class="spin" style="width:24px;height:24px;display:inline-block;margin-bottom:12px"></span><div style="color:var(--muted)">Identifying internal linking opportunities…</div></div></div>`;
+
+  const msgs=['Scanning site structure…','Matching anchor opportunities…','Identifying placement sections…','Classifying anchor types…','Finalising recommendations…'];
+  let si=0; const st=setInterval(()=>{ setLoading('s7-status','s7-txt',true,msgs[si++%msgs.length]); },2000);
+  setLoading('s7-status','s7-txt',true,msgs[0]);
+
+  const sys=`You are an SEO internal linking specialist. Analyse an article and a site index, then recommend internal links. Return ONLY valid JSON.
+
+Return a JSON array of link objects. Each object MUST have:
+- "targetUrl": the URL path to link to (from the site index)
+- "targetPageTitle": the title of the target page
+- "anchorText": the recommended anchor text
+- "anchorType": "exact-match"|"branded-partial"|"secondary-keyword"|"descriptive"
+- "placementSection": which H2/H3 section of the article to place this link
+- "placementSnippet": a short excerpt (1-2 sentences) from the article showing where to naturally insert the link, with the anchor text wrapped in [brackets]
+- "relevanceScore": 1-10 how relevant this link is
+- "rationale": 1 sentence why this link adds value
+
+Aim for 8-12 links. Use a MIX of anchor text types:
+- exact-match: uses the target page's primary keyword
+- branded-partial: includes brand name + partial keyword
+- secondary-keyword: uses a secondary/related keyword
+- descriptive: natural descriptive phrase
+
+Links must feel natural — never forced. Prioritise high-relevance links.`;
+
+  const usr=`Article keyword: "${p.primaryKeyword}"
+Article title: "${p.pageTitle}"
+Website: ${currentSite}
+
+ARTICLE CONTENT (first 3000 chars):
+${articleText.substring(0,3000)}
+
+SITE INDEX (available pages to link to):
+${siteStr()}`;
+
+  try{
+    linkData = await callAPI(sys,usr,6000);
+    clearInterval(st);
+    setLoading('s7-status','s7-txt',false);
+    renderStep7();
+  }catch(e){
+    clearInterval(st);
+    setLoading('s7-status','s7-txt',false);
+    showErr('s7-err','Error: '+e.message);
+    document.getElementById('s7-content').innerHTML = `<div class="btn-row"><button class="btn-ghost" onclick="setStep(6)">← Back</button><button class="btn-primary" onclick="runStep7()">Retry</button></div>`;
+  }
+}
+
+function renderStep7(){
+  const anchorTypeClass={'exact-match':'at-exact','branded-partial':'at-branded','secondary-keyword':'at-secondary','descriptive':'at-descriptive'};
+  const anchorTypeLabel={'exact-match':'Exact Match','branded-partial':'Branded + Partial','secondary-keyword':'Secondary Keyword','descriptive':'Descriptive'};
+
+  let html = `<div class="stats-bar">
+    <div class="stat-item"><div class="stat-n">${linkData.length}</div><div class="stat-l">Internal<br>Links</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${linkData.filter(l=>l.anchorType==='exact-match').length}</div><div class="stat-l">Exact<br>Match</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${linkData.filter(l=>l.anchorType==='branded-partial').length}</div><div class="stat-l">Branded<br>Partial</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${linkData.filter(l=>l.anchorType==='secondary-keyword'||l.anchorType==='descriptive').length}</div><div class="stat-l">Secondary &<br>Descriptive</div></div>
+  </div>`;
+
+  html += `<div class="card"><div style="overflow-x:auto"><table class="link-table">
+    <thead><tr><th>#</th><th>Target Page</th><th>Anchor Text</th><th>Type</th><th>Placement Section</th><th>Placement Context</th></tr></thead><tbody>`;
+
+  linkData.forEach((l,i) => {
+    html += `<tr>
+      <td style="font-family:var(--fm);font-size:11px;color:var(--grn)">${i+1}</td>
+      <td><div style="font-weight:600;font-size:12px">${l.targetPageTitle||''}</div><div style="font-size:10px;color:var(--blu);font-family:var(--fm)">${l.targetUrl||''}</div></td>
+      <td><span style="font-weight:600;color:var(--grn)">${l.anchorText||''}</span></td>
+      <td><span class="anchor-type ${anchorTypeClass[l.anchorType]||'at-descriptive'}">${anchorTypeLabel[l.anchorType]||l.anchorType}</span></td>
+      <td style="font-size:11px;color:var(--muted)">${l.placementSection||''}</td>
+      <td style="font-size:11px;color:var(--muted);max-width:250px">${(l.placementSnippet||'').replace(/\[/g,'<strong style="color:var(--grn)">[').replace(/\]/g,']</strong>')}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></div>`;
+
+  html += `<div class="btn-row" style="margin-top:16px">
+    <button class="btn-ghost" onclick="setStep(6)">← Back to Article</button>
+    <button class="btn-primary" onclick="setStep(8);renderStep8()">View Final Output →</button>
+  </div>`;
+
+  document.getElementById('s7-content').innerHTML = html;
+}
+
+// ═══════════════════════════════════
+// STEP 8 — FINAL OUTPUT
+// ═══════════════════════════════════
+function renderStep8(){
+  const wordCount = articleText.trim().split(/\s+/).length;
+  const charCount = articleText.length;
+  const p = step1Pages[selectedPageIdx];
+  const outline = outlineOptions[chosenOutlineIdx];
+  const kws = step2Keywords[selectedPageIdx]||{};
+
+  let html = `<div class="stats-bar">
+    <div class="stat-item"><div class="stat-n">${wordCount.toLocaleString()}</div><div class="stat-l">Total<br>Words</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${charCount.toLocaleString()}</div><div class="stat-l">Total<br>Characters</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${linkData.length}</div><div class="stat-l">Internal<br>Links</div></div>
+    <div style="width:1px;height:28px;background:var(--border)"></div>
+    <div class="stat-item"><div class="stat-n">${Math.ceil(wordCount/200)}</div><div class="stat-l">Read Time<br>(minutes)</div></div>
+  </div>`;
+
+  html += `<div class="card" style="margin-bottom:16px"><div class="card-hdr">
+    <div style="font-weight:700;flex:1">${p.pageTitle}</div>
+    <span class="kwc kp">${p.primaryKeyword}</span>
+  </div>
+  <div class="card-body">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="kwc ks" style="font-size:11px">Slug: ${p.slug}</span>
+      <span class="kwc kse">${p.searchIntent}</span>
+      <span class="kwc kse">~${wordCount} words</span>
+      <span class="kwc kse">${outline.targetReadingLevel||''}</span>
+    </div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.5">${outline.angle||''}</div>
+  </div></div>`;
+
+  html += `<div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="copyArticleHTML()">📋 Copy Article (HTML)</button>
+    <button class="btn-outline" onclick="copyArticleText()">📋 Copy Article (Plain Text)</button>
+    <button class="btn-ghost" onclick="copyArticleMarkdown()">📋 Copy as Markdown</button>
+    <button class="btn-ghost" onclick="exportCSV()">📊 Export CSV</button>
+  </div>`;
+
+  html += `<div class="article-content" id="final-article">${articleHTML}</div>`;
+
+  html += `<div class="btn-row" style="margin-top:24px">
+    <button class="btn-ghost" onclick="setStep(7)">← Back to Links</button>
+    <button class="btn-ghost" onclick="setStep(1);location.reload()">↻ Start Over</button>
+  </div>`;
+
+  document.getElementById('s8-content').innerHTML = html;
+}
+
+function copyArticleHTML(){
+  navigator.clipboard.writeText(articleHTML).then(()=>{
+    const btns = document.querySelectorAll('.btn-primary');
+    btns.forEach(b=>{ if(b.textContent.includes('Copy Article (HTML)')){ b.textContent='✓ Copied HTML!'; setTimeout(()=>b.textContent='📋 Copy Article (HTML)',2000); }});
+  });
+}
+
+function copyArticleText(){
+  navigator.clipboard.writeText(articleText).then(()=>{
+    const btns = document.querySelectorAll('.btn-outline');
+    btns.forEach(b=>{ if(b.textContent.includes('Copy Article (Plain Text)')){ b.textContent='✓ Copied!'; setTimeout(()=>b.textContent='📋 Copy Article (Plain Text)',2000); }});
+  });
+}
+
+function copyArticleMarkdown(){
+  let md = articleHTML
+    .replace(/<h1[^>]*>(.*?)<\/h1>/gi,'# $1\n\n')
+    .replace(/<h2[^>]*>(.*?)<\/h2>/gi,'## $1\n\n')
+    .replace(/<h3[^>]*>(.*?)<\/h3>/gi,'### $1\n\n')
+    .replace(/<h4[^>]*>(.*?)<\/h4>/gi,'#### $1\n\n')
+    .replace(/<strong>(.*?)<\/strong>/gi,'**$1**')
+    .replace(/<em>(.*?)<\/em>/gi,'*$1*')
+    .replace(/<p>(.*?)<\/p>/gi,'$1\n\n')
+    .replace(/<li>(.*?)<\/li>/gi,'- $1\n')
+    .replace(/<blockquote>(.*?)<\/blockquote>/gi,'> $1\n\n')
+    .replace(/<\/?[^>]+(>|$)/g,'')
+    .replace(/\n{3,}/g,'\n\n').trim();
+  navigator.clipboard.writeText(md);
+}
+
 function exportCSV(){
-  const rows=[['#','Page Type','Page Title','URL','Search Intent','Content Goal','Primary Keyword','Secondary Keywords (10)','Semantic Keywords (10)','Meta Title','Title Len','Meta Description','Desc Len','Cannibal Status','Conflicting Pages','Recommendation','SERP Features','FS Target','FS Format','Featured Snippet Answer','AI Overview Strategy','Winning Strategy','Comp 1','Comp 2','Comp 3','Comp 4','Word Count','Reading Level','Tone','Schema','Intro Hook','H2-1','H2-2','H2-3','H2-4','H2-5','Closing CTA','Internal Links']];
-  selectedPages.forEach((p,i)=>{
-    const s2=step2Data[i]||{}, d=step3Data[i]||{}, sa=d.serpAnalysis||{}, co=d.contentOutline||{};
-    const sp=step1Pages.find(pp=>pp.slug===p.slug)||{}, cd=sp.cannibalizationDetails||{};
-    const comps=(sa.competitors||[]).map(c=>`#${c.position} ${c.domain} DA${c.domainAuthority} ~${c.estimatedWordCount}w`);
-    const h2s=(co.h2Sections||[]).map(h=>h.h2Title);
-    const ils=(d.internalLinks||[]).map(l=>`${l.anchorText} → ${base()}${l.targetUrl}`).join(' | ');
-    rows.push([i+1,p.pageType,p.pageTitle,base()+p.slug,p.searchIntent,p.contentGoal,p.primaryKeyword,(s2.secondaryKeywords||[]).join(' | '),(s2.semanticKeywords||[]).join(' | '),s2.metaTitle,(s2.metaTitle||'').length,s2.metaDescription,(s2.metaDescription||'').length,sp.cannibalizationStatus||'safe',(cd.conflictingPosts||[]).join(' | '),cd.recommendation||'',(sa.serpFeatures||[]).join(' | '),sa.featuredSnippetTarget||'',sa.featuredSnippetFormat||'',sa.featuredSnippetAnswer||'',sa.aiOverviewStrategy||'',sa.winningStrategy||'',comps[0]||'',comps[1]||'',comps[2]||'',comps[3]||'',co.recommendedWordCount||'',co.readingLevel||'',co.contentTone||'',co.schemaMarkup||'',co.introHook||'',h2s[0]||'',h2s[1]||'',h2s[2]||'',h2s[3]||'',h2s[4]||'',co.closingCTA||'',ils]);
-  });
-  const csv=rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download=`kwmap-${(currentSeed||'export').replace(/\s+/g,'-')}.csv`;
+  const p = step1Pages[selectedPageIdx];
+  const kws = step2Keywords[selectedPageIdx]||{};
+  const outline = outlineOptions[chosenOutlineIdx];
+  const wordCount = articleText.trim().split(/\s+/).length;
+
+  const rows = [
+    ['Field','Value'],
+    ['Page Title', p.pageTitle],
+    ['Slug', p.slug],
+    ['Primary Keyword', p.primaryKeyword],
+    ['Search Intent', p.searchIntent],
+    ['Secondary Keywords', (kws.secondaryKeywords||[]).join(' | ')],
+    ['Semantic Keywords', (kws.semanticKeywords||[]).join(' | ')],
+    ['Word Count', wordCount],
+    ['Reading Level', outline.targetReadingLevel||''],
+    ['Schema Markup', outline.schemaMarkup||''],
+    ['',''],
+    ['Internal Links',''],
+    ['Anchor Text','Target URL','Anchor Type','Placement Section']
+  ];
+  linkData.forEach(l => rows.push([l.anchorText, base()+l.targetUrl, l.anchorType, l.placementSection]));
+
+  const csv = rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = `kwmap-${(currentSeed||'export').replace(/\s+/g,'-')}.csv`;
   a.click();
 }
 
-// ═══════════════════════════════════
 // INIT
-// ═══════════════════════════════════
+buildProgress();
+setStep(1);
 updCnt();
 document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&document.activeElement.id==='inp-seed') runStep1(); });
 </script>
