@@ -37,6 +37,7 @@ header{padding:14px 40px;border-bottom:1px solid var(--border);background:rgba(2
 .hb-b{background:var(--blu-l);color:var(--blu);border-color:var(--blu-b);}
 .hb-r{background:var(--red-l);color:var(--red);border-color:var(--red-b);}
 .hb-p{background:var(--pur-l);color:var(--pur);border-color:var(--pur-b);}
+.hb-p:hover{background:var(--pur-b);}
 .pdot{width:5px;height:5px;background:var(--grn);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 6px var(--grn);}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
 
@@ -50,6 +51,11 @@ main{max-width:960px;margin:0 auto;padding:40px 24px 80px;position:relative;z-in
 .step-label{font-size:10px;font-weight:600;color:var(--muted);margin-left:6px;white-space:nowrap;transition:color .3s;}
 .step-label.active{color:var(--grn);}
 .step-label.done{color:var(--grn);opacity:.7;}
+.step-circle.done:hover{background:var(--grn-d);transform:scale(1.1);}
+.step-circle.active:hover{transform:scale(1.05);}
+.mode-tab{padding:8px 20px;border-radius:var(--r);border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-family:var(--fd);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.mode-tab.active{border-color:var(--grn);background:var(--grn-l);color:var(--grn);}
+.mode-tab:not(.active):hover{border-color:var(--border-hi);color:var(--ink);}
 .step-line{flex:0 0 24px;height:1px;background:var(--border);margin:0 4px;transition:background .3s;}
 .step-line.done{background:var(--grn);opacity:.5;}
 
@@ -208,9 +214,17 @@ select.sel{font-family:var(--fd);font-size:12px;color:var(--muted);background:va
     <div class="logo-sub">SEO Keyword Mapper</div>
   </div>
   <div class="hbadges">
-    <span class="hb hb-g"><span class="pdot"></span> <span id="sp-cnt-hdr">271 Pages Indexed</span></span>
+    <span class="hb hb-g"><span class="pdot"></span> <span id="sp-cnt-hdr">49 Pages Indexed</span></span>
     <span class="hb hb-b">8-Step Wizard</span>
     <span class="hb hb-r">Powered by Claude</span>
+    <div style="position:relative;display:inline-flex;gap:6px;align-items:center">
+      <button class="hb hb-p" id="save-btn" onclick="saveSession()" style="cursor:pointer;border:none;font-family:var(--fd)">💾 Save</button>
+      <button class="hb hb-p" id="load-btn" onclick="toggleLoadMenu()" style="cursor:pointer;border:none;font-family:var(--fd)">📂 Saved</button>
+      <div id="load-menu" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);min-width:260px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.4);padding:8px 0;">
+        <div style="padding:8px 14px 6px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Saved Sessions</div>
+        <div id="load-menu-list"></div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -222,8 +236,13 @@ select.sel{font-family:var(--fd);font-size:12px;color:var(--muted);background:va
 <div class="step-panel active" id="step1">
   <div class="step-hdr">
     <div class="step-eyebrow">Step 1 of 8</div>
-    <div class="step-title">Enter your <em>seed keyword</em></div>
-    <div class="step-desc">Claude will analyse the keyword and map out the <strong>pillar page</strong> and all <strong>cluster pages</strong> — checking every page against your live site URLs for cannibalization.</div>
+    <div class="step-title" id="s1-title">Enter your <em>seed keyword</em></div>
+    <div class="step-desc" id="s1-desc">Claude will analyse the keyword and map out the <strong>pillar page</strong> and all <strong>cluster pages</strong> — checking every page against your live site URLs for cannibalization.</div>
+  </div>
+
+  <div style="display:flex;gap:8px;margin-bottom:18px">
+    <button class="mode-tab active" id="mode-cluster" onclick="setMode('cluster')">🗺 Cluster Map</button>
+    <button class="mode-tab" id="mode-single" onclick="setMode('single')">⚡ Single Page</button>
   </div>
 
   <div class="input-card">
@@ -232,7 +251,7 @@ select.sel{font-family:var(--fd);font-size:12px;color:var(--muted);background:va
       <input class="inp-seed" id="inp-seed" placeholder="e.g. hire overseas workers">
       <input class="inp-site" id="inp-site" value="hireoverseas.com" placeholder="yoursite.com">
     </div>
-    <div class="opts-row">
+    <div class="opts-row" id="cluster-opts">
       <label class="optl"><input type="checkbox" id="opt-comm" checked> Include commercial pages</label>
       <label class="optl"><input type="checkbox" id="opt-blog" checked> Include blog posts</label>
       <span style="font-size:12px;color:var(--muted)">Pages:</span>
@@ -264,6 +283,7 @@ select.sel{font-family:var(--fd);font-size:12px;color:var(--muted);background:va
   <div style="margin-top:20px">
     <button class="btn-primary" id="s1-btn" onclick="runStep1()">Analyse Keyword → →</button>
   </div>
+  <div id="s1-mode-hint" style="display:none;margin-top:10px;font-size:12px;color:var(--muted)">⚡ Single Page mode — generates keywords &amp; goes straight to SERP analysis.</div>
   <div class="status-box" id="s1-status"><div class="spin"></div><div class="status-txt" id="s1-txt"></div></div>
   <div class="err-box" id="s1-err"></div>
 </div>
@@ -362,13 +382,20 @@ let currentStep = 1;
 function buildProgress(){
   const bar = document.getElementById('progress-bar');
   bar.innerHTML = STEPS.map((s,i) => {
-    let html = `<div class="step-item"><div class="step-circle" id="sc${s.n}">${s.n}</div><div class="step-label" id="sl${s.n}">${s.l}</div></div>`;
+    let html = `<div class="step-item"><div class="step-circle" id="sc${s.n}" onclick="navToStep(${s.n})">${s.n}</div><div class="step-label" id="sl${s.n}">${s.l}</div></div>`;
     if(i < STEPS.length-1) html += `<div class="step-line" id="line${s.n}"></div>`;
     return html;
   }).join('');
 }
 
+let maxStep = 1;
+
+function navToStep(n){
+  if(n <= maxStep) setStep(n);
+}
+
 function setStep(n){
+  if(n > maxStep) maxStep = n;
   currentStep = n;
   STEPS.forEach(s => {
     document.getElementById('step'+s.n).classList.toggle('active', s.n===n);
@@ -379,16 +406,26 @@ function setStep(n){
     else { sc.className='step-circle'; sl.className='step-label'; }
     const line = document.getElementById('line'+s.n);
     if(line){ line.classList.toggle('done', s.n < n); }
+    // Show pointer cursor on reachable steps
+    sc.style.cursor = (s.n <= maxStep) ? 'pointer' : 'default';
   });
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // SITE INDEX
-let sitePages = [
-  {t:'Home',u:'/',cat:'page'},{t:'Hire Remote Workers',u:'/hire-remote-workers',cat:'page'},{t:'Remote Staffing Agency',u:'/remote-staffing-agency',cat:'page'},{t:'About Us',u:'/about-us',cat:'page'},{t:'Roles',u:'/roles',cat:'page'},{t:'FAQs',u:'/faqs',cat:'page'},{t:'Community',u:'/community',cat:'page'},{t:'Blogs',u:'/blogs',cat:'page'},
-  {t:'Virtual Assistant',u:'/roles/virtual-assistant',cat:'role'},{t:'Web Developer',u:'/roles/web-developer',cat:'role'},{t:'SEO Specialist',u:'/roles/seo-specialist',cat:'role'},{t:'Graphic Designer',u:'/roles/graphic-designer',cat:'role'},{t:'UX/UI Designer',u:'/roles/ux-ui-designer',cat:'role'},{t:'Video Editor',u:'/roles/video-editor',cat:'role'},{t:'Google Ads Manager',u:'/roles/google-ads-manager',cat:'role'},{t:'Customer Support',u:'/roles/customer-support',cat:'role'},{t:'Data Analyst',u:'/roles/data-analyst',cat:'role'},{t:'Accountant',u:'/roles/accountant',cat:'role'},{t:'Executive Assistant',u:'/roles/executive-assistant',cat:'role'},{t:'Digital Marketing Manager',u:'/roles/digital-marketing-manager',cat:'role'},{t:'Social Media Manager',u:'/roles/social-media-manager',cat:'role'},{t:'Copywriter',u:'/roles/copywriter',cat:'role'},{t:'Financial Analyst',u:'/roles/financial-analyst',cat:'role'},{t:'Payroll Specialist',u:'/roles/payroll-specialist',cat:'role'},{t:'Community Manager',u:'/roles/community-manager',cat:'role'},{t:'SDR',u:'/roles/sdr',cat:'role'},{t:'Project Manager',u:'/roles/project-manager',cat:'role'},{t:'AI Automations Manager',u:'/roles/ai-automations-manager',cat:'role'},{t:'Content Assistant',u:'/roles/content-assistant',cat:'role'},{t:'Email Marketing Specialist',u:'/roles/email-marketing-specialist',cat:'role'},
-  {t:'How to Hire Employees from Overseas',u:'/blogs/how-to-hire-employees-from-overseas',cat:'blog'},{t:'Top Companies Hiring Remote Workers',u:'/blogs/companies-hiring-remote-workers',cat:'blog'},{t:'20 Best Remote Companies to Work For',u:'/blogs/best-remote-companies-to-work-for',cat:'blog'},{t:'Non-Voice Work From Home',u:'/blogs/non-voice-work-from-home',cat:'blog'},{t:'13 Best Global Recruitment Agencies',u:'/blogs/global-recruitment-agency',cat:'blog'},{t:'Virtual Assistant vs In-House',u:'/blogs/virtual-assistant-vs-in-house',cat:'blog'},{t:'What Does a Virtual Assistant Do?',u:'/blogs/what-does-a-virtual-assistant-do',cat:'blog'},{t:'Answer Engine Optimization AEO',u:'/blogs/answer-engine-optimization-aeo',cat:'blog'},{t:'Offshore Staffing Agency',u:'/blogs/offshore-staffing-agency',cat:'blog'},{t:'Hiring Remote Employees in Other Countries',u:'/blogs/hiring-remote-employees-other-countries',cat:'blog'},{t:'In-House SEO vs Outsourcing',u:'/blogs/in-house-seo-vs-outsourcing',cat:'blog'},{t:'Outsourcing SEO Services',u:'/blogs/outsourcing-seo-services',cat:'blog'},{t:'Best Countries to Hire Customer Success Managers',u:'/blogs/hire-customer-success-managers',cat:'blog'},{t:'Filipino AI Experts',u:'/blogs/hire-filipino-ai-experts',cat:'blog'},{t:'Working With Hire Overseas',u:'/blogs/hire-overseas-company-review',cat:'blog'},{t:'25 HR Interview Questions',u:'/blogs/questions-to-ask-hr-during-interview',cat:'blog'},{t:'Top Virtual Assistant Companies',u:'/blogs/top-virtual-assistant-companies',cat:'blog'},{t:'Best Countries for Remote Hiring',u:'/blogs/best-countries-remote-hiring',cat:'blog'},{t:'Cost of Hiring Overseas',u:'/blogs/cost-of-hiring-overseas',cat:'blog'}
-];
+let sitePages = [];
+
+async function loadSitePages(){
+  try {
+    const r = await fetch('/api/sitemap');
+    if(!r.ok) throw new Error('sitemap fetch failed');
+    const data = await r.json();
+    sitePages = data.pages || [];
+  } catch(e) {
+    console.warn('Sitemap load failed, using fallback', e);
+  }
+  updCnt();
+}
 
 function updCnt(){
   const tot=sitePages.length;
@@ -401,6 +438,24 @@ function renderPgList(){
 }
 function toggleSP(){ const b=document.getElementById('sp-body'); b.classList.toggle('open'); if(b.classList.contains('open')){updCnt();renderPgList();} }
 
+// MODE
+let singlePageMode = false;
+
+function setMode(mode){
+  singlePageMode = mode === 'single';
+  document.getElementById('mode-cluster').classList.toggle('active', !singlePageMode);
+  document.getElementById('mode-single').classList.toggle('active', singlePageMode);
+  document.getElementById('cluster-opts').style.display = singlePageMode ? 'none' : '';
+  document.getElementById('s1-btn').textContent = singlePageMode ? '⚡ Generate Page →' : 'Analyse Keyword → →';
+  document.getElementById('s1-mode-hint').style.display = singlePageMode ? 'block' : 'none';
+  document.getElementById('s1-title').innerHTML = singlePageMode
+    ? 'Enter your <em>primary keyword</em>'
+    : 'Enter your <em>seed keyword</em>';
+  document.getElementById('s1-desc').innerHTML = singlePageMode
+    ? 'Claude will generate a single optimised page for this keyword — with secondary keywords, SERP analysis, outline, and full article.'
+    : 'Claude will analyse the keyword and map out the <strong>pillar page</strong> and all <strong>cluster pages</strong> — checking every page against your live site URLs for cannibalization.';
+}
+
 // STATE
 let currentSeed='', currentSite='hireoverseas.com';
 let step1Pages=[];
@@ -412,6 +467,101 @@ let chosenOutlineIdx=null;
 let articleHTML='';
 let articleText='';
 let linkData=[];
+let metaTitle='';
+let metaDescription='';
+
+// SAVE / LOAD
+const SAVE_PREFIX = 'kwm_save_';
+
+function saveSession(){
+  if(!currentSeed){ alert('Nothing to save yet — run a keyword analysis first.'); return; }
+  const key = SAVE_PREFIX + Date.now();
+  const session = {
+    savedAt: new Date().toISOString(),
+    label: currentSeed + (currentSite ? ' · ' + currentSite : ''),
+    step: currentStep,
+    currentSeed, currentSite,
+    step1Pages, step2Keywords,
+    selectedPageIdx, serpData,
+    outlineOptions, chosenOutlineIdx,
+    articleHTML, articleText, linkData,
+    metaTitle, metaDescription
+  };
+  localStorage.setItem(key, JSON.stringify(session));
+  const btn = document.getElementById('save-btn');
+  btn.textContent = '✓ Saved';
+  setTimeout(() => btn.textContent = '💾 Save', 2000);
+}
+
+function toggleLoadMenu(){
+  const menu = document.getElementById('load-menu');
+  if(menu.style.display === 'none'){
+    renderLoadMenu();
+    menu.style.display = 'block';
+    setTimeout(() => document.addEventListener('click', closeLoadMenu, {once:true}), 10);
+  } else {
+    menu.style.display = 'none';
+  }
+}
+
+function closeLoadMenu(){ document.getElementById('load-menu').style.display = 'none'; }
+
+function renderLoadMenu(){
+  const keys = Object.keys(localStorage).filter(k => k.startsWith(SAVE_PREFIX)).sort().reverse();
+  const list = document.getElementById('load-menu-list');
+  if(!keys.length){
+    list.innerHTML = '<div style="padding:10px 14px;font-size:12px;color:var(--muted2)">No saved sessions yet.</div>';
+    return;
+  }
+  list.innerHTML = keys.map(k => {
+    const s = JSON.parse(localStorage.getItem(k));
+    const dt = new Date(s.savedAt).toLocaleString();
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-top:1px solid var(--border)">
+      <div style="flex:1;min-width:0;cursor:pointer" onclick="loadSession('${k}')">
+        <div style="font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(s.label)}</div>
+        <div style="font-size:10px;color:var(--muted2);margin-top:2px">Step ${s.step} · ${dt}</div>
+      </div>
+      <button onclick="deleteSession('${k}')" style="background:none;border:none;color:var(--muted2);cursor:pointer;font-size:14px;padding:2px 4px;flex-shrink:0" title="Delete">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function loadSession(key){
+  const raw = localStorage.getItem(key);
+  if(!raw) return;
+  const s = JSON.parse(raw);
+  currentSeed = s.currentSeed || '';
+  currentSite = s.currentSite || 'hireoverseas.com';
+  step1Pages = s.step1Pages || [];
+  step2Keywords = s.step2Keywords || {};
+  selectedPageIdx = s.selectedPageIdx ?? null;
+  serpData = s.serpData || null;
+  outlineOptions = s.outlineOptions || [];
+  chosenOutlineIdx = s.chosenOutlineIdx ?? null;
+  articleHTML = s.articleHTML || '';
+  articleText = s.articleText || '';
+  linkData = s.linkData || [];
+  metaTitle = s.metaTitle || '';
+  metaDescription = s.metaDescription || '';
+  document.getElementById('load-menu').style.display = 'none';
+  // Restore the furthest step content then navigate
+  const step = s.step || 1;
+  if(step >= 2 && step1Pages.length) renderStep2();
+  if(step >= 5 && outlineOptions.length) setTimeout(renderStep5, 0);
+  if(step >= 7 && linkData.length) setTimeout(renderStep7stub, 0);
+  if(step >= 8) setTimeout(renderStep8, 0);
+  maxStep = step;
+  setStep(step);
+}
+
+function renderStep7stub(){
+  if(linkData.length) try{ renderStep7(); }catch(e){}
+}
+
+function deleteSession(key){
+  localStorage.removeItem(key);
+  renderLoadMenu();
+}
 
 // UTILS
 function fe(kw){ document.getElementById('inp-seed').value=kw; document.getElementById('inp-seed').focus(); }
@@ -456,28 +606,48 @@ async function runStep1(){
 
   document.getElementById('s1-btn').disabled=true;
   hideErr('s1-err');
+
+  if(singlePageMode){
+    await runSinglePage(seed);
+    document.getElementById('s1-btn').disabled=false;
+    return;
+  }
+
+  const cnt=document.getElementById('opt-cnt').value;
+  const comm=document.getElementById('opt-comm').checked;
+  const blog=document.getElementById('opt-blog').checked;
+
   const msgs=['Analysing seed keyword…','Mapping pillar page…','Identifying cluster pages…','Checking live pages for cannibalization…','Finalising content map…'];
   let si=0; const st=setInterval(()=>{ setLoading('s1-status','s1-txt',true,msgs[si++%msgs.length]); },2000);
   setLoading('s1-status','s1-txt',true,msgs[0]);
 
-  const sys=`You are a senior SEO strategist. Analyse a seed keyword and return a content map as ONLY valid JSON — no markdown, no code fences. Return a JSON array of page objects.
+  const sys=`You are a senior B2B SEO strategist. Analyse a seed keyword and return a content map as ONLY valid JSON — no markdown, no code fences. Return a JSON array of page objects.
+
+AUDIENCE: This site targets BUSINESS OWNERS and HIRING MANAGERS who want to hire or outsource remote workers — NOT job seekers or contractors looking for work.
+
+KEYWORD BIAS RULES:
+- ALL keywords must be from the CLIENT/BUYER perspective (e.g. "hire", "outsource", "staffing agency", "remote team", "cost of hiring", "best agency to hire")
+- NEVER suggest keywords a job seeker or contractor would search (e.g. "remote jobs", "work from home", "find clients", "freelance work", "contractor jobs")
+- Prioritise Commercial and Transactional intent — pages that help a business evaluate, compare, or take action on hiring
+- Blog posts must address business pain points (cost savings, productivity, compliance, risk) not worker tips
 
 Each object MUST have:
 - "pageType": "Pillar Page"|"Cluster Page"|"Landing Page"|"Blog Post"|"Comparison Page"
-- "pageTitle": compelling H1
+- "pageTitle": compelling H1 written for a business decision-maker
 - "slug": URL slug starting with /
-- "primaryKeyword": exact target keyword
+- "primaryKeyword": exact target keyword (client/buyer perspective only)
 - "searchIntent": "Informational"|"Commercial"|"Transactional"|"Navigational"
-- "contentGoal": 1 sentence — specific purpose
+- "contentGoal": 1 sentence — specific business outcome this page drives
 - "cannibalizationStatus": "safe"|"risk"|"conflict"
 - "cannibalizationDetails": {"conflictingPosts":[],"conflictingUrls":[],"recommendation":"","notes":""}
 
 There must be exactly 1 Pillar Page. All other pages are Clusters or supporting content.
-${comm?'Include commercial intent pages.':''} ${blog?'Include blog posts.':''}`;
+${comm?'Prioritise commercial and transactional landing pages.':''} ${blog?'Include blog posts targeting business decision-maker pain points only.':''}`;
 
   const usr=`Seed keyword: "${seed}"
 Website: ${currentSite}
 Generate exactly ${cnt.replace(' pages','')} pages (1 pillar + the rest as clusters/supporting).
+Remember: all keywords must target businesses hiring remote workers, NOT workers seeking jobs.
 
 FULL SITE INDEX (${sitePages.length} pages) — check every suggested page against these for cannibalization:
 ${siteStr()}`;
@@ -495,6 +665,52 @@ ${siteStr()}`;
     showErr('s1-err','Error: '+e.message);
   }
   document.getElementById('s1-btn').disabled=false;
+}
+
+async function runSinglePage(seed){
+  const msgs=['Analysing keyword…','Building page structure…','Generating secondary keywords…','Checking for cannibalization…'];
+  let si=0; const st=setInterval(()=>{ setLoading('s1-status','s1-txt',true,msgs[si++%msgs.length]); },2000);
+  setLoading('s1-status','s1-txt',true,msgs[0]);
+
+  const sys=`You are a senior B2B SEO strategist. Return a JSON array containing exactly ONE page object for the given keyword.
+
+AUDIENCE: This site targets BUSINESS OWNERS and HIRING MANAGERS — not job seekers.
+All keywords must be from the client/buyer perspective.
+
+The object MUST have:
+- "pageType": "Pillar Page"|"Landing Page"|"Blog Post"|"Comparison Page"
+- "pageTitle": compelling H1 for a business decision-maker
+- "slug": URL slug starting with /
+- "primaryKeyword": exact target keyword (buyer perspective)
+- "searchIntent": "Informational"|"Commercial"|"Transactional"|"Navigational"
+- "contentGoal": 1 sentence — specific business outcome
+- "cannibalizationStatus": "safe"|"risk"|"conflict"
+- "cannibalizationDetails": {"conflictingPosts":[],"conflictingUrls":[],"recommendation":"","notes":""}
+
+Return ONLY a JSON array with 1 object — no markdown, no code fences.`;
+
+  const usr=`Primary keyword: "${seed}"
+Website: ${currentSite}
+
+FULL SITE INDEX (${sitePages.length} pages) — check for cannibalization:
+${siteStr()}`;
+
+  try{
+    step1Pages = await callAPI(sys, usr, 2000);
+    step2Keywords = {};
+    selectedPageIdx = 0;
+    // Auto-generate keywords then go to step 3
+    setLoading('s1-status','s1-txt',true,'Generating keywords…');
+    await generateKeywordsOnly(0);
+    clearInterval(st);
+    setLoading('s1-status','s1-txt',false);
+    setStep(3);
+    runStep3();
+  }catch(e){
+    clearInterval(st);
+    setLoading('s1-status','s1-txt',false);
+    showErr('s1-err','Error: '+e.message);
+  }
 }
 
 // ═══════════════════════════════════
@@ -562,10 +778,16 @@ async function generateKeywords(idx){
   cell.innerHTML = '<span style="font-size:11px;color:var(--muted)"><span class="spin-sm" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>Generating keywords…</span>';
 
   const p = step1Pages[idx];
-  const sys=`You are a senior SEO strategist. Generate keyword suggestions for a page. Return ONLY valid JSON — no markdown.
+  const sys=`You are a senior B2B SEO strategist. Generate keyword suggestions for a page targeting BUSINESS OWNERS and HIRING MANAGERS — not job seekers or contractors. Return ONLY valid JSON — no markdown.
+
+KEYWORD RULES:
+- All keywords must reflect the CLIENT/BUYER perspective (businesses looking to hire, outsource, or manage remote staff)
+- Prioritise commercial and transactional terms: "hire", "outsource", "agency", "service", "pricing", "cost", "best", "top", "vs", "for businesses"
+- NEVER include job seeker terms: "jobs", "work from home jobs", "find work", "freelance", "contractor jobs", "remote work opportunities"
+
 Return a single JSON object with:
-- "secondaryKeywords": array of exactly 10 secondary keywords
-- "semanticKeywords": array of exactly 10 semantic/LSI keywords`;
+- "secondaryKeywords": array of exactly 10 secondary keywords (commercial/transactional bias)
+- "semanticKeywords": array of exactly 10 semantic/LSI keywords (business decision-maker context)`;
 
   const usr=`Page: "${p.pageTitle}"
 Primary keyword: "${p.primaryKeyword}"
@@ -597,10 +819,16 @@ async function generateAllKeywords(){
 
 async function generateKeywordsOnly(idx){
   const p = step1Pages[idx];
-  const sys=`You are a senior SEO strategist. Generate keyword suggestions for a page. Return ONLY valid JSON — no markdown.
+  const sys=`You are a senior B2B SEO strategist. Generate keyword suggestions for a page targeting BUSINESS OWNERS and HIRING MANAGERS — not job seekers or contractors. Return ONLY valid JSON — no markdown.
+
+KEYWORD RULES:
+- All keywords must reflect the CLIENT/BUYER perspective (businesses looking to hire, outsource, or manage remote staff)
+- Prioritise commercial and transactional terms: "hire", "outsource", "agency", "service", "pricing", "cost", "best", "top", "vs", "for businesses"
+- NEVER include job seeker terms: "jobs", "work from home jobs", "find work", "freelance", "contractor jobs", "remote work opportunities"
+
 Return a single JSON object with:
-- "secondaryKeywords": array of exactly 10 secondary keywords
-- "semanticKeywords": array of exactly 10 semantic/LSI keywords`;
+- "secondaryKeywords": array of exactly 10 secondary keywords (commercial/transactional bias)
+- "semanticKeywords": array of exactly 10 semantic/LSI keywords (business decision-maker context)`;
   const usr=`Page: "${p.pageTitle}"
 Primary keyword: "${p.primaryKeyword}"
 Search intent: ${p.searchIntent}
@@ -611,9 +839,14 @@ Website: ${currentSite}`;
 }
 
 function selectPageForSERP(idx){
-  selectedPageIdx = idx;
-  setStep(3);
-  runStep3();
+  const state = {
+    currentSeed, currentSite,
+    step1Pages, step2Keywords,
+    selectedPageIdx: idx
+  };
+  const key = 'kwm_tab_' + Date.now();
+  localStorage.setItem(key, JSON.stringify(state));
+  window.open('/?tab=' + key, '_blank');
 }
 
 // ═══════════════════════════════════
@@ -1029,12 +1262,34 @@ function renderStep7(){
 // ═══════════════════════════════════
 // STEP 8 — FINAL OUTPUT
 // ═══════════════════════════════════
-function renderStep8(){
+async function renderStep8(){
   const wordCount = articleText.trim().split(/\s+/).length;
   const charCount = articleText.length;
   const p = step1Pages[selectedPageIdx];
   const outline = outlineOptions[chosenOutlineIdx];
-  const kws = step2Keywords[selectedPageIdx]||{};
+
+  // Generate meta if not already done
+  if(!metaTitle || !metaDescription){
+    document.getElementById('s8-content').innerHTML = `<div class="card"><div class="card-body" style="text-align:center;padding:32px"><span class="spin" style="width:20px;height:20px;display:inline-block;margin-bottom:10px"></span><div style="color:var(--muted);font-size:13px">Generating meta title & description…</div></div></div>`;
+    try{
+      const sys = `You are an SEO expert. Generate an optimised meta title and meta description for the given page.
+Rules:
+- Meta title: 50–60 characters, include primary keyword near the front, compelling and click-worthy
+- Meta description: 145–160 characters, include primary keyword, clear value proposition, ends with a soft CTA
+Return ONLY a JSON object: {"metaTitle":"...","metaDescription":"..."}`;
+      const usr = `Page title: "${p.pageTitle}"
+Primary keyword: "${p.primaryKeyword}"
+Search intent: ${p.searchIntent}
+Website: ${currentSite}
+Article intro (first 500 chars): ${articleText.substring(0,500)}`;
+      const data = await callAPI(sys, usr, 300);
+      metaTitle = data.metaTitle || '';
+      metaDescription = data.metaDescription || '';
+    }catch(e){
+      metaTitle = p.pageTitle;
+      metaDescription = '';
+    }
+  }
 
   let html = `<div class="stats-bar">
     <div class="stat-item"><div class="stat-n">${wordCount.toLocaleString()}</div><div class="stat-l">Total<br>Words</div></div>
@@ -1044,6 +1299,42 @@ function renderStep8(){
     <div class="stat-item"><div class="stat-n">${linkData.length}</div><div class="stat-l">Internal<br>Links</div></div>
     <div style="width:1px;height:28px;background:var(--border)"></div>
     <div class="stat-item"><div class="stat-n">${Math.ceil(wordCount/200)}</div><div class="stat-l">Read Time<br>(minutes)</div></div>
+  </div>`;
+
+  // META CARD
+  const mtLen = metaTitle.length;
+  const mdLen = metaDescription.length;
+  const mtColor = mtLen >= 50 && mtLen <= 60 ? 'var(--grn)' : mtLen > 60 ? 'var(--red)' : 'var(--amb)';
+  const mdColor = mdLen >= 145 && mdLen <= 160 ? 'var(--grn)' : mdLen > 160 ? 'var(--red)' : 'var(--amb)';
+
+  html += `<div class="card" style="margin-bottom:16px">
+    <div class="card-hdr">
+      <div style="font-weight:700;flex:1">SEO Meta Tags</div>
+      <span class="kwc kp">${p.primaryKeyword}</span>
+    </div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:14px">
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Meta Title</span>
+          <span style="font-size:11px;font-weight:700;color:${mtColor}">${mtLen} chars ${mtLen >= 50 && mtLen <= 60 ? '✓' : mtLen > 60 ? '(too long)' : '(too short)'}</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:stretch">
+          <div id="meta-title-box" contenteditable="true" oninput="updateMetaLen('title')" style="flex:1;background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;font-size:13px;font-weight:600;color:var(--ink);outline:none;line-height:1.5">${esc(metaTitle)}</div>
+          <button class="btn-ghost" style="padding:8px 14px;font-size:12px;align-self:stretch" onclick="copyMeta('title')">Copy</button>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Meta Description</span>
+          <span id="md-len-badge" style="font-size:11px;font-weight:700;color:${mdColor}">${mdLen} chars ${mdLen >= 145 && mdLen <= 160 ? '✓' : mdLen > 160 ? '(too long)' : '(too short)'}</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:stretch">
+          <div id="meta-desc-box" contenteditable="true" oninput="updateMetaLen('desc')" style="flex:1;background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;font-size:13px;color:var(--ink);outline:none;line-height:1.6">${esc(metaDescription)}</div>
+          <button class="btn-ghost" style="padding:8px 14px;font-size:12px;align-self:stretch" onclick="copyMeta('desc')">Copy</button>
+        </div>
+      </div>
+      <button class="btn-ghost" style="align-self:flex-start;font-size:12px" onclick="regenerateMeta()">↻ Regenerate</button>
+    </div>
   </div>`;
 
   html += `<div class="card" style="margin-bottom:16px"><div class="card-hdr">
@@ -1077,6 +1368,39 @@ function renderStep8(){
   document.getElementById('s8-content').innerHTML = html;
 }
 
+function updateMetaLen(type){
+  if(type === 'title'){
+    const el = document.getElementById('meta-title-box');
+    metaTitle = el.innerText;
+    const len = metaTitle.length;
+    const color = len >= 50 && len <= 60 ? 'var(--grn)' : len > 60 ? 'var(--red)' : 'var(--amb)';
+    el.previousElementSibling.querySelector('span:last-child').style.color = color;
+    el.previousElementSibling.querySelector('span:last-child').textContent = `${len} chars ${len >= 50 && len <= 60 ? '✓' : len > 60 ? '(too long)' : '(too short)'}`;
+  } else {
+    const el = document.getElementById('meta-desc-box');
+    metaDescription = el.innerText;
+    const len = metaDescription.length;
+    const color = len >= 145 && len <= 160 ? 'var(--grn)' : len > 160 ? 'var(--red)' : 'var(--amb)';
+    const badge = document.getElementById('md-len-badge');
+    badge.style.color = color;
+    badge.textContent = `${len} chars ${len >= 145 && len <= 160 ? '✓' : len > 160 ? '(too long)' : '(too short)'}`;
+  }
+}
+
+function copyMeta(type){
+  const text = type === 'title' ? metaTitle : metaDescription;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = event.target;
+    btn.textContent = '✓ Copied';
+    setTimeout(()=>btn.textContent='Copy', 2000);
+  });
+}
+
+async function regenerateMeta(){
+  metaTitle = ''; metaDescription = '';
+  await renderStep8();
+}
+
 function copyArticleHTML(){
   navigator.clipboard.writeText(articleHTML).then(()=>{
     const btns = document.querySelectorAll('.btn-primary');
@@ -1085,7 +1409,18 @@ function copyArticleHTML(){
 }
 
 function copyArticleText(){
-  navigator.clipboard.writeText(articleText).then(()=>{
+  const formatted = articleHTML
+    .replace(/<h1[^>]*>(.*?)<\/h1>/gi,'\n# $1\n')
+    .replace(/<h2[^>]*>(.*?)<\/h2>/gi,'\n## $1\n')
+    .replace(/<h3[^>]*>(.*?)<\/h3>/gi,'\n### $1\n')
+    .replace(/<h4[^>]*>(.*?)<\/h4>/gi,'\n#### $1\n')
+    .replace(/<br\s*\/?>/gi,'\n')
+    .replace(/<\/p>/gi,'\n')
+    .replace(/<li[^>]*>(.*?)<\/li>/gi,'- $1\n')
+    .replace(/<\/?[^>]+(>|$)/g,'')
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').replace(/&#39;/g,"'").replace(/&quot;/g,'"')
+    .replace(/\n{3,}/g,'\n\n').trim();
+  navigator.clipboard.writeText(formatted).then(()=>{
     const btns = document.querySelectorAll('.btn-outline');
     btns.forEach(b=>{ if(b.textContent.includes('Copy Article (Plain Text)')){ b.textContent='✓ Copied!'; setTimeout(()=>b.textContent='📋 Copy Article (Plain Text)',2000); }});
   });
@@ -1117,6 +1452,8 @@ function exportCSV(){
     ['Field','Value'],
     ['Page Title', p.pageTitle],
     ['Slug', p.slug],
+    ['Meta Title', metaTitle],
+    ['Meta Description', metaDescription],
     ['Primary Keyword', p.primaryKeyword],
     ['Search Intent', p.searchIntent],
     ['Secondary Keywords', (kws.secondaryKeywords||[]).join(' | ')],
@@ -1139,9 +1476,40 @@ function exportCSV(){
 
 // INIT
 buildProgress();
-setStep(1);
-updCnt();
+loadSitePages();
 document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&document.activeElement.id==='inp-seed') runStep1(); });
+
+// Restore state if opened as a keyword tab
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('tab');
+  if(key){
+    const raw = localStorage.getItem(key);
+    if(raw){
+      try{
+        const s = JSON.parse(raw);
+        currentSeed = s.currentSeed || '';
+        currentSite = s.currentSite || 'hireoverseas.com';
+        step1Pages = s.step1Pages || [];
+        step2Keywords = s.step2Keywords || {};
+        selectedPageIdx = s.selectedPageIdx;
+        localStorage.removeItem(key);
+        // Show a back-to-map button in the header area
+        const p = step1Pages[selectedPageIdx];
+        if(p){
+          const notice = document.createElement('div');
+          notice.style.cssText='background:var(--s2);border-bottom:1px solid var(--border);padding:8px 40px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:12px;';
+          notice.innerHTML=`<span>Working on: <strong style="color:var(--ink)">${esc(p.pageTitle)}</strong> — <span style="color:var(--grn)">${esc(p.primaryKeyword)}</span></span><span style="margin-left:auto;font-size:11px;color:var(--muted2)">Keyword Map is open in the previous tab</span>`;
+          document.querySelector('header').after(notice);
+        }
+        setStep(3);
+        runStep3();
+        return;
+      }catch(e){}
+    }
+  }
+  setStep(1);
+})();
 </script>
 </body>
 </html>
